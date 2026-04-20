@@ -4,6 +4,7 @@ The Aggregated Intelligence Posture (AIP) framework. One governance score for hu
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
+- Pre-assessment PRD: [PRD.md](PRD.md)
 - Self-assessment: https://aiposture.org/assess/
 
 ## Three vectors
@@ -15,6 +16,7 @@ The Aggregated Intelligence Posture (AIP) framework. One governance score for hu
 ## Repo layout
 
 - `SPEC.md` — normative specification
+- `PRD.md` — pre-assessment product requirements (question bank, likelihood tables, rubric tables, runtime flow)
 - `docs/` — canonical site source (GitHub Pages root)
 - `docs/assess/` — client-side self-assessment
 
