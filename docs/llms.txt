@@ -1,0 +1,31 @@
+# AI Posture
+
+> The Aggregated Intelligence Posture framework — where your org stands, and how to move.
+
+AI governance is three problems, not one. How effectively your people collaborate with AI. How ready your digital presence is for AI agents. How prepared you are for AI-specific regulation. An organization's Aggregated Intelligence Posture (AIP) is bounded by its weakest vector.
+
+## Concepts
+
+- Aggregated Intelligence Posture (AIP): A unified governance score across three vectors, bounded by the lowest.
+- Three vectors: People (human-AI collaboration), Infrastructure (agent-readiness of digital presence), Regulation (AI-specific compliance readiness).
+- Five-level maturity model: Perceiving, Assessing, Integrating, Calibrated, Engineered. Shared across all three vectors.
+- Constraint rule: AIP equals the minimum of the three vector levels. Structural, not a scoring choice.
+- Constraining vector: The lowest vector; the one whose advancement will raise the AIP.
+
+## Key files
+
+- [Spec](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification
+- [Landing page](https://aiposture.org/): Canonical homepage
+- [Self-assessment](https://aiposture.org/assess/): Fifteen-question self-assessment, client-side
+
+## Links
+
+- GitHub: https://github.com/snapsynapse/ai-posture
+- Homepage: https://aiposture.org/
+
+## Related patterns
+
+- [PAICE.work](https://paice.work/): People vector — human-AI collaboration measurement
+- [Siteline](https://siteline.to/): Infrastructure vector — agent-readiness of digital presence
+- [EveryAILaw](https://everyailaw.com/): Regulation vector — AI-specific compliance readiness
+- [PAICE Portfolio](https://paice.foundation/): Portfolio parent organization
