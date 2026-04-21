@@ -60,8 +60,8 @@ defined_term_alternate_names:
 defined_term_description: >
   A unified governance score for human-AI collaboration, computed across
   three vectors (People, Infrastructure, Regulation) on a five-level
-  maturity model (Perceiving, Assessing, Integrating, Calibrated,
-  Engineered). An organization's AIP is bounded by its lowest vector.
+  maturity model (Perceiving, Assessing, Integrating, Calibrating,
+  Engineering). An organization's AIP is bounded by its lowest vector.
 citations:
   - { name: "PAICE.work",      url: "https://paice.work/" }
   - { name: "Siteline",        url: "https://siteline.to/" }

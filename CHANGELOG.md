@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.3.0 spec + PRD v0.1.1 — 2026-04-20
+
+Level-name terminology update. Cosmetic-semantic change, no calibration or methodology impact.
+
+SPEC.md v0.3.0
+- Levels 4 and 5 renamed from past-participle to present-participle form: "Calibrated" → "Calibrating", "Engineered" → "Engineering".
+- Rationale: present-participle form is more honest to the spec's decay principle. Levels are sustained practices requiring continuous maintenance, not terminal achievements. Past-participle implied done; present-participle correctly conveys ongoing practice.
+- All five levels (Perceiving, Assessing, Integrating, Calibrating, Engineering) now share present-participle form, resolving a grammatical inconsistency between Levels 1-3 and Levels 4-5.
+- Posture-statement adjective uses of "engineered capability" preserved where the word describes an artifact rather than a level.
+
+PRD.md v0.1.1
+- Level name updates throughout likelihood tables (Appendix A), rubric tables (Appendix B), question bank references, and output contract.
+- Related-spec reference bumped to SPEC.md v0.3.0.
+
+Pre-assessment runtime (docs/assess/)
+- LEVEL_NAMES array in app.js updated.
+- likelihoods.json levels array updated.
+- rubric.json per-vector level names updated.
+- Minor UI string updates where level names appeared in prose.
+
+No changes to probability values, prior distributions, constraint rule, or admission criteria.
+
 ## v0.2.0 spec + PRD v0.1.0 — 2026-04-20
 
 Spec revision and pre-assessment product definition.

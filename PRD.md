@@ -1,9 +1,9 @@
 # AIP Pre-Assessment PRD
 
-Version: v0.1.0
+Version: v0.1.1
 Status: Draft
 Last modified: 2026-04-20
-Related spec: SPEC.md (v0.2.0)
+Related spec: SPEC.md (v0.3.0)
 Canonical URL: https://aiposture.org/assess/
 
 ## Purpose
@@ -269,8 +269,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.05 | 0.15 | 0.70 | 0.10 |
 | 2 Assessing | 0.85 | 0.05 | 0.05 | 0.05 |
 | 3 Integrating | 0.92 | 0.03 | 0.03 | 0.02 |
-| 4 Calibrated | 0.95 | 0.02 | 0.02 | 0.01 |
-| 5 Engineered | 0.97 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.95 | 0.02 | 0.02 | 0.01 |
+| 5 Engineering | 0.97 | 0.01 | 0.01 | 0.01 |
 
 ### I2 — Declarations deployed and confirmed?
 
@@ -280,8 +280,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.02 | 0.03 | 0.05 | 0.80 | 0.10 |
 | 2 Assessing | 0.05 | 0.10 | 0.30 | 0.45 | 0.10 |
 | 3 Integrating | 0.70 | 0.15 | 0.05 | 0.05 | 0.05 |
-| 4 Calibrated | 0.85 | 0.08 | 0.02 | 0.03 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.85 | 0.08 | 0.02 | 0.03 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### I3 — Recurring scans with drift tracking?
 
@@ -291,8 +291,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.02 | 0.07 | 0.80 | 0.10 |
 | 2 Assessing | 0.02 | 0.05 | 0.60 | 0.25 | 0.08 |
 | 3 Integrating | 0.10 | 0.25 | 0.30 | 0.25 | 0.10 |
-| 4 Calibrated | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### I4 — Declared cadence with artifact?
 
@@ -302,8 +302,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.05 | 0.84 | 0.10 |
 | 2 Assessing | 0.03 | 0.15 | 0.75 | 0.07 |
 | 3 Integrating | 0.10 | 0.35 | 0.50 | 0.05 |
-| 4 Calibrated | 0.40 | 0.40 | 0.18 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.02 | 0.01 |
+| 4 Calibrating | 0.40 | 0.40 | 0.18 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.02 | 0.01 |
 
 ### I5 — Release-time agent-readiness scoring?
 
@@ -313,8 +313,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.03 | 0.86 | 0.10 |
 | 2 Assessing | 0.02 | 0.08 | 0.85 | 0.05 |
 | 3 Integrating | 0.05 | 0.20 | 0.70 | 0.05 |
-| 4 Calibrated | 0.15 | 0.45 | 0.38 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.02 | 0.01 |
+| 4 Calibrating | 0.15 | 0.45 | 0.38 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.02 | 0.01 |
 
 ### R1 — Obligation register built?
 
@@ -324,8 +324,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.05 | 0.15 | 0.70 | 0.10 |
 | 2 Assessing | 0.85 | 0.05 | 0.05 | 0.05 |
 | 3 Integrating | 0.92 | 0.03 | 0.03 | 0.02 |
-| 4 Calibrated | 0.95 | 0.02 | 0.02 | 0.01 |
-| 5 Engineered | 0.97 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.95 | 0.02 | 0.02 | 0.01 |
+| 5 Engineering | 0.97 | 0.01 | 0.01 | 0.01 |
 
 ### R2 — Obligations translated to controls with traceability?
 
@@ -335,8 +335,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.02 | 0.03 | 0.05 | 0.80 | 0.10 |
 | 2 Assessing | 0.05 | 0.10 | 0.35 | 0.40 | 0.10 |
 | 3 Integrating | 0.70 | 0.15 | 0.05 | 0.05 | 0.05 |
-| 4 Calibrated | 0.85 | 0.08 | 0.02 | 0.03 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.85 | 0.08 | 0.02 | 0.03 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### R3 — All jurisdictions plus monitoring plus interpretations?
 
@@ -346,8 +346,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.02 | 0.07 | 0.80 | 0.10 |
 | 2 Assessing | 0.02 | 0.05 | 0.20 | 0.65 | 0.08 |
 | 3 Integrating | 0.05 | 0.20 | 0.50 | 0.15 | 0.10 |
-| 4 Calibrated | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### R4 — Declared cadence with artifact?
 
@@ -357,8 +357,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.05 | 0.84 | 0.10 |
 | 2 Assessing | 0.03 | 0.15 | 0.75 | 0.07 |
 | 3 Integrating | 0.10 | 0.35 | 0.50 | 0.05 |
-| 4 Calibrated | 0.40 | 0.40 | 0.18 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.02 | 0.01 |
+| 4 Calibrating | 0.40 | 0.40 | 0.18 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.02 | 0.01 |
 
 ### R5 — Continuous refresh with rapid intake?
 
@@ -368,8 +368,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.03 | 0.07 | 0.79 | 0.10 |
 | 2 Assessing | 0.02 | 0.05 | 0.10 | 0.75 | 0.08 |
 | 3 Integrating | 0.03 | 0.10 | 0.35 | 0.45 | 0.07 |
-| 4 Calibrated | 0.10 | 0.45 | 0.25 | 0.18 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.10 | 0.45 | 0.25 | 0.18 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### P1 — Baseline behavioral assessment done?
 
@@ -379,8 +379,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.05 | 0.15 | 0.70 | 0.10 |
 | 2 Assessing | 0.85 | 0.05 | 0.05 | 0.05 |
 | 3 Integrating | 0.92 | 0.03 | 0.03 | 0.02 |
-| 4 Calibrated | 0.95 | 0.02 | 0.02 | 0.01 |
-| 5 Engineered | 0.97 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.95 | 0.02 | 0.02 | 0.01 |
+| 5 Engineering | 0.97 | 0.01 | 0.01 | 0.01 |
 
 ### P2 — Change traces to assessment data?
 
@@ -390,8 +390,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.02 | 0.03 | 0.85 | 0.10 |
 | 2 Assessing | 0.05 | 0.10 | 0.75 | 0.10 |
 | 3 Integrating | 0.70 | 0.20 | 0.05 | 0.05 |
-| 4 Calibrated | 0.85 | 0.08 | 0.05 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.02 | 0.01 |
+| 4 Calibrating | 0.85 | 0.08 | 0.05 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.02 | 0.01 |
 
 ### P3 — Cohort plus cadence plus privacy?
 
@@ -401,8 +401,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.02 | 0.07 | 0.80 | 0.10 |
 | 2 Assessing | 0.02 | 0.05 | 0.55 | 0.30 | 0.08 |
 | 3 Integrating | 0.05 | 0.25 | 0.35 | 0.25 | 0.10 |
-| 4 Calibrated | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
+| 4 Calibrating | 0.80 | 0.12 | 0.03 | 0.03 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.01 | 0.01 | 0.01 |
 
 ### P5 — Declared cadence with artifact? (asked 4th)
 
@@ -412,8 +412,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.05 | 0.84 | 0.10 |
 | 2 Assessing | 0.03 | 0.15 | 0.75 | 0.07 |
 | 3 Integrating | 0.10 | 0.35 | 0.50 | 0.05 |
-| 4 Calibrated | 0.40 | 0.40 | 0.18 | 0.02 |
-| 5 Engineered | 0.92 | 0.05 | 0.02 | 0.01 |
+| 4 Calibrating | 0.40 | 0.40 | 0.18 | 0.02 |
+| 5 Engineering | 0.92 | 0.05 | 0.02 | 0.01 |
 
 ### P4 — Continuous with attestation? (asked 5th)
 
@@ -423,8 +423,8 @@ Expert-elicited for v1. Recalibration planned after 100 completions. Tables are 
 | 1 Perceiving | 0.01 | 0.02 | 0.04 | 0.83 | 0.10 |
 | 2 Assessing | 0.01 | 0.03 | 0.06 | 0.80 | 0.10 |
 | 3 Integrating | 0.02 | 0.08 | 0.10 | 0.75 | 0.05 |
-| 4 Calibrated | 0.15 | 0.35 | 0.25 | 0.23 | 0.02 |
-| 5 Engineered | 0.90 | 0.05 | 0.03 | 0.01 | 0.01 |
+| 4 Calibrating | 0.15 | 0.35 | 0.25 | 0.23 | 0.02 |
+| 5 Engineering | 0.90 | 0.05 | 0.03 | 0.01 | 0.01 |
 
 ## Appendix B: rubric tables
 
@@ -438,8 +438,8 @@ Per-vector level descriptors. Columns: Level, Name, Assertion, Evidence, Test, N
 | 1 | Perceiving | "Our people use AI. We have not measured how." | Written acknowledgment of AI use in policy, dated. | Produce the dated written acknowledgment. | No behavioral measurement required or expected at this level. |
 | 2 | Assessing | "We have looked at how our people collaborate with AI." | Baseline behavioral assessment of human-AI collaboration. | Produce the assessment report, dated. | Data may be uncomfortable. Level is about seeing, not acting. |
 | 3 | Integrating | "What we saw changed what we do." | At least one policy or practice change traceable to baseline assessment data. | Show the change and the source finding. | Traceability is the bar. Not activity. Not intent. |
-| 4 | Calibrated | "We measure continuously. Data drives governance." | Cohort-level behavioral data on defined cadence. Privacy-preserving aggregation verified. | Produce cohort report, cadence document, anonymization validation. | Ongoing, not episodic. Jurisdictional variants if multi-jurisdictional workforce. |
-| 5 | Engineered | "Human-AI collaboration is an engineered capability, continuously maintained." | Continuous behavioral assessment. Verifiable attestation mechanism. Declared framework-review cadence with review artifact from prior cycle. | Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 4 | Calibrating | "We measure continuously. Data drives governance." | Cohort-level behavioral data on defined cadence. Privacy-preserving aggregation verified. | Produce cohort report, cadence document, anonymization validation. | Ongoing, not episodic. Jurisdictional variants if multi-jurisdictional workforce. |
+| 5 | Engineering | "Human-AI collaboration is an engineered capability, continuously maintained." | Continuous behavioral assessment. Verifiable attestation mechanism. Declared framework-review cadence with review artifact from prior cycle. | Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
 
 ### Infrastructure
 
@@ -449,8 +449,8 @@ Per-vector level descriptors. Columns: Level, Name, Assertion, Evidence, Test, N
 | 1 | Perceiving | "Agents may interact with our systems. We have not measured readiness." | Acknowledgment that agents may interact with org systems. | Produce the acknowledgment. | No scan or inventory required or expected. |
 | 2 | Assessing | "We have scanned our infrastructure for agent readiness." | Agent-readiness scan complete. Inventory of external surfaces. Partner integrations mapped. | Produce scan report, surface inventory, partner map. | Outer surface and inner edge both in scope. |
 | 3 | Integrating | "We have acted on what the scan showed." | Remediations made from scan findings. Machine-readable declarations deployed (llms.txt, structured data, agent-legible identifiers). Follow-up scan confirms change. | Show scan, remediation log, follow-up scan delta. | Declarations must be deployed, not drafted. |
-| 4 | Calibrated | "We scan continuously. Drift is tracked." | Scans on defined cadence. Drift log. Outer-surface claims verified against internal reality on a cycle. | Produce cadence record, drift log, claim-reality reconciliation. | Claim-reality check catches outward drift without requiring a separate vector. |
-| 5 | Engineered | "Agent-readiness is engineered into how systems are built and shipped." | Agent-readiness scored automatically at release. Standards contributed to, or internally extended protocols in use. Declared framework-review cadence with review artifact from prior cycle. | Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 4 | Calibrating | "We scan continuously. Drift is tracked." | Scans on defined cadence. Drift log. Outer-surface claims verified against internal reality on a cycle. | Produce cadence record, drift log, claim-reality reconciliation. | Claim-reality check catches outward drift without requiring a separate vector. |
+| 5 | Engineering | "Agent-readiness is engineered into how systems are built and shipped." | Agent-readiness scored automatically at release. Standards contributed to, or internally extended protocols in use. Declared framework-review cadence with review artifact from prior cycle. | Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
 
 ### Regulation
 
@@ -460,5 +460,5 @@ Per-vector level descriptors. Columns: Level, Name, Assertion, Evidence, Test, N
 | 1 | Perceiving | "We are exposed to AI regulation. We have not mapped it." | Exposure acknowledged. Some jurisdictions named. | Produce the acknowledgment. | No structured mapping required or expected. |
 | 2 | Assessing | "We have mapped our obligations across jurisdictions." | Obligation register. Jurisdictional coverage across operations, sales, employment footprint. Gaps identified. | Produce register with jurisdictional coverage and named gaps. | Coverage ratio is the measure, not volume of regulation. |
 | 3 | Integrating | "Obligations are translated into controls." | Obligations mapped to controls. At least primary jurisdiction fully controlled. Statute-to-control traceability maintained. | Show the statute-to-control trace for at least one jurisdiction. | Obligation becomes action, not just document. |
-| 4 | Calibrated | "Controls cover all in-scope jurisdictions. Regulatory change is monitored." | Controls across all in-scope jurisdictions. Active regulatory-change monitoring. Documented interpretations with counterparties where applicable. | Produce coverage map, monitoring cadence, interpretation records. | Documented interpretations matter where ambiguity exists. |
-| 5 | Engineered | "Compliance is continuous. New jurisdictions onboard rapidly." | Obligations met as measured coverage ratio, refreshed continuously. Proactive interpretation recordkeeping. New jurisdiction ingested in days. Declared framework-review cadence with review artifact from prior cycle. | Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 4 | Calibrating | "Controls cover all in-scope jurisdictions. Regulatory change is monitored." | Controls across all in-scope jurisdictions. Active regulatory-change monitoring. Documented interpretations with counterparties where applicable. | Produce coverage map, monitoring cadence, interpretation records. | Documented interpretations matter where ambiguity exists. |
+| 5 | Engineering | "Compliance is continuous. New jurisdictions onboard rapidly." | Obligations met as measured coverage ratio, refreshed continuously. Proactive interpretation recordkeeping. New jurisdiction ingested in days. Declared framework-review cadence with review artifact from prior cycle. | Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |

@@ -8,7 +8,7 @@
   var B = window.AIPBayes;
   var DATA_BASE = './data/';
   var STORAGE_KEY = 'aip.assess.v1.draft';
-  var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrated', 'Engineered'];
+  var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
   var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
 
   function track(event, props) {
@@ -558,7 +558,7 @@
       var nextName = aggregate < 5 ? LEVEL_NAMES[aggregate + 1] : null;
       var nextAction = nextName
         ? 'Advance ' + constraining.join(', ') + ' to ' + nextName + '.'
-        : 'All in-scope vectors are Engineered. Advance the frontier.';
+        : 'All in-scope vectors are at Engineering. Advance the frontier.';
       wrap.appendChild(el('p', { class: 'constraining' }, [
         el('strong', null, ['Constraining vector: ']),
         constraining.join(', ') + '. ' + nextAction

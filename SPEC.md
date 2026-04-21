@@ -1,6 +1,6 @@
 # Aggregated Intelligence Posture (AIP)
 
-Version: v0.2.0
+Version: v0.3.0
 Status: Draft
 Published: 2026-04-04
 Last modified: 2026-04-20
@@ -18,7 +18,7 @@ AIP measures verified behavior across domains where human-AI collaboration produ
 - Progressive, not regressive. AIP is a maturity model. Risk models feed it as inputs. Risk exposure that is imposed from outside (new regulation, new jurisdiction, reclassification) does not reduce maturity. It only reveals where maturity is bounded.
 - Coverage, not volume. Scores reflect obligations met as a ratio of obligations in scope, not total work performed. A smaller organization can score equal to a larger one.
 - Time-stamped. Every AIP report is an assertion valid at the moment it is instantiated. Scores decay. The assessor records a next-review belief at stamping time, which later readers use to weight the assertion retroactively.
-- Bounded by the weakest vector. The constraint rule is structural, not a scoring convenience. Domains depend on each other. A Calibrated People vector cannot support a Calibrated compliance claim if Regulation is Perceiving, because the compliance claim has no behavioral ground to stand on.
+- Bounded by the weakest vector. The constraint rule is structural, not a scoring convenience. Domains depend on each other. A Calibrating People vector cannot support a Calibrating compliance claim if Regulation is Perceiving, because the compliance claim has no behavioral ground to stand on.
 - Output-orthogonal to program frameworks. AIP does not replace NIST AI RMF, ISO/IEC 42001, or conformance to the EU AI Act. Those frameworks govern program inputs and remediations. AIP measures detectable output behavior.
 
 ## The vector set
@@ -50,20 +50,20 @@ Each vector is scored at one of five levels, shared across all vectors. Level 0 
 1. Perceiving. The organization is aware the domain exists but has not acted.
 2. Assessing. The organization has begun inventorying its state but has no deliberate practice.
 3. Integrating. Deliberate practice is in place; evidence is starting to accumulate.
-4. Calibrated. Practice is measured, tuned, and defensible to outside inspection.
-5. Engineered. Practice is systematized; the organization advances the frontier rather than catching up.
+4. Calibrating. Practice is measured, tuned, and defensible to outside inspection.
+5. Engineering. Practice is systematized; the organization advances the frontier rather than catching up.
 
-Defensibility at level 4 is not audience-specific. A Calibrated score must hold up to auditors, regulators, boards, partners, and customers alike. The analogy is physical immunity: a healthy immune system defends against both germs and viruses without knowing in advance which will arrive.
+Defensibility at level 4 is not audience-specific. A Calibrating score must hold up to auditors, regulators, boards, partners, and customers alike. The analogy is physical immunity: a healthy immune system defends against both germs and viruses without knowing in advance which will arrive.
 
 Level name semantics are intended to carry equivalent weight across vectors. Validation of this assumption is open for v1.0 and may tighten in later versions.
 
-Each vector reaches each level independently. An organization may score Engineered on one vector while another sits at Assessing. The constraint rule still applies. AIP is the minimum of in-scope vectors. Cohesion at the aggregate level is enforced by the minimum, not by gating level progression within any single vector.
+Each vector reaches each level independently. An organization may score Engineering on one vector while another sits at Assessing. The constraint rule still applies. AIP is the minimum of in-scope vectors. Cohesion at the aggregate level is enforced by the minimum, not by gating level progression within any single vector.
 
 ## The constraint rule
 
 AIP equals the minimum of the in-scope vector levels. N/A vectors are excluded from the minimum.
 
-The rule is normative. Domains constrain each other in practice. A Calibrated People score without a Calibrated Regulation score cannot support a defensible compliance narrative. A Calibrated Infrastructure score without Calibrated People cannot support a claim of responsible human-AI collaboration. The minimum captures the organization's true operating ceiling, which is only as strong as its weakest link.
+The rule is normative. Domains constrain each other in practice. A Calibrating People score without a Calibrating Regulation score cannot support a defensible compliance narrative. A Calibrating Infrastructure score without Calibrating People cannot support a claim of responsible human-AI collaboration. The minimum captures the organization's true operating ceiling, which is only as strong as its weakest link.
 
 ## Scope and comparability
 
@@ -85,7 +85,7 @@ Freshness is the reader's weighting. A score three months past its next-review d
 
 AIP is orthogonal to NIST AI RMF, ISO/IEC 42001, EU AI Act conformance programs, and similar regimes. Those frameworks measure program design, governance structure, and remediation discipline. AIP measures verified output behavior.
 
-An organization may run any or all of those programs and still receive a Perceiving AIP if the programs have not yet produced externally observable behavioral change. Conversely, an organization may score Calibrated on AIP without formally adopting any of those frameworks, provided the behavioral evidence exists.
+An organization may run any or all of those programs and still receive a Perceiving AIP if the programs have not yet produced externally observable behavioral change. Conversely, an organization may score Calibrating on AIP without formally adopting any of those frameworks, provided the behavioral evidence exists.
 
 AIP does not replace those frameworks. Where they are required, they remain required. Where they are optional, AIP does not substitute for them.
 
@@ -97,7 +97,7 @@ Scope: Acme Corp, organizational
 Stamped: 2026-04-20
 Next review: 2026-10-20
 
-  People:          Calibrated     ████████░░    since 2025-09-01
+  People:          Calibrating     ████████░░    since 2025-09-01
   Infrastructure:  Integrating    ██████░░░░    since 2026-02-14
   Regulation:      Assessing      ████░░░░░░    since 2026-04-20
 

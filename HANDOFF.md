@@ -62,4 +62,4 @@ Current-state snapshot. Prior sessions built the runtime described in [PRD.md](P
 
 ## Governance
 
-Stewarded by PAICE.work PBC. Transition to an independent steward (PAICE Foundation) is planned. Structural decisions captured in [CHANGELOG.md](CHANGELOG.md). Questions on intent should reference SPEC.md v0.2.0 and PRD.md v0.1.0 (dated 2026-04-20).
+Stewarded by PAICE.work PBC. Transition to an independent steward (PAICE Foundation) is planned. Structural decisions captured in [CHANGELOG.md](CHANGELOG.md). Questions on intent should reference SPEC.md v0.3.0 and PRD.md v0.1.1 (dated 2026-04-20).

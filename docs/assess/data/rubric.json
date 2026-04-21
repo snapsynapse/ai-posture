@@ -43,7 +43,7 @@
       },
       {
         "level": 4,
-        "name": "Calibrated",
+        "name": "Calibrating",
         "assertion": "We measure continuously. Data drives governance.",
         "evidence": [
           "Cohort-level behavioral data on defined cadence.",
@@ -54,7 +54,7 @@
       },
       {
         "level": 5,
-        "name": "Engineered",
+        "name": "Engineering",
         "assertion": "Human-AI collaboration is an engineered capability, continuously maintained.",
         "evidence": [
           "Continuous behavioral assessment.",
@@ -108,7 +108,7 @@
       },
       {
         "level": 4,
-        "name": "Calibrated",
+        "name": "Calibrating",
         "assertion": "We scan continuously. Drift is tracked.",
         "evidence": [
           "Scans on defined cadence.",
@@ -120,7 +120,7 @@
       },
       {
         "level": 5,
-        "name": "Engineered",
+        "name": "Engineering",
         "assertion": "Agent-readiness is engineered into how systems are built and shipped.",
         "evidence": [
           "Agent-readiness scored automatically at release.",
@@ -177,7 +177,7 @@
       },
       {
         "level": 4,
-        "name": "Calibrated",
+        "name": "Calibrating",
         "assertion": "Controls cover all in-scope jurisdictions. Regulatory change is monitored.",
         "evidence": [
           "Controls across all in-scope jurisdictions.",
@@ -189,7 +189,7 @@
       },
       {
         "level": 5,
-        "name": "Engineered",
+        "name": "Engineering",
         "assertion": "Compliance is continuous. New jurisdictions onboard rapidly.",
         "evidence": [
           "Obligations met as measured coverage ratio, refreshed continuously.",

@@ -25,7 +25,7 @@
   // O1 primary (People). Distributions over levels given the opener answer.
   // `null` means no override; use base.
   var O1_PRIMARY = {
-    'a': [0.02, 0.15, 0.25, 0.25, 0.20, 0.13], // written policy — organization has acknowledged, plausible through Engineered
+    'a': [0.02, 0.15, 0.25, 0.25, 0.20, 0.13], // written policy — organization has acknowledged, plausible through Engineering
     'b': [0.05, 0.35, 0.30, 0.20, 0.08, 0.02], // partial acknowledgment — centered low-mid
     'c': [0.15, 0.60, 0.15, 0.07, 0.02, 0.01], // use without acknowledgment — mostly Perceiving, some Ignoring
     'd': null, // falsified N/A path handled by L0-skip; if revised, treat as 'c'
