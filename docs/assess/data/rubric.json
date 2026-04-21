@@ -15,7 +15,7 @@
         "assertion": "Our people do not use AI.",
         "evidence": ["No written acknowledgment of AI use, or policy prohibits AI while use is observable."],
         "test": "Produce acknowledgment. Absent or contradicted by observable shadow use means Ignoring.",
-        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+        "notes": "Falsified Level 0 invalidates the whole AI Posture assertion."
       },
       {
         "level": 1,
@@ -62,7 +62,7 @@
           "Declared framework-review cadence with review artifact from prior cycle."
         ],
         "test": "Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact.",
-        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+        "notes": "Reachable independently. Constraint rule still binds AI Posture aggregate."
       }
     ],
     "Infrastructure": [
@@ -72,7 +72,7 @@
         "assertion": "AI agents do not interact with our systems.",
         "evidence": ["No acknowledgment of agent interaction, or prohibited while logs show agent traffic or external scan shows scrapable surfaces."],
         "test": "Inspect logs and run external scan. Contradicted denial means Ignoring.",
-        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+        "notes": "Falsified Level 0 invalidates the whole AI Posture assertion."
       },
       {
         "level": 1,
@@ -128,7 +128,7 @@
           "Declared framework-review cadence with review artifact from prior cycle."
         ],
         "test": "Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact.",
-        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+        "notes": "Reachable independently. Constraint rule still binds AI Posture aggregate."
       }
     ],
     "Regulation": [
@@ -138,7 +138,7 @@
         "assertion": "No AI-specific laws apply to us.",
         "evidence": ["No acknowledgment of exposure, or acknowledgment contradicted by regulated activity in jurisdictions the org operates, sells, or employs in."],
         "test": "Compare declared non-exposure to operational footprint. Contradicted means Ignoring.",
-        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+        "notes": "Falsified Level 0 invalidates the whole AI Posture assertion."
       },
       {
         "level": 1,
@@ -198,7 +198,7 @@
           "Declared framework-review cadence with review artifact from prior cycle."
         ],
         "test": "Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact.",
-        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+        "notes": "Reachable independently. Constraint rule still binds AI Posture aggregate."
       }
     ]
   }

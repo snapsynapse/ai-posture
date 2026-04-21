@@ -315,7 +315,7 @@
 
   // AIP aggregate: min over in-scope vector modes. N/A vectors excluded.
   // If a vector is skip'd (L0 enforced), it is NOT in-scope and excluded.
-  function aggregateAIP(modes, inScope) {
+  function aggregateAIPosture(modes, inScope) {
     var vals = [];
     Object.keys(modes).forEach(function (v) {
       if (inScope[v]) vals.push(modes[v]);
@@ -328,7 +328,7 @@
   // Export
   // ---------------------------------------------------------------------------
 
-  global.AIPBayes = {
+  global.AIPostureBayes = {
     VERSION: ENGINE_VERSION,
     LEVELS: LEVELS,
     VECTORS: VECTORS,
@@ -349,7 +349,7 @@
     replayVector: replayVector,
     modeLevel: modeLevel,
     shouldStop: shouldStop,
-    aggregateAIP: aggregateAIP
+    aggregateAIPosture: aggregateAIPosture
   };
 
 })(typeof window !== 'undefined' ? window : globalThis);

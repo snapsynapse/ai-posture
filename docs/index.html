@@ -34,9 +34,14 @@
   <meta property="article:tag" content="ai-maturity-model">
 
   <!-- Twitter -->
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Posture">
   <meta name="twitter:description" content="The Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png">
 
   <script type="application/ld+json">
   {
@@ -72,7 +77,7 @@
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
     "name": "Aggregated Intelligence Posture",
-    "alternateName": ["AIP", "AI Posture", "Aggregated Intelligence Posture"],
+    "alternateName": ["AI Posture", "Aggregated Intelligence Posture"],
     "description": "A unified governance score for human-AI collaboration, computed across three vectors (People, Infrastructure, Regulation) on a five-level maturity model (Perceiving, Assessing, Integrating, Calibrating, Engineering). An organization's AI Posture is bounded by its lowest vector.",
     "url": "https://aiposture.org/",
     "sameAs": [
@@ -415,7 +420,7 @@
     </a>
     <div class="links mobile-compact">
       <a href="/assess/">Assess</a>
-      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" target="_blank" rel="noopener">Spec</a>
+      <a href="/spec/">Spec</a>
     </div>
   </div>
 </nav>
@@ -470,21 +475,21 @@
     <div class="pillars">
       <div class="pillar">
         <h3>People</h3>
-        <p>How effectively humans collaborate with AI. Behavioral, not self-reported. Measured by observed patterns: error catches, trust calibration, escalation choices.</p>
+        <p>How effectively humans in the organization collaborate with AI. Behavioral, not self-reported. Evidence must resolve to an artifact a third party can inspect.</p>
       </div>
       <div class="pillar">
         <h3>Infrastructure</h3>
-        <p>How ready your digital presence is for AI agent interactions. Can an agent reach your site, parse your content, cite your claims, complete a task?</p>
+        <p>How ready the organization's digital systems are for AI agent interaction, from internal systems to partner integrations to public-facing surfaces.</p>
       </div>
       <div class="pillar">
         <h3>Regulation</h3>
-        <p>How informed and prepared you are for AI-specific compliance. Which laws apply, what they require, when enforcement begins.</p>
+        <p>How completely the organization has met its AI-specific obligations across the jurisdictions that bind it.</p>
       </div>
     </div>
 
     <h3 style="margin-top: 2.5rem;">The constraint rule</h3>
     <p><strong>Your AI Posture is the minimum of your three vector levels.</strong> An organization Calibrating on People but Perceiving on Regulation has an AI Posture of Perceiving. This is structural, not a scoring convenience.</p>
-    <p>You cannot be Calibrating on compliance if your people have no evidence of AI collaboration behavior. You cannot be Engineering on People if your infrastructure is not usable by agents. You cannot be Calibrating on Infrastructure if you don&rsquo;t know which standards to build toward. The vectors constrain each other because the domains do.</p>
+    <p>A Calibrating People score without a Calibrating Regulation score cannot support a defensible compliance narrative. A Calibrating Infrastructure score without Calibrating People cannot support a claim of responsible human-AI collaboration. The vectors constrain each other because the domains do.</p>
   </div>
 </section>
 
@@ -498,6 +503,7 @@
         <tr><th class="num">#</th><th>Level</th><th>What it means</th></tr>
       </thead>
       <tbody>
+        <tr><td class="num">0</td><td class="level">N/A</td><td>Vector not in scope. N/A is a falsifiable claim — a contradicted N/A invalidates the entire assertion.</td></tr>
         <tr><td class="num">1</td><td class="level">Perceiving</td><td>Aware the domain exists. No deliberate action yet.</td></tr>
         <tr><td class="num">2</td><td class="level">Assessing</td><td>Inventorying current state. No deliberate practice.</td></tr>
         <tr><td class="num">3</td><td class="level">Integrating</td><td>Deliberate practice in place. Evidence starting to accumulate.</td></tr>
@@ -509,10 +515,13 @@
     <h3 style="margin-top: 2rem;">Reporting format</h3>
     <p>One score, one slide. The constraining vector makes the investment case.</p>
 <pre><code>Aggregated Intelligence Posture: Assessing
+Scope: Acme Corp, organizational
+Stamped: 2026-04-20
+Next review: 2026-10-20
 
-  People:          Calibrating     ████████░░
-  Infrastructure:  Integrating    ██████░░░░
-  Regulation:      Assessing      ████░░░░░░
+  People:          Calibrating     ████████░░    since 2025-09-01
+  Infrastructure:  Integrating    ██████░░░░    since 2026-02-14
+  Regulation:      Assessing      ████░░░░░░    since 2026-04-20
 
   Constraining vector: Regulation
   Recommended next action: Advance Regulation to Integrating</code></pre>
@@ -524,7 +533,7 @@
     <h2>Read the spec</h2>
     <p style="max-width: 620px; margin: 0 auto 2rem; color: var(--text-muted);">The normative definition of AI Posture lives in SPEC.md. It covers the vector set, the five-level model, the constraint rule, decay, and the relationship to NIST AI RMF, ISO/IEC 42001, and the EU AI Act.</p>
     <div class="cta-row">
-      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" class="btn btn-primary" target="_blank" rel="noopener">SPEC.md &rarr;</a>
+      <a href="/spec/" class="btn btn-primary">Read the spec &rarr;</a>
       <a href="/assess/" class="btn btn-secondary">Estimate your posture</a>
     </div>
 
@@ -541,8 +550,7 @@
 
 <footer>
   <div class="container" style="text-align: center;">
-    <p><a href="/">AI Posture</a> &middot; <a href="/assess/">Assess</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a></p>
-    <p style="margin-top: 0.3rem; font-size: 0.8rem;">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+    <p>A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a> &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
   </div>
 </footer>
 

@@ -1,4 +1,4 @@
-# AIP Pre-Assessment PRD
+# AI Posture Pre-Assessment PRD
 
 Version: v0.1.1
 Status: Draft
@@ -8,9 +8,9 @@ Canonical URL: https://aiposture.org/assess/
 
 ## Purpose
 
-The pre-assessment is a self-administered onramp that produces an estimated Aggregated Intelligence Posture (AIP) for an organization, teaches the rubric by exposing it through the estimate, and points the user to the path for a verified assertion.
+The pre-assessment is a self-administered onramp that produces an estimated Aggregated Intelligence Posture for an organization, teaches the rubric by exposing it through the estimate, and points the user to the path for a verified assertion.
 
-This is not the verified AIP measure described in SPEC.md. It is a Bayesian adaptive estimate. It serves three audiences in order of priority: the person taking it (self-understanding), the stakeholder they share it with (board, exec, committee), and downstream agents that may parse the resulting artifact.
+This is not the verified AI Posture measure described in SPEC.md. It is a Bayesian adaptive estimate. It serves three audiences in order of priority: the person taking it (self-understanding), the stakeholder they share it with (board, exec, committee), and downstream agents that may parse the resulting artifact.
 
 ## Non-goals
 
@@ -25,7 +25,7 @@ This is not the verified AIP measure described in SPEC.md. It is a Bayesian adap
 
 Primary user: a person responsible for AI governance at an organization. Titles vary. CISO, CAIO, GRC lead, privacy officer, compliance director, head of IT, practitioner curious about the framework. The tool does not ask for title or role.
 
-Context: the user arrives from the blog post, a LinkedIn share, a partner referral, or direct search. They may know nothing about AIP beyond the post title. They want to understand what it is and whether it applies to them. They do not want to answer 50 questions.
+Context: the user arrives from the blog post, a LinkedIn share, a partner referral, or direct search. They may know nothing about AI Posture beyond the post title. They want to understand what it is and whether it applies to them. They do not want to answer 50 questions.
 
 ## Runtime flow
 
@@ -153,7 +153,7 @@ Expert-elicited for v1. See appendix A for all 15 tables. Planned recalibration 
 
 ### Aggregation
 
-AIP = minimum of in-scope vector modes, per SPEC.md constraint rule. N/A vectors are excluded from the minimum.
+AI Posture = minimum of in-scope vector modes, per SPEC.md constraint rule. N/A vectors are excluded from the minimum.
 
 ### Revision (back button)
 
@@ -163,7 +163,7 @@ User can revise any previous answer. Posterior recomputes forward from the revis
 
 ### Inline result (all users)
 
-- Headline: "AIP (estimated): [level]" with scope label
+- Headline: "AI Posture (estimated): [level]" with scope label
 - Per-vector levels with point estimate and hover band
 - Constraining vector named
 - Recommended next action (advance the constraining vector)
@@ -196,7 +196,7 @@ V2. Not in v1 scope.
 
 ## Data and privacy
 
-- Per-run record stored under a random opaque ID. Contains: timestamp, opener answers, per-vector answers, computed posteriors, resulting AIP aggregate.
+- Per-run record stored under a random opaque ID. Contains: timestamp, opener answers, per-vector answers, computed posteriors, resulting AI Posture aggregate.
 - Email captured for delivery. Delivered artifact, then email is dissociated from the record.
 - Retention: 3 years. User can request deletion via the ID included in the delivery email (privacy@paice.work).
 - Aggregate statistics (level distributions, constraining-vector frequencies, trajectory shapes over time) may be published without attribution.
@@ -434,31 +434,31 @@ Per-vector level descriptors. Columns: Level, Name, Assertion, Evidence, Test, N
 
 | Level | Name | Assertion | Evidence | Test | Notes |
 |---|---|---|---|---|---|
-| 0 | Ignoring | "Our people do not use AI." | No written acknowledgment of AI use. Or policy prohibits AI while use is observable. | Produce acknowledgment. Absent or contradicted by observable shadow use = Ignoring. | Falsified Level 0 invalidates the whole AIP assertion. |
+| 0 | Ignoring | "Our people do not use AI." | No written acknowledgment of AI use. Or policy prohibits AI while use is observable. | Produce acknowledgment. Absent or contradicted by observable shadow use = Ignoring. | Falsified Level 0 invalidates the whole AI Posture assertion. |
 | 1 | Perceiving | "Our people use AI. We have not measured how." | Written acknowledgment of AI use in policy, dated. | Produce the dated written acknowledgment. | No behavioral measurement required or expected at this level. |
 | 2 | Assessing | "We have looked at how our people collaborate with AI." | Baseline behavioral assessment of human-AI collaboration. | Produce the assessment report, dated. | Data may be uncomfortable. Level is about seeing, not acting. |
 | 3 | Integrating | "What we saw changed what we do." | At least one policy or practice change traceable to baseline assessment data. | Show the change and the source finding. | Traceability is the bar. Not activity. Not intent. |
 | 4 | Calibrating | "We measure continuously. Data drives governance." | Cohort-level behavioral data on defined cadence. Privacy-preserving aggregation verified. | Produce cohort report, cadence document, anonymization validation. | Ongoing, not episodic. Jurisdictional variants if multi-jurisdictional workforce. |
-| 5 | Engineering | "Human-AI collaboration is an engineered capability, continuously maintained." | Continuous behavioral assessment. Verifiable attestation mechanism. Declared framework-review cadence with review artifact from prior cycle. | Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 5 | Engineering | "Human-AI collaboration is an engineered capability, continuously maintained." | Continuous behavioral assessment. Verifiable attestation mechanism. Declared framework-review cadence with review artifact from prior cycle. | Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AI Posture aggregate. |
 
 ### Infrastructure
 
 | Level | Name | Assertion | Evidence | Test | Notes |
 |---|---|---|---|---|---|
-| 0 | Ignoring | "AI agents do not interact with our systems." | No acknowledgment of agent interaction. Or prohibited while logs show agent traffic or external scan shows scrapable surfaces. | Inspect logs and run external scan. Contradicted denial = Ignoring. | Falsified Level 0 invalidates the whole AIP assertion. |
+| 0 | Ignoring | "AI agents do not interact with our systems." | No acknowledgment of agent interaction. Or prohibited while logs show agent traffic or external scan shows scrapable surfaces. | Inspect logs and run external scan. Contradicted denial = Ignoring. | Falsified Level 0 invalidates the whole AI Posture assertion. |
 | 1 | Perceiving | "Agents may interact with our systems. We have not measured readiness." | Acknowledgment that agents may interact with org systems. | Produce the acknowledgment. | No scan or inventory required or expected. |
 | 2 | Assessing | "We have scanned our infrastructure for agent readiness." | Agent-readiness scan complete. Inventory of external surfaces. Partner integrations mapped. | Produce scan report, surface inventory, partner map. | Outer surface and inner edge both in scope. |
 | 3 | Integrating | "We have acted on what the scan showed." | Remediations made from scan findings. Machine-readable declarations deployed (llms.txt, structured data, agent-legible identifiers). Follow-up scan confirms change. | Show scan, remediation log, follow-up scan delta. | Declarations must be deployed, not drafted. |
 | 4 | Calibrating | "We scan continuously. Drift is tracked." | Scans on defined cadence. Drift log. Outer-surface claims verified against internal reality on a cycle. | Produce cadence record, drift log, claim-reality reconciliation. | Claim-reality check catches outward drift without requiring a separate vector. |
-| 5 | Engineering | "Agent-readiness is engineered into how systems are built and shipped." | Agent-readiness scored automatically at release. Standards contributed to, or internally extended protocols in use. Declared framework-review cadence with review artifact from prior cycle. | Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 5 | Engineering | "Agent-readiness is engineered into how systems are built and shipped." | Agent-readiness scored automatically at release. Standards contributed to, or internally extended protocols in use. Declared framework-review cadence with review artifact from prior cycle. | Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AI Posture aggregate. |
 
 ### Regulation
 
 | Level | Name | Assertion | Evidence | Test | Notes |
 |---|---|---|---|---|---|
-| 0 | Ignoring | "No AI-specific laws apply to us." | No acknowledgment of exposure. Or acknowledgment contradicted by regulated activity in jurisdictions the org operates, sells, or employs in. | Compare declared non-exposure to operational footprint. Contradicted = Ignoring. | Falsified Level 0 invalidates the whole AIP assertion. |
+| 0 | Ignoring | "No AI-specific laws apply to us." | No acknowledgment of exposure. Or acknowledgment contradicted by regulated activity in jurisdictions the org operates, sells, or employs in. | Compare declared non-exposure to operational footprint. Contradicted = Ignoring. | Falsified Level 0 invalidates the whole AI Posture assertion. |
 | 1 | Perceiving | "We are exposed to AI regulation. We have not mapped it." | Exposure acknowledged. Some jurisdictions named. | Produce the acknowledgment. | No structured mapping required or expected. |
 | 2 | Assessing | "We have mapped our obligations across jurisdictions." | Obligation register. Jurisdictional coverage across operations, sales, employment footprint. Gaps identified. | Produce register with jurisdictional coverage and named gaps. | Coverage ratio is the measure, not volume of regulation. |
 | 3 | Integrating | "Obligations are translated into controls." | Obligations mapped to controls. At least primary jurisdiction fully controlled. Statute-to-control traceability maintained. | Show the statute-to-control trace for at least one jurisdiction. | Obligation becomes action, not just document. |
 | 4 | Calibrating | "Controls cover all in-scope jurisdictions. Regulatory change is monitored." | Controls across all in-scope jurisdictions. Active regulatory-change monitoring. Documented interpretations with counterparties where applicable. | Produce coverage map, monitoring cadence, interpretation records. | Documented interpretations matter where ambiguity exists. |
-| 5 | Engineering | "Compliance is continuous. New jurisdictions onboard rapidly." | Obligations met as measured coverage ratio, refreshed continuously. Proactive interpretation recordkeeping. New jurisdiction ingested in days. Declared framework-review cadence with review artifact from prior cycle. | Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AIP aggregate. |
+| 5 | Engineering | "Compliance is continuous. New jurisdictions onboard rapidly." | Obligations met as measured coverage ratio, refreshed continuously. Proactive interpretation recordkeeping. New jurisdiction ingested in days. Declared framework-review cadence with review artifact from prior cycle. | Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact. | Reachable independently. Constraint rule still binds AI Posture aggregate. |

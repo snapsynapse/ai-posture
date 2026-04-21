@@ -12,7 +12,7 @@ hero_h1: Where your org stands. And how.
 hero_subtitle: >
   One score across three vectors — People, Infrastructure, Regulation —
   bounded by the weakest. The canonical definition of the
-  Aggregated Intelligence Posture (AIP) framework.
+  Aggregated Intelligence Posture framework.
 hero_hook: >
   AI governance is three problems, not one. How effectively your people
   collaborate with AI. How ready your digital presence is for AI agents.
@@ -54,14 +54,14 @@ mode: enhance
 
 # JSON-LD
 defined_term_alternate_names:
-  - AIP
+  - AI Posture
   - Aggregated Intelligence Posture
   - AI Posture
 defined_term_description: >
   A unified governance score for human-AI collaboration, computed across
   three vectors (People, Infrastructure, Regulation) on a five-level
   maturity model (Perceiving, Assessing, Integrating, Calibrating,
-  Engineering). An organization's AIP is bounded by its lowest vector.
+  Engineering). An organization's AI Posture is bounded by its lowest vector.
 citations:
   - { name: "PAICE.work",      url: "https://paice.work/" }
   - { name: "Siteline",        url: "https://siteline.to/" }

@@ -19,12 +19,29 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 
 ## Repo layout
 
-- `SPEC.md` — normative specification
+- `SPEC.md` — normative specification (YAML frontmatter + Markdown body)
 - `PRD.md` — pre-assessment product requirements (question bank, likelihood tables, rubric tables, runtime flow)
 - `CHANGELOG.md` — spec and PRD change log
+- `scripts/build-spec.js` — generates `docs/spec/index.html` from `SPEC.md`
 - `docs/` — canonical site source (GitHub Pages root)
+- `docs/spec/` — generated spec page (do not edit directly; run `npm run build`)
 - `docs/assess/` — client-side Bayesian adaptive self-assessment
 - `docs/privacy/`, `docs/terms/` — supporting legal pages (beta drafts)
+
+## Build
+
+The spec page at `docs/spec/index.html` is generated from `SPEC.md`. After editing the spec, regenerate it:
+
+```
+npm run build
+```
+
+The script (`scripts/build-spec.js`) reads the YAML frontmatter and Markdown sections from `SPEC.md` and writes a fully rendered HTML page. No dependencies beyond Node.js.
+
+To update the spec:
+1. Edit `SPEC.md` — bump `version`, `status`, `last_modified` in the frontmatter as needed
+2. Run `npm run build`
+3. Commit both `SPEC.md` and `docs/spec/index.html`
 
 ## Analytics and privacy
 

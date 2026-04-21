@@ -1,5 +1,18 @@
 # Changelog
 
+## site + tooling — 2026-04-20
+
+Spec page, AIP→AI Posture terminology, and build pipeline.
+
+- Added `docs/spec/` — canonical HTML rendering of the specification, linked from nav and all homepage buttons
+- Replaced "AIP" abbreviation with "AI Posture" across all human/agent-facing content (SPEC.md, HTML pages, JSON data, PRD.md, CHANGELOG.md)
+- Added YAML frontmatter to SPEC.md (`version`, `status`, `published`, `last_modified`, `license`)
+- Added `scripts/build-spec.js` — zero-dependency Node.js script that generates `docs/spec/index.html` from SPEC.md; handles frontmatter, principles lists, tables, maturity-level ordered lists, code fences, inline links
+- Added `package.json` with `npm run build` wired to the script
+- Aligned homepage vector descriptions, constraint rule examples, and reporting format code block with spec
+- Added Level 0 (N/A) row to homepage maturity table
+- Consolidated footer to single line across all pages
+
 ## v0.3.0 spec + PRD v0.1.1 — 2026-04-20
 
 Level-name terminology update. Cosmetic-semantic change, no calibration or methodology impact.
@@ -29,7 +42,7 @@ Spec revision and pre-assessment product definition.
 SPEC.md v0.2.0
 - Opened with first-principles framing. Product references moved below the fold.
 - Vector set declared open with admission criteria. v1.0 ships three vectors (People, Infrastructure, Regulation). Market/Exposure collapsed into Infrastructure as its outer boundary.
-- Level 0 redefined as N/A (scope boundary), not Ignoring. Falsified N/A invalidates the whole AIP assertion.
+- Level 0 redefined as N/A (scope boundary), not Ignoring. Falsified N/A invalidates the whole AI Posture assertion.
 - Coverage-ratio scoring clarified (obligations met relative to obligations in scope, not volume of work).
 - Decay and freshness model added. Scores are time-stamped assertions with assessor-declared next-review dates. Duration at level is a trust signal, not a gate.
 - Level 5 retains independent reachability per vector. Requires declared framework-review cadence with recent artifact. Calendar-anchored "last 12 months" gate removed.
@@ -52,6 +65,6 @@ PRD.md v0.1.0
 
 Initial public release.
 
-- Canonical spec at [SPEC.md](SPEC.md) defining the Aggregated Intelligence Posture (AIP) framework
+- Canonical spec at [SPEC.md](SPEC.md) defining the Aggregated Intelligence Posture framework
 - Landing site at https://aiposture.org/ with inline three-vector level picker
 - Fifteen-question self-assessment at https://aiposture.org/assess/

@@ -1,11 +1,11 @@
 // AIP Pre-Assessment — UI runtime
 // Version: 1.0.0
-// Single-file vanilla JS. Depends on window.AIPBayes (bayes.js).
+// Single-file vanilla JS. Depends on window.AIPostureBayes (bayes.js).
 
 (function () {
   'use strict';
 
-  var B = window.AIPBayes;
+  var B = window.AIPostureBayes;
   var DATA_BASE = './data/';
   var STORAGE_KEY = 'aip.assess.v1.draft';
   var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
@@ -250,7 +250,7 @@
         var r = computePosteriors();
         var modes = {};
         VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
-        var agg = B.aggregateAIP(modes, r.inScope);
+        var agg = B.aggregateAIPosture(modes, r.inScope);
         track('assessment_completed', {
           version: state.version,
           aip: agg == null ? null : LEVEL_NAMES[agg],
@@ -518,7 +518,7 @@
     var openers = currentOpeners();
     var modes = {};
     VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
-    var aggregate = B.aggregateAIP(modes, r.inScope);
+    var aggregate = B.aggregateAIPosture(modes, r.inScope);
     var aggregateName = aggregate == null ? 'Undefined' : LEVEL_NAMES[aggregate];
 
     // Constraining vector(s): in-scope, level == aggregate.

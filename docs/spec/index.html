@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Specification &mdash; Aggregated Intelligence Posture v0.3.0</title>
+  <meta name="description" content="The normative specification for the Aggregated Intelligence Posture framework. Covers the vector set, five-level maturity model, constraint rule, decay, and relationship to NIST AI RMF, ISO/IEC 42001, and the EU AI Act.">
+  <meta name="keywords" content="aggregated intelligence posture, ai posture spec, ai governance maturity model, paice">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://aiposture.org/spec/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="/favicon.svg" color="#4f46e5">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <link rel="alternate" type="text/plain" href="https://aiposture.org/llms.txt" title="LLM-readable summary">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Posture">
+  <meta property="og:title" content="AI Posture Specification v0.3.0">
+  <meta property="og:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta property="og:url" content="https://aiposture.org/spec/">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-04-19T00:00:00Z">
+  <meta property="article:modified_time" content="2026-04-20T00:00:00Z">
+  <meta property="article:section" content="Open Patterns">
+  <meta property="article:tag" content="ai-posture">
+  <meta property="article:tag" content="aggregated-intelligence-posture">
+  <meta property="article:tag" content="ai-governance">
+  <meta property="article:tag" content="specification">
+
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Posture Specification v0.3.0">
+  <meta name="twitter:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Aggregated Intelligence Posture Specification",
+    "description": "The normative specification for the Aggregated Intelligence Posture framework, covering the vector set, five-level maturity model, constraint rule, decay, and relationship to adjacent frameworks.",
+    "inLanguage": "en",
+    "url": "https://aiposture.org/spec/",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/spec/" },
+    "datePublished": "2026-04-19",
+    "dateModified": "2026-04-20",
+    "version": "0.3.0",
+    "author": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
+    "publisher": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff; --bg-alt: #f8f9fa; --surface2: #f1f3f5;
+      --text: #1a1d24; --text-muted: #5a6170;
+      --accent: #4f46e5; --accent-hover: #4338ca; --accent-soft: #eef2ff;
+      --border: #e5e7eb; --code-bg: #0f1117; --code-text: #e1e4ed;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --max-width: 960px; --radius: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--accent); color: #fff; padding: 0.5rem 1rem; z-index: 100; }
+    .skip-link:focus { left: 0; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+    nav { border-bottom: 1px solid var(--border); padding: 1rem 0; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 0.55rem; }
+    nav .logo svg { color: var(--accent); flex: 0 0 auto; }
+    nav .logo:hover svg { color: var(--accent-hover); }
+    nav .links { display: flex; align-items: center; gap: 1.5rem; font-size: 0.9rem; }
+    nav .links a { color: var(--text-muted); }
+    nav .links a:hover { color: var(--text); text-decoration: none; }
+    nav .links a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+    .page-layout { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items: start; padding: 3rem 0 5rem; }
+    .toc { position: sticky; top: 5rem; font-size: 0.82rem; line-height: 1.5; }
+    .toc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .toc ol { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 0.3rem; }
+    .toc a { color: var(--text-muted); text-decoration: none; display: block; padding: 0.15rem 0 0.15rem 0.6rem; border-left: 2px solid transparent; transition: color 0.1s, border-color 0.1s; }
+    .toc a:hover { color: var(--accent); text-decoration: none; border-left-color: var(--accent); }
+    .doc-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .doc-eyebrow { font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 999px; display: inline-block; margin-bottom: 1rem; font-weight: 600; }
+    .doc-header h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.75rem; }
+    .doc-meta { font-size: 0.82rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; align-items: center; }
+    .doc-meta .sep { color: var(--border); }
+    .doc-meta a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+    .doc-meta a:hover { color: var(--accent-hover); }
+    .doc-meta .version { font-family: var(--mono); font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--border); }
+    .doc-content section { margin-bottom: 3rem; }
+    .doc-content h2 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; padding-top: 0.25rem; scroll-margin-top: 5rem; color: var(--text); }
+    .doc-content p { margin-bottom: 1rem; color: var(--text); }
+    .doc-content p:last-child { margin-bottom: 0; }
+    .doc-content ul, .doc-content ol { margin: 0 0 1rem 1.5rem; }
+    .doc-content li { margin-bottom: 0.4rem; color: var(--text); }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.88rem; }
+    th, td { text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--border); }
+    th { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg-alt); }
+    td.level { font-family: var(--mono); color: var(--accent); font-weight: 700; white-space: nowrap; }
+    td.num { font-family: var(--mono); text-align: center; width: 3em; color: var(--text-muted); }
+    tr:last-child td { border-bottom: none; }
+    .table-wrap { overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid var(--border); border-radius: 8px; }
+    .table-wrap table { margin-bottom: 0; }
+    .table-wrap th:first-child, .table-wrap td:first-child { padding-left: 1rem; }
+    .table-wrap th:last-child, .table-wrap td:last-child { padding-right: 1rem; }
+    code { font-family: var(--mono); font-size: 0.88em; color: var(--accent); background: var(--accent-soft); padding: 0.1em 0.4em; border-radius: 4px; }
+    pre { background: var(--code-bg); color: var(--code-text); padding: 1.25rem; border-radius: 8px; overflow-x: auto; font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+    pre code { color: var(--code-text); background: transparent; padding: 0; }
+    .principles-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+    .principles-list li { padding: 0.75rem 0 0.75rem 1rem; border-left: 3px solid var(--border); margin-bottom: 0.75rem; color: var(--text); }
+    .principles-list li:last-child { margin-bottom: 0; }
+    .principles-list li strong { color: var(--accent); }
+    .note-box { padding: 1rem 1.25rem; background: var(--bg-alt); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; font-size: 0.88rem; color: var(--text-muted); margin-top: 1.5rem; }
+    .note-box strong { color: var(--text); }
+    .note-box a { text-decoration: underline; text-underline-offset: 2px; }
+    .gh-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-alt); color: var(--text); font-weight: 600; font-size: 0.82rem; text-decoration: none; transition: border-color 0.1s ease, transform 0.05s ease; margin-top: 0.5rem; }
+    .gh-link:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-1px); color: var(--text); }
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 0; font-size: 0.85rem; color: var(--text-muted); }
+    @media (max-width: 860px) {
+      .page-layout { grid-template-columns: 1fr; gap: 0; padding-top: 2rem; }
+      .toc { display: none; }
+      .doc-header h1 { font-size: 1.75rem; }
+      nav .links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="AI Posture home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="20" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="20" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      </svg>
+      <span>AI Posture</span>
+    </a>
+    <div class="links">
+      <a href="/assess/">Assess</a>
+      <a href="/spec/" aria-current="page">Spec</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="container">
+    <div class="page-layout">
+
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-label">On this page</div>
+        <ol>
+          <li><a href="#summary">Summary</a></li>
+          <li><a href="#first-principles">First principles</a></li>
+          <li><a href="#the-vector-set">The vector set</a></li>
+          <li><a href="#the-fivelevel-maturity-model">Five-level model</a></li>
+          <li><a href="#the-constraint-rule">The constraint rule</a></li>
+          <li><a href="#scope-and-comparability">Scope &amp; comparability</a></li>
+          <li><a href="#decay-and-freshness">Decay &amp; freshness</a></li>
+          <li><a href="#relationship-to-adjacent-frameworks">Adjacent frameworks</a></li>
+          <li><a href="#reporting-format">Reporting format</a></li>
+          <li><a href="#measurement">Measurement</a></li>
+          <li><a href="#governance">Governance</a></li>
+          <li><a href="#license">License</a></li>
+        </ol>
+      </nav>
+
+      <article class="doc-content" aria-labelledby="spec-title">
+        <header class="doc-header">
+          <div class="doc-eyebrow">Specification</div>
+          <h1 id="spec-title">Aggregated Intelligence Posture</h1>
+          <div class="doc-meta">
+            <span class="version">v0.3.0</span>
+            <span class="sep">&middot;</span>
+            <span>Published</span>
+            <span class="sep">&middot;</span>
+            <time datetime="2026-04-19">2026-04-19</time>
+            <span class="sep">&middot;</span>
+            Updated <time datetime="2026-04-20">2026-04-20</time>
+            <span class="sep">&middot;</span>
+            <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC&nbsp;BY&nbsp;4.0</a>
+            <span class="sep">&middot;</span>
+            <a href="https://github.com/snapsynapse/ai-posture/commits/main/SPEC.md" target="_blank" rel="noopener">Revision history</a>
+          </div>
+        </header>
+
+        <section id="summary">
+          <h2>Summary</h2>
+          <p>The Aggregated Intelligence Posture is a unified maturity assertion for human-AI collaboration. It rolls up independently measured vectors into a single level that a board, regulator, partner, or customer can act on.</p>
+<p>AI Posture measures verified behavior across domains where human-AI collaboration produces externally observable consequence. It is an output measure, not an input or remediation measure. It is progressive, not regressive. It is a time-stamped assertion, not a guarantee of future state. It is bounded by its weakest in-scope vector.</p>
+
+        </section>
+
+        <section id="first-principles">
+          <h2>First principles</h2>
+          <ul class="principles-list">
+  <li><strong>Externally verifiable.</strong> Every claim under AI Posture resolves to an artifact a third party can inspect. Surveys and self-reported sentiment do not qualify. Intent is signal. Only behavior scores.</li>
+  <li><strong>Progressive, not regressive.</strong> AI Posture is a maturity model. Risk models feed it as inputs. Risk exposure that is imposed from outside (new regulation, new jurisdiction, reclassification) does not reduce maturity. It only reveals where maturity is bounded.</li>
+  <li><strong>Coverage, not volume.</strong> Scores reflect obligations met as a ratio of obligations in scope, not total work performed. A smaller organization can score equal to a larger one.</li>
+  <li><strong>Time-stamped.</strong> Every AI Posture report is an assertion valid at the moment it is instantiated. Scores decay. The assessor records a next-review belief at stamping time, which later readers use to weight the assertion retroactively.</li>
+  <li><strong>Bounded by the weakest vector.</strong> The constraint rule is structural, not a scoring convenience. Domains depend on each other. A Calibrating People vector cannot support a Calibrating compliance claim if Regulation is Perceiving, because the compliance claim has no behavioral ground to stand on.</li>
+  <li><strong>Output-orthogonal to program frameworks.</strong> AI Posture does not replace NIST AI RMF, ISO/IEC 42001, or conformance to the EU AI Act. Those frameworks govern program inputs and remediations. AI Posture measures detectable output behavior.</li>
+</ul>
+
+        </section>
+
+        <section id="the-vector-set">
+          <h2>The vector set</h2>
+          <p>The vector set is open. New vectors may be admitted as the landscape evolves. Vectors may also retire. A candidate qualifies as a vector when it meets all of the following:</p>
+<ul>
+  <li>Has an externally observable artifact, or can produce one</li>
+  <li>Has a distinct actor-class it measures (humans, digital systems, regulators, or an analogous class not yet named)</li>
+  <li>Can vary independently of the other vectors</li>
+  <li>Can independently constrain the whole under the weakest-link rule</li>
+</ul>
+<p>v1.0 ships with three vectors.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Vector</th><th>Span</th><th>What it measures</th><th>Artifact class</th></tr></thead>
+<tbody><tr><td><strong>People</strong></td><td>Inside-out</td><td>How effectively humans in the organization collaborate with AI</td><td>Behavioral assessment with verifiable telemetry</td></tr><tr><td><strong>Infrastructure</strong></td><td>Bottom-up through outer surface</td><td>How ready the organization's digital systems are for AI agent interaction, from internal systems to partner integrations to public-facing surfaces</td><td>Agent-readiness scans, machine-readable declarations, structured identifiers</td></tr><tr><td><strong>Regulation</strong></td><td>Top-down</td><td>How completely the organization has met its AI-specific obligations across the jurisdictions that bind it</td><td>Obligation register with verifiable coverage, recorded interpretations with authorities</td></tr>
+</tbody></table></div>
+<p>Infrastructure spans the full stack, inside to edge. The outer surface (how the organization presents to humans and agents) is not a separate vector. It is the outer boundary of the same infrastructure.</p>
+<p>Misrepresentation (claims that exceed reality) is not a separate measurement. It is a signal of immaturity within whichever vector the claim falsifies. An organization that asserts a People maturity it cannot evidence has, by that act, reduced its People score.</p>
+
+        </section>
+
+        <section id="the-fivelevel-maturity-model">
+          <h2>The five-level maturity model</h2>
+          <p>Each vector is scored at one of five levels, shared across all vectors. Level 0 indicates the vector is not in scope.</p>
+<div class="table-wrap"><table>
+<thead><tr><th class="num">#</th><th>Level</th><th>What it means</th></tr></thead>
+<tbody><tr><td class="num">0</td><td class="level">N/A</td><td>The vector does not apply to this organization at this time. N/A defines the scope boundary of the AI Posture claim. It does not count toward the minimum. N/A is itself a falsifiable claim. An N/A declaration that is externally contradicted (for example, a &quot;no AI in use&quot; declaration against demonstrable shadow AI use) invalidates the entire AI Posture assertion for that stamping, not only the falsified vector. A falsified scope is not a low score. It is not a score at all.</td></tr><tr><td class="num">1</td><td class="level">Perceiving</td><td>The organization is aware the domain exists but has not acted.</td></tr><tr><td class="num">2</td><td class="level">Assessing</td><td>The organization has begun inventorying its state but has no deliberate practice.</td></tr><tr><td class="num">3</td><td class="level">Integrating</td><td>Deliberate practice is in place; evidence is starting to accumulate.</td></tr><tr><td class="num">4</td><td class="level">Calibrating</td><td>Practice is measured, tuned, and defensible to outside inspection.</td></tr><tr><td class="num">5</td><td class="level">Engineering</td><td>Practice is systematized; the organization advances the frontier rather than catching up.</td></tr>
+</tbody></table></div>
+<p>Defensibility at level 4 is not audience-specific. A Calibrating score must hold up to auditors, regulators, boards, partners, and customers alike. The analogy is physical immunity: a healthy immune system defends against both germs and viruses without knowing in advance which will arrive.</p>
+<p>Level name semantics are intended to carry equivalent weight across vectors. Validation of this assumption is open for v1.0 and may tighten in later versions.</p>
+<p>Each vector reaches each level independently. An organization may score Engineering on one vector while another sits at Assessing. The constraint rule still applies. AI Posture is the minimum of in-scope vectors. Cohesion at the aggregate level is enforced by the minimum, not by gating level progression within any single vector.</p>
+
+        </section>
+
+        <section id="the-constraint-rule">
+          <h2>The constraint rule</h2>
+          <p>AI Posture equals the minimum of the in-scope vector levels. N/A vectors are excluded from the minimum.</p>
+<p>The rule is normative. Domains constrain each other in practice. A Calibrating People score without a Calibrating Regulation score cannot support a defensible compliance narrative. A Calibrating Infrastructure score without Calibrating People cannot support a claim of responsible human-AI collaboration. The minimum captures the organization's true operating ceiling, which is only as strong as its weakest link.</p>
+
+        </section>
+
+        <section id="scope-and-comparability">
+          <h2>Scope and comparability</h2>
+          <p>An AI Posture score applies to the organization as declared, at the scope declared, for the vectors declared. Organizations with different footprints may publish identical scores. That is intentional. Maturity is progressive. The model rewards what is genuinely in scope and met.</p>
+<p>Scores may be issued at organizational, business-unit, product-line, or team scope. The scope must be named alongside the score.</p>
+
+        </section>
+
+        <section id="decay-and-freshness">
+          <h2>Decay and freshness</h2>
+          <p>An AI Posture assessment is an assertion at the moment it is instantiated. It is not a promise about the future.</p>
+<p>Each assessment stamps a next-review date reflecting the assessor's belief about the assertion's likely valid window. Decay rates are not uniform across vectors or even within a single vector. Regulation can shift weekly. People behavior shifts over months. Infrastructure shifts on deployment cadence.</p>
+<p>Each vector's level assertion also carries an at-this-level-since date. Duration at level is a trust signal, not a gate. Two organizations at the same level with different tenures publish truthfully different signals, and readers weight accordingly. Level 5 additionally requires a declared framework-review cadence and a review artifact produced within the prior cadence window. The organization sets the cadence. The artifact proves adherence.</p>
+<p>Freshness is the reader's weighting. A score three months past its next-review date is not invalid. It is a weaker signal and should be treated as such.</p>
+
+        </section>
+
+        <section id="relationship-to-adjacent-frameworks">
+          <h2>Relationship to adjacent frameworks</h2>
+          <p>AI Posture is orthogonal to NIST AI RMF, ISO/IEC 42001, EU AI Act conformance programs, and similar regimes. Those frameworks measure program design, governance structure, and remediation discipline. AI Posture measures verified output behavior.</p>
+<p>An organization may run any or all of those programs and still receive a Perceiving AI Posture if the programs have not yet produced externally observable behavioral change. Conversely, an organization may score Calibrating on AI Posture without formally adopting any of those frameworks, provided the behavioral evidence exists.</p>
+<p>AI Posture does not replace those frameworks. Where they are required, they remain required. Where they are optional, AI Posture does not substitute for them.</p>
+
+        </section>
+
+        <section id="reporting-format">
+          <h2>Reporting format</h2>
+          <pre><code>Aggregated Intelligence Posture: Assessing
+Scope: Acme Corp, organizational
+Stamped: 2026-04-20
+Next review: 2026-10-20
+
+  People:          Calibrating     ████████░░    since 2025-09-01
+  Infrastructure:  Integrating    ██████░░░░    since 2026-02-14
+  Regulation:      Assessing      ████░░░░░░    since 2026-04-20
+
+  Constraining vector: Regulation
+  Recommended next action: Advance Regulation to Integrating</code></pre>
+<p>Additional vectors, if in scope, are listed in the same block. Vectors marked N/A are listed explicitly to make scope legible.</p>
+
+        </section>
+
+        <section id="measurement">
+          <h2>Measurement</h2>
+          <p>Each vector has its own assessment methodology. AI Posture does not define those methodologies. It defines how their outputs aggregate into a single board-reportable level.</p>
+<p>A self-assessment at https://aiposture.org/assess/ provides a fast approximation. It is a starting point, not a substitute for per-vector measurement.</p>
+<p>Reference implementations for each vector are listed in the companion document at https://aiposture.org/implementations/.</p>
+
+        </section>
+
+        <section id="governance">
+          <h2>Governance</h2>
+          <p>AI Posture is currently stewarded by PAICE.work PBC. The spec is maintained in public under CC BY 4.0 and accepts contributions under the repository's contribution terms.</p>
+<p>Adoption by organizations outside the current steward's product line is explicitly welcome. The spec does not favor any particular reference implementation.</p>
+
+          <a href="https://github.com/snapsynapse/ai-posture" class="gh-link" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </section>
+
+        <section id="license">
+          <h2>License</h2>
+          <p>Specification: CC BY 4.0. Reference implementations: MIT.</p>
+
+          <div class="note-box">
+            <strong>Canonical reference.</strong> This page is the authoritative definition of the Aggregated Intelligence Posture framework. Any cross-posts or references should cite <a href="https://aiposture.org/">aiposture.org</a> as canonical. Last substantive revision: <time datetime="2026-04-20">2026-04-20</time>.
+          </div>
+        </section>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="text-align: center;">
+    <p style="font-size: 0.85rem; color: var(--text-muted);">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a> &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+  </div>
+</footer>
+
+</body>
+</html>
