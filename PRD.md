@@ -198,7 +198,7 @@ V2. Not in v1 scope.
 
 - Per-run record stored under a random opaque ID. Contains: timestamp, opener answers, per-vector answers, computed posteriors, resulting AIP aggregate.
 - Email captured for delivery. Delivered artifact, then email is dissociated from the record.
-- Retention: 3 years. User can request deletion via the ID included in the delivery email (privacy@aiposture.org or equivalent).
+- Retention: 3 years. User can request deletion via the ID included in the delivery email (privacy@paice.work).
 - Aggregate statistics (level distributions, constraining-vector frequencies, trajectory shapes over time) may be published without attribution.
 - Newsletter email capture on front page flows to https://paice.substack.com under Substack's default double opt-in.
 - No data sold. No third-party sharing without explicit opt-in (v2 feature when shareable URLs launch).

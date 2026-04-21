@@ -1,0 +1,205 @@
+{
+  "version": "1.0.0",
+  "note": "Per-vector level descriptors. Evidence rows are the content source for the evidence checklist shown in the output. See PRD Appendix B.",
+  "handoff": {
+    "People": { "name": "PAICE.work", "url": "https://paice.work/" },
+    "Infrastructure": { "name": "Siteline", "url": "https://siteline.to/" },
+    "Regulation": { "name": "EveryAILaw", "url": "https://everyailaw.com/" },
+    "generic": { "name": "Find an assessor", "url": "https://paice.foundation/" }
+  },
+  "vectors": {
+    "People": [
+      {
+        "level": 0,
+        "name": "Ignoring",
+        "assertion": "Our people do not use AI.",
+        "evidence": ["No written acknowledgment of AI use, or policy prohibits AI while use is observable."],
+        "test": "Produce acknowledgment. Absent or contradicted by observable shadow use means Ignoring.",
+        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+      },
+      {
+        "level": 1,
+        "name": "Perceiving",
+        "assertion": "Our people use AI. We have not measured how.",
+        "evidence": ["Written acknowledgment of AI use in policy, dated."],
+        "test": "Produce the dated written acknowledgment.",
+        "notes": "No behavioral measurement required or expected at this level."
+      },
+      {
+        "level": 2,
+        "name": "Assessing",
+        "assertion": "We have looked at how our people collaborate with AI.",
+        "evidence": ["Baseline behavioral assessment of human-AI collaboration, dated."],
+        "test": "Produce the assessment report, dated.",
+        "notes": "Data may be uncomfortable. Level is about seeing, not acting."
+      },
+      {
+        "level": 3,
+        "name": "Integrating",
+        "assertion": "What we saw changed what we do.",
+        "evidence": ["At least one policy or practice change traceable to baseline assessment data."],
+        "test": "Show the change and the source finding.",
+        "notes": "Traceability is the bar. Not activity. Not intent."
+      },
+      {
+        "level": 4,
+        "name": "Calibrated",
+        "assertion": "We measure continuously. Data drives governance.",
+        "evidence": [
+          "Cohort-level behavioral data on defined cadence.",
+          "Privacy-preserving aggregation verified."
+        ],
+        "test": "Produce cohort report, cadence document, anonymization validation.",
+        "notes": "Ongoing, not episodic. Jurisdictional variants if multi-jurisdictional workforce."
+      },
+      {
+        "level": 5,
+        "name": "Engineered",
+        "assertion": "Human-AI collaboration is an engineered capability, continuously maintained.",
+        "evidence": [
+          "Continuous behavioral assessment.",
+          "Verifiable attestation mechanism.",
+          "Declared framework-review cadence with review artifact from prior cycle."
+        ],
+        "test": "Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact.",
+        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+      }
+    ],
+    "Infrastructure": [
+      {
+        "level": 0,
+        "name": "Ignoring",
+        "assertion": "AI agents do not interact with our systems.",
+        "evidence": ["No acknowledgment of agent interaction, or prohibited while logs show agent traffic or external scan shows scrapable surfaces."],
+        "test": "Inspect logs and run external scan. Contradicted denial means Ignoring.",
+        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+      },
+      {
+        "level": 1,
+        "name": "Perceiving",
+        "assertion": "Agents may interact with our systems. We have not measured readiness.",
+        "evidence": ["Acknowledgment that agents may interact with org systems."],
+        "test": "Produce the acknowledgment.",
+        "notes": "No scan or inventory required or expected."
+      },
+      {
+        "level": 2,
+        "name": "Assessing",
+        "assertion": "We have scanned our infrastructure for agent readiness.",
+        "evidence": [
+          "Agent-readiness scan complete.",
+          "Inventory of external surfaces.",
+          "Partner integrations mapped."
+        ],
+        "test": "Produce scan report, surface inventory, partner map.",
+        "notes": "Outer surface and inner edge both in scope."
+      },
+      {
+        "level": 3,
+        "name": "Integrating",
+        "assertion": "We have acted on what the scan showed.",
+        "evidence": [
+          "Remediations made from scan findings.",
+          "Machine-readable declarations deployed (llms.txt, structured data, agent-legible identifiers).",
+          "Follow-up scan confirms change."
+        ],
+        "test": "Show scan, remediation log, follow-up scan delta.",
+        "notes": "Declarations must be deployed, not drafted."
+      },
+      {
+        "level": 4,
+        "name": "Calibrated",
+        "assertion": "We scan continuously. Drift is tracked.",
+        "evidence": [
+          "Scans on defined cadence.",
+          "Drift log.",
+          "Outer-surface claims verified against internal reality on a cycle."
+        ],
+        "test": "Produce cadence record, drift log, claim-reality reconciliation.",
+        "notes": "Claim-reality check catches outward drift without requiring a separate vector."
+      },
+      {
+        "level": 5,
+        "name": "Engineered",
+        "assertion": "Agent-readiness is engineered into how systems are built and shipped.",
+        "evidence": [
+          "Agent-readiness scored automatically at release.",
+          "Standards contributed to, or internally extended protocols in use.",
+          "Declared framework-review cadence with review artifact from prior cycle."
+        ],
+        "test": "Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact.",
+        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+      }
+    ],
+    "Regulation": [
+      {
+        "level": 0,
+        "name": "Ignoring",
+        "assertion": "No AI-specific laws apply to us.",
+        "evidence": ["No acknowledgment of exposure, or acknowledgment contradicted by regulated activity in jurisdictions the org operates, sells, or employs in."],
+        "test": "Compare declared non-exposure to operational footprint. Contradicted means Ignoring.",
+        "notes": "Falsified Level 0 invalidates the whole AIP assertion."
+      },
+      {
+        "level": 1,
+        "name": "Perceiving",
+        "assertion": "We are exposed to AI regulation. We have not mapped it.",
+        "evidence": [
+          "Exposure acknowledged.",
+          "Some jurisdictions named."
+        ],
+        "test": "Produce the acknowledgment.",
+        "notes": "No structured mapping required or expected."
+      },
+      {
+        "level": 2,
+        "name": "Assessing",
+        "assertion": "We have mapped our obligations across jurisdictions.",
+        "evidence": [
+          "Obligation register.",
+          "Jurisdictional coverage across operations, sales, employment footprint.",
+          "Gaps identified."
+        ],
+        "test": "Produce register with jurisdictional coverage and named gaps.",
+        "notes": "Coverage ratio is the measure, not volume of regulation."
+      },
+      {
+        "level": 3,
+        "name": "Integrating",
+        "assertion": "Obligations are translated into controls.",
+        "evidence": [
+          "Obligations mapped to controls.",
+          "At least primary jurisdiction fully controlled.",
+          "Statute-to-control traceability maintained."
+        ],
+        "test": "Show the statute-to-control trace for at least one jurisdiction.",
+        "notes": "Obligation becomes action, not just document."
+      },
+      {
+        "level": 4,
+        "name": "Calibrated",
+        "assertion": "Controls cover all in-scope jurisdictions. Regulatory change is monitored.",
+        "evidence": [
+          "Controls across all in-scope jurisdictions.",
+          "Active regulatory-change monitoring.",
+          "Documented interpretations with counterparties where applicable."
+        ],
+        "test": "Produce coverage map, monitoring cadence, interpretation records.",
+        "notes": "Documented interpretations matter where ambiguity exists."
+      },
+      {
+        "level": 5,
+        "name": "Engineered",
+        "assertion": "Compliance is continuous. New jurisdictions onboard rapidly.",
+        "evidence": [
+          "Obligations met as measured coverage ratio, refreshed continuously.",
+          "Proactive interpretation recordkeeping.",
+          "New jurisdiction ingested in days.",
+          "Declared framework-review cadence with review artifact from prior cycle."
+        ],
+        "test": "Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact.",
+        "notes": "Reachable independently. Constraint rule still binds AIP aggregate."
+      }
+    ]
+  }
+}

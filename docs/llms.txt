@@ -1,31 +1,47 @@
 # AI Posture
 
-> The Aggregated Intelligence Posture framework — where your org stands, and how to move.
+> The Aggregated Intelligence Posture framework. Where your organization stands on AI governance, across three vectors, bounded by the weakest.
 
-AI governance is three problems, not one. How effectively your people collaborate with AI. How ready your digital presence is for AI agents. How prepared you are for AI-specific regulation. An organization's Aggregated Intelligence Posture (AIP) is bounded by its weakest vector.
+AI governance is three problems, not one. How effectively your people collaborate with AI (People vector). How ready your digital presence is for AI agents (Infrastructure vector). How prepared you are for AI-specific regulation (Regulation vector). An organization's AI Posture (also called Aggregated Intelligence Posture) is bounded by its weakest in-scope vector.
+
+AI Posture is stewarded by PAICE.work PBC. The spec is CC BY 4.0. Reference implementations are MIT. A planned transition to an independent steward (PAICE Foundation) is documented in the spec governance section.
 
 ## Concepts
 
-- Aggregated Intelligence Posture (AIP): A unified governance score across three vectors, bounded by the lowest.
-- Three vectors: People (human-AI collaboration), Infrastructure (agent-readiness of digital presence), Regulation (AI-specific compliance readiness).
-- Five-level maturity model: Perceiving, Assessing, Integrating, Calibrated, Engineered. Shared across all three vectors.
-- Constraint rule: AIP equals the minimum of the three vector levels. Structural, not a scoring choice.
-- Constraining vector: The lowest vector; the one whose advancement will raise the AIP.
+- AI Posture (formally Aggregated Intelligence Posture): A unified governance score for human-AI collaboration, computed as the minimum over in-scope vectors.
+- Three vectors (v1.0): People (human-AI collaboration), Infrastructure (agent-readiness of digital presence), Regulation (AI-specific compliance readiness).
+- Five-level maturity model: Perceiving, Assessing, Integrating, Calibrated, Engineered. Level 0 (Ignoring) is N/A-or-falsified and invalidates the assertion if observably contradicted.
+- Constraint rule: AI Posture equals the minimum of the in-scope vector levels. Structural, not a scoring choice. N/A vectors are excluded from the minimum.
+- Constraining vector: The lowest in-scope vector. Advancing it raises the aggregate.
+- Decay and freshness: Every AI Posture report is a time-stamped assertion. Assessors stamp a next-review date. Readers weight older scores as weaker signals.
+
+## Pre-assessment
+
+- Runtime: https://aiposture.org/assess/
+- Shape: Bayesian adaptive. Three openers set scope and prior. Up to five adaptive questions per in-scope vector, stopping early when a level's posterior crosses 0.70.
+- Output: Estimated AI Posture aggregate, per-vector posterior (point estimate with full distribution on hover), constraining vector, evidence checklist per vector.
+- Privacy: Client-side. Answers in sessionStorage. No cookies. Aggregate analytics only (PostHog in cookie-less mode, no autocapture, no session recording). No personal identifiers.
+- Labeling: Output is labeled "estimated AI Posture," never "verified" or "assessed."
 
 ## Key files
 
-- [Spec](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification
+- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v0.2.0)
+- [PRD.md](https://github.com/snapsynapse/ai-posture/blob/main/PRD.md): Pre-assessment product requirements (v0.1.0)
+- [CHANGELOG.md](https://github.com/snapsynapse/ai-posture/blob/main/CHANGELOG.md): Spec change log
 - [Landing page](https://aiposture.org/): Canonical homepage
-- [Self-assessment](https://aiposture.org/assess/): Fifteen-question self-assessment, client-side
+- [Self-assessment](https://aiposture.org/assess/): Bayesian adaptive pre-assessment
+- [Privacy policy](https://aiposture.org/privacy/): Data handling, retention, cookie-less analytics posture
+- [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), beta notice, warranty disclaimers
 
 ## Links
 
 - GitHub: https://github.com/snapsynapse/ai-posture
 - Homepage: https://aiposture.org/
+- Spec canonical URL: https://aiposture.org/
 
 ## Related patterns
 
-- [PAICE.work](https://paice.work/): People vector — human-AI collaboration measurement
-- [Siteline](https://siteline.to/): Infrastructure vector — agent-readiness of digital presence
-- [EveryAILaw](https://everyailaw.com/): Regulation vector — AI-specific compliance readiness
-- [PAICE Portfolio](https://paice.foundation/): Portfolio parent organization
+- [PAICE.work](https://paice.work/): People vector reference implementation, human-AI collaboration measurement
+- [Siteline](https://siteline.to/): Infrastructure vector reference implementation, agent-readiness scanning
+- [EveryAILaw](https://everyailaw.com/): Regulation vector reference implementation, AI-specific compliance obligation registry
+- [PAICE Foundation](https://paice.foundation/): Planned independent steward

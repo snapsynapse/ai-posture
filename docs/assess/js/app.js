@@ -1,0 +1,659 @@
+// AIP Pre-Assessment — UI runtime
+// Version: 1.0.0
+// Single-file vanilla JS. Depends on window.AIPBayes (bayes.js).
+
+(function () {
+  'use strict';
+
+  var B = window.AIPBayes;
+  var DATA_BASE = './data/';
+  var STORAGE_KEY = 'aip.assess.v1.draft';
+  var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrated', 'Engineered'];
+  var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
+
+  function track(event, props) {
+    try {
+      if (window.posthog && typeof window.posthog.capture === 'function') {
+        window.posthog.capture(event, props || {});
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  var tracked = { started: false, completed: false };
+
+  // ---------------------------------------------------------------------------
+  // Data loading
+  // ---------------------------------------------------------------------------
+
+  var DATA = { questions: null, likelihoods: null, rubric: null };
+
+  function loadAllData() {
+    return Promise.all([
+      fetch(DATA_BASE + 'questions.json').then(function (r) { return r.json(); }),
+      fetch(DATA_BASE + 'likelihoods.json').then(function (r) { return r.json(); }),
+      fetch(DATA_BASE + 'rubric.json').then(function (r) { return r.json(); })
+    ]).then(function (parts) {
+      DATA.questions = parts[0];
+      DATA.likelihoods = parts[1];
+      DATA.rubric = parts[2];
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------------------
+  //
+  // state.steps is an ordered history. Each entry is one of:
+  //   { type: 'opener',  id: 'O1'|'O2'|'O3', value, skip }
+  //   { type: 'probe',   id: 'O1'|..., choice: 'confirm'|'revise' }
+  //   { type: 'bank',    vector: 'Infrastructure'|..., qid, optIdx }
+  // The result screen is derived from steps + openers' in-scope/skip state.
+
+  var state = {
+    version: '1.0.0',
+    scopeLabel: '',
+    steps: [],
+    stage: 'start' // start -> O1 -> (probe) -> O2 -> (probe) -> O3 -> (probe) -> bank:Infrastructure -> bank:Regulation -> bank:People -> result
+  };
+
+  function saveDraft() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) { /* ignore */ }
+  }
+
+  function loadDraft() {
+    try {
+      var raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      var parsed = JSON.parse(raw);
+      if (parsed && parsed.version === '1.0.0') {
+        state = parsed;
+        return true;
+      }
+    } catch (e) { /* ignore */ }
+    return false;
+  }
+
+  function clearDraft() {
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+  }
+
+  // ---------------------------------------------------------------------------
+  // State derivations
+  // ---------------------------------------------------------------------------
+
+  // Build opener answers object from steps (honoring revisions: last one wins).
+  function currentOpeners() {
+    var out = {};
+    state.steps.forEach(function (s) {
+      if (s.type === 'opener') {
+        out[s.id] = { value: s.value, skip: !!s.skip };
+      }
+    });
+    return out;
+  }
+
+  // Collect bank answers per vector in order.
+  function bankAnswersByVector() {
+    var out = { Infrastructure: [], Regulation: [], People: [] };
+    state.steps.forEach(function (s) {
+      if (s.type === 'bank') out[s.vector].push({ qid: s.qid, optIdx: s.optIdx });
+    });
+    return out;
+  }
+
+  // Compute priors + per-vector posterior from current step history.
+  function computePosteriors() {
+    var openers = currentOpeners();
+    var built = B.buildPriors(openers);
+    var posts = {};
+    var banks = bankAnswersByVector();
+    VECTOR_ORDER.forEach(function (v) {
+      if (!built.inScope[v]) {
+        // L0 forced: put all mass on L0.
+        posts[v] = [1, 0, 0, 0, 0, 0];
+      } else {
+        posts[v] = B.replayVector(built.priors[v], banks[v], DATA.likelihoods);
+      }
+    });
+    return { priors: built.priors, inScope: built.inScope, posteriors: posts };
+  }
+
+  // Decide the current stage given step history.
+  function deriveStage() {
+    var openers = currentOpeners();
+
+    // Pending probes: after each opener with na_trigger matched, check if
+    // probe follow-up step exists. If not, stage = probe:<openerId>.
+    var openerDefs = DATA.questions.openers;
+    for (var i = 0; i < openerDefs.length; i++) {
+      var od = openerDefs[i];
+      var ans = openers[od.id];
+      if (!ans) {
+        return { kind: 'opener', openerId: od.id };
+      }
+      // If this opener's value is a trigger, probe must follow.
+      var triggered = isNaTriggered(od, ans.value);
+      if (triggered) {
+        // Did a probe step follow this opener?
+        var probed = state.steps.some(function (s, idx) {
+          if (s.type !== 'probe' || s.id !== od.id) return false;
+          // probe must come after this opener's most recent answer
+          var lastOpenerIdx = lastIndexOfOpener(od.id);
+          return idx > lastOpenerIdx;
+        });
+        if (!probed) return { kind: 'probe', openerId: od.id };
+      }
+    }
+
+    // All openers done, probes done. Move to banks.
+    var scope = B.buildPriors(openers).inScope;
+    for (var v = 0; v < VECTOR_ORDER.length; v++) {
+      var vec = VECTOR_ORDER[v];
+      if (!scope[vec]) continue; // L0 skipped
+      // Is this vector complete?
+      var banks = bankAnswersByVector();
+      var answered = banks[vec];
+      // Compute posterior progressively; stop when threshold or bank exhausted.
+      var post = currentPosteriorFor(vec);
+      var remaining = remainingBankIds(vec);
+      var stop = B.shouldStop(post, remaining);
+      // We also cap at 5 per vector per PRD.
+      var done = stop || answered.length >= 5;
+      if (!done) {
+        return { kind: 'bank', vector: vec };
+      }
+    }
+
+    return { kind: 'result' };
+  }
+
+  function lastIndexOfOpener(id) {
+    for (var i = state.steps.length - 1; i >= 0; i--) {
+      if (state.steps[i].type === 'opener' && state.steps[i].id === id) return i;
+    }
+    return -1;
+  }
+
+  function isNaTriggered(openerDef, value) {
+    if (!openerDef.na_trigger) return false;
+    if (openerDef.type === 'single') return value === openerDef.na_trigger;
+    if (openerDef.type === 'multi') {
+      if (!Array.isArray(value)) return false;
+      // Trigger if 'none' is selected and no exposure; also if only 'dk'.
+      var hasTrigger = value.indexOf(openerDef.na_trigger) >= 0;
+      if (!hasTrigger) return false;
+      // If they selected something real alongside 'none', do not trigger.
+      var exposureKeys = ['eu', 'us_high', 'us_other', 'uk', 'other'];
+      var hasExposure = exposureKeys.some(function (k) { return value.indexOf(k) >= 0; });
+      return !hasExposure;
+    }
+    return false;
+  }
+
+  function currentPosteriorFor(vector) {
+    var openers = currentOpeners();
+    var built = B.buildPriors(openers);
+    if (!built.inScope[vector]) return [1, 0, 0, 0, 0, 0];
+    var banks = bankAnswersByVector();
+    return B.replayVector(built.priors[vector], banks[vector], DATA.likelihoods);
+  }
+
+  function remainingBankIds(vector) {
+    var bank = DATA.questions.banks[vector];
+    var asked = {};
+    bankAnswersByVector()[vector].forEach(function (a) { asked[a.qid] = true; });
+    return bank.filter(function (q) { return !asked[q.id]; }).map(function (q) { return q.id; });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------------------
+
+  var root = null;
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        if (k === 'class') e.className = attrs[k];
+        else if (k === 'html') e.innerHTML = attrs[k];
+        else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), attrs[k]);
+        else e.setAttribute(k, attrs[k]);
+      });
+    }
+    if (children) {
+      children.forEach(function (c) {
+        if (c == null) return;
+        if (typeof c === 'string') e.appendChild(document.createTextNode(c));
+        else e.appendChild(c);
+      });
+    }
+    return e;
+  }
+
+  function render() {
+    var stage = deriveStage();
+    root.innerHTML = '';
+
+    if (stage.kind === 'opener') {
+      renderOpener(stage.openerId);
+    } else if (stage.kind === 'probe') {
+      renderProbe(stage.openerId);
+    } else if (stage.kind === 'bank') {
+      renderBankQuestion(stage.vector);
+    } else if (stage.kind === 'result') {
+      renderResult();
+      if (!tracked.completed) {
+        tracked.completed = true;
+        var r = computePosteriors();
+        var modes = {};
+        VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
+        var agg = B.aggregateAIP(modes, r.inScope);
+        track('assessment_completed', {
+          version: state.version,
+          aip: agg == null ? null : LEVEL_NAMES[agg],
+          people_level: r.inScope.People ? modes.People : null,
+          infrastructure_level: r.inScope.Infrastructure ? modes.Infrastructure : null,
+          regulation_level: r.inScope.Regulation ? modes.Regulation : null,
+          in_scope_count: VECTOR_ORDER.filter(function (v) { return r.inScope[v]; }).length
+        });
+      }
+    }
+    renderProgress(stage);
+    saveDraft();
+  }
+
+  function progressCounts() {
+    var openers = currentOpeners();
+    var answered = 0;
+    var total = 3; // openers
+    Object.keys(openers).forEach(function (k) { if (openers[k]) answered++; });
+    // Add bank question counts
+    var built;
+    try { built = B.buildPriors(openers); } catch (e) { built = { inScope: { Infrastructure: true, Regulation: true, People: true } }; }
+    VECTOR_ORDER.forEach(function (v) {
+      if (built.inScope[v]) total += 5;
+    });
+    var banks = bankAnswersByVector();
+    VECTOR_ORDER.forEach(function (v) {
+      answered += banks[v].length;
+    });
+    return { answered: answered, total: total };
+  }
+
+  function renderProgress(stage) {
+    var pc = progressCounts();
+    var barFill = document.getElementById('bar');
+    if (!barFill) return;
+    var pct = pc.total > 0 ? (pc.answered / pc.total) * 100 : 0;
+    barFill.style.width = pct + '%';
+  }
+
+  // --- Opener screen ---
+  function renderOpener(openerId) {
+    var def = DATA.questions.openers.find(function (o) { return o.id === openerId; });
+    var existing = currentOpeners()[openerId];
+    var currentValue = existing ? existing.value : (def.type === 'multi' ? [] : '');
+
+    var optionNodes = def.options.map(function (opt) {
+      var id = 'opt-' + openerId + '-' + opt.key;
+      var inputType = def.type === 'multi' ? 'checkbox' : 'radio';
+      var checked = def.type === 'multi'
+        ? (currentValue || []).indexOf(opt.key) >= 0
+        : currentValue === opt.key;
+      var input = el('input', {
+        type: inputType,
+        name: 'opener-' + openerId,
+        id: id,
+        value: opt.key
+      });
+      if (checked) input.checked = true;
+      var label = el('label', { for: id, class: 'option' }, [
+        input,
+        el('span', null, [opt.label])
+      ]);
+      return label;
+    });
+
+    var form = el('form', { class: 'q-form', onsubmit: function (ev) { ev.preventDefault(); submitOpener(def); } }, [
+      el('div', { class: 'q-header' }, [
+        el('h2', { class: 'q-text' }, [def.text])
+      ]),
+      el('fieldset', { class: 'options-wrap' }, optionNodes),
+      renderActions({ showBack: openerId !== 'O1', nextLabel: 'Next' })
+    ]);
+    root.appendChild(form);
+  }
+
+  function submitOpener(def) {
+    var inputs = root.querySelectorAll('input[name="opener-' + def.id + '"]');
+    var value;
+    if (def.type === 'multi') {
+      value = [];
+      inputs.forEach(function (i) { if (i.checked) value.push(i.value); });
+      if (value.length === 0) { alert('Select at least one option.'); return; }
+    } else {
+      value = null;
+      inputs.forEach(function (i) { if (i.checked) value = i.value; });
+      if (!value) { alert('Select an option.'); return; }
+    }
+    // If the user is re-answering this opener, truncate history from its
+    // previous location forward (so subsequent answers recompute cleanly).
+    truncateFrom({ type: 'opener', id: def.id });
+    if (!tracked.started) {
+      tracked.started = true;
+      track('assessment_started', { version: state.version });
+    }
+    state.steps.push({ type: 'opener', id: def.id, value: value, skip: false });
+    track('question_answered', { question_id: def.id });
+    render();
+  }
+
+  // --- N/A probe screen ---
+  function renderProbe(openerId) {
+    var def = DATA.questions.openers.find(function (o) { return o.id === openerId; });
+    var probe = def.na_probe;
+    var optionNodes = probe.options.map(function (opt) {
+      return el('button', {
+        type: 'button',
+        class: 'btn btn-secondary probe-option',
+        onclick: function () { submitProbe(def, opt.key); }
+      }, [opt.label]);
+    });
+    var wrap = el('div', { class: 'q-form' }, [
+      el('div', { class: 'q-header' }, [
+        el('div', { class: 'q-tag' }, ['Quick check — ' + def.primary_vector]),
+        el('p', { class: 'q-text' }, [probe.prompt])
+      ]),
+      el('div', { class: 'probe-actions' }, optionNodes),
+      renderActions({ showBack: true, nextLabel: null })
+    ]);
+    root.appendChild(wrap);
+  }
+
+  function submitProbe(def, choice) {
+    // Remove prior probe entries for this opener after its last answer.
+    truncateFrom({ type: 'probe', id: def.id });
+    if (choice === 'confirm') {
+      // Mark opener with skip=true; keep user's original answer for record.
+      // Find the last opener step for this id and set skip.
+      var idx = lastIndexOfOpener(def.id);
+      if (idx >= 0) state.steps[idx].skip = true;
+      state.steps.push({ type: 'probe', id: def.id, choice: 'confirm' });
+    } else {
+      // Revise. If revise_to defined, overwrite the opener's value; else
+      // jump back to the opener screen.
+      if (def.na_probe.revise_to) {
+        var i2 = lastIndexOfOpener(def.id);
+        if (i2 >= 0) {
+          state.steps[i2].value = def.na_probe.revise_to;
+          state.steps[i2].skip = false;
+        }
+        state.steps.push({ type: 'probe', id: def.id, choice: 'revise' });
+      } else {
+        // Remove the opener answer so we re-ask.
+        state.steps = state.steps.filter(function (s) { return !(s.type === 'opener' && s.id === def.id); });
+      }
+    }
+    render();
+  }
+
+  // --- Bank question screen ---
+  function renderBankQuestion(vector) {
+    var banks = bankAnswersByVector()[vector];
+    var qIdx = banks.length + 1;
+    // Pick next question via EIG.
+    var post = currentPosteriorFor(vector);
+    var remainingIds = remainingBankIds(vector);
+    var qid = B.selectNextQuestion(post, remainingIds, DATA.likelihoods);
+    var def = DATA.questions.banks[vector].find(function (q) { return q.id === qid; });
+    if (!def) { render(); return; }
+
+    var optionNodes = def.options.map(function (opt, idx) {
+      var id = 'opt-' + def.id + '-' + opt.key;
+      var input = el('input', {
+        type: 'radio',
+        name: 'bank-' + def.id,
+        id: id,
+        value: String(idx)
+      });
+      var label = el('label', { for: id, class: 'option' }, [
+        input,
+        el('span', null, [opt.label])
+      ]);
+      return label;
+    });
+
+    var form = el('form', { class: 'q-form', onsubmit: function (ev) { ev.preventDefault(); submitBank(vector, def); } }, [
+      el('div', { class: 'q-header' }, [
+        el('div', { class: 'q-tag' }, [vector + ' — question ' + qIdx + ' of up to 5']),
+        el('h2', { class: 'q-text' }, [def.text])
+      ]),
+      el('fieldset', { class: 'options-wrap' }, optionNodes),
+      renderActions({ showBack: true, nextLabel: 'Next' })
+    ]);
+    root.appendChild(form);
+  }
+
+  function submitBank(vector, def) {
+    var inputs = root.querySelectorAll('input[name="bank-' + def.id + '"]');
+    var optIdx = -1;
+    inputs.forEach(function (i) { if (i.checked) optIdx = parseInt(i.value, 10); });
+    if (optIdx < 0) { alert('Select an option.'); return; }
+    state.steps.push({ type: 'bank', vector: vector, qid: def.id, optIdx: optIdx });
+    track('question_answered', { question_id: def.id });
+    render();
+  }
+
+  // --- Actions (back/next row) ---
+  function renderActions(opts) {
+    var children = [];
+    if (opts.showBack) {
+      children.push(el('button', {
+        type: 'button',
+        class: 'btn btn-ghost',
+        onclick: goBack
+      }, ['← Back']));
+    } else {
+      children.push(el('span', null, []));
+    }
+    if (opts.nextLabel) {
+      children.push(el('button', {
+        type: 'submit',
+        class: 'btn btn-primary'
+      }, [opts.nextLabel + ' →']));
+    }
+    return el('div', { class: 'q-actions' }, children);
+  }
+
+  function stageFingerprint() {
+    var s = deriveStage();
+    if (s.kind === 'bank') {
+      return 'bank:' + s.vector + ':' + bankAnswersByVector()[s.vector].length;
+    }
+    if (s.kind === 'opener') return 'opener:' + s.openerId;
+    if (s.kind === 'probe') return 'probe:' + s.openerId;
+    return 'result';
+  }
+
+  function goBack() {
+    if (state.steps.length === 0) return;
+    var before = stageFingerprint();
+    // Pop steps until the derived stage changes (so "back" always reveals a
+    // different screen, not the same one that auto-advances past a no-op).
+    var guard = 0;
+    while (state.steps.length > 0 && guard < 50) {
+      guard++;
+      var popped = state.steps.pop();
+      if (popped && popped.type === 'probe') {
+        var idx = lastIndexOfOpener(popped.id);
+        if (idx >= 0) state.steps[idx].skip = false;
+      }
+      var after = stageFingerprint();
+      if (after !== before) break;
+    }
+    render();
+  }
+
+  // Truncate from first occurrence of the matching step forward (inclusive).
+  function truncateFrom(match) {
+    for (var i = 0; i < state.steps.length; i++) {
+      var s = state.steps[i];
+      if (match.type === 'opener' && s.type === 'opener' && s.id === match.id) {
+        state.steps = state.steps.slice(0, i);
+        return;
+      }
+      if (match.type === 'probe' && s.type === 'probe' && s.id === match.id) {
+        state.steps = state.steps.slice(0, i);
+        return;
+      }
+    }
+  }
+
+  // --- Result screen ---
+  function renderResult() {
+    var r = computePosteriors();
+    var openers = currentOpeners();
+    var modes = {};
+    VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
+    var aggregate = B.aggregateAIP(modes, r.inScope);
+    var aggregateName = aggregate == null ? 'Undefined' : LEVEL_NAMES[aggregate];
+
+    // Constraining vector(s): in-scope, level == aggregate.
+    var constraining = [];
+    VECTOR_ORDER.forEach(function (v) {
+      if (r.inScope[v] && modes[v] === aggregate) constraining.push(v);
+    });
+
+    var wrap = el('div', { class: 'result' });
+
+    wrap.appendChild(el('div', { class: 'result-header' }, [
+      el('div', { class: 'result-tag' }, ['Estimated']),
+      el('h2', null, ['AI Posture: ' + aggregateName]),
+      el('p', { class: 'result-note' }, [
+        'This is an estimate, not a verified assertion. The evidence checklist below shows what would make it verified per vector.'
+      ])
+    ]));
+
+    // Per-vector rows with posterior hover band.
+    var rows = VECTOR_ORDER.map(function (v) {
+      var p = r.posteriors[v];
+      var modeLvl = modes[v];
+      var pct = (modeLvl / 5) * 100;
+      var bandStr = p.map(function (x, i) { return 'L' + i + ' ' + (x * 100).toFixed(1) + '%'; }).join(' · ');
+      var naBadge = r.inScope[v] ? null : el('span', { class: 'na-badge' }, ['N/A']);
+      return el('div', { class: 'vrow', title: bandStr }, [
+        el('span', { class: 'vlabel' }, [v]),
+        el('span', { class: 'vbar' }, [el('span', { style: 'width:' + pct + '%' }, [])]),
+        el('span', { class: 'vlevel' }, [r.inScope[v] ? LEVEL_NAMES[modeLvl] : 'N/A']),
+        naBadge
+      ]);
+    });
+    wrap.appendChild(el('div', { class: 'vrows' }, rows));
+
+    // Constraining + next action
+    if (aggregate != null) {
+      var nextName = aggregate < 5 ? LEVEL_NAMES[aggregate + 1] : null;
+      var nextAction = nextName
+        ? 'Advance ' + constraining.join(', ') + ' to ' + nextName + '.'
+        : 'All in-scope vectors are Engineered. Advance the frontier.';
+      wrap.appendChild(el('p', { class: 'constraining' }, [
+        el('strong', null, ['Constraining vector: ']),
+        constraining.join(', ') + '. ' + nextAction
+      ]));
+    }
+
+    // Evidence checklist
+    wrap.appendChild(el('h3', null, ['Evidence checklist']));
+    wrap.appendChild(el('p', { class: 'sub' }, ['Artifacts that would turn this estimate into a verified assertion at each vector\u2019s current estimated level.']));
+    VECTOR_ORDER.forEach(function (v) {
+      var lvl = r.inScope[v] ? modes[v] : 0;
+      var rubricEntry = DATA.rubric.vectors[v].find(function (e) { return e.level === lvl; });
+      if (!rubricEntry) return;
+      var items = (rubricEntry.evidence || []).map(function (t) { return el('li', null, [t]); });
+      wrap.appendChild(el('div', { class: 'evidence-block' }, [
+        el('h4', null, [v + ' — ' + rubricEntry.name + (r.inScope[v] ? '' : ' (N/A)')]),
+        el('p', { class: 'assertion' }, ['\u201C' + rubricEntry.assertion + '\u201D']),
+        el('ul', null, items),
+        el('p', { class: 'test' }, [el('strong', null, ['Test: ']), rubricEntry.test])
+      ]));
+    });
+
+    // Plain-text report block (copyable)
+    wrap.appendChild(el('h3', null, ['Shareable summary']));
+    wrap.appendChild(el('pre', { class: 'report' }, [buildTextReport(aggregateName, modes, r.inScope, constraining)]));
+
+    // What this is not
+    wrap.appendChild(el('details', { class: 'not-panel' }, [
+      el('summary', null, ['What this is not']),
+      el('ul', null, [
+        el('li', null, ['Not a certification. No seal. No attestation of compliance.']),
+        el('li', null, ['Not an audit. No independent verification. No evidence collection.']),
+        el('li', null, ['Not legal advice.']),
+        el('li', null, ['Not a substitute for per-vector measurement.']),
+        el('li', null, ['Not a sales qualifier.'])
+      ])
+    ]));
+
+    // Actions: start over, back
+    wrap.appendChild(el('div', { class: 'q-actions' }, [
+      el('button', { type: 'button', class: 'btn btn-ghost', onclick: goBack }, ['← Revise last answer']),
+      el('button', { type: 'button', class: 'btn btn-secondary', onclick: startOver }, ['Start over'])
+    ]));
+
+    root.appendChild(wrap);
+  }
+
+  function buildTextReport(aggregateName, modes, inScope, constraining) {
+    var lines = [];
+    lines.push('Aggregated Intelligence Posture (estimated): ' + aggregateName);
+    lines.push('');
+    VECTOR_ORDER.forEach(function (v) {
+      var name = inScope[v] ? LEVEL_NAMES[modes[v]] : 'N/A';
+      var bars = barStr(inScope[v] ? modes[v] : 0);
+      lines.push('  ' + pad(v + ':', 17) + pad(name, 14) + bars);
+    });
+    lines.push('');
+    lines.push('  Constraining vector: ' + (constraining.length ? constraining.join(', ') : 'n/a'));
+    lines.push('');
+    lines.push('  Source: https://aiposture.org/assess/');
+    return lines.join('\n');
+  }
+  function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s; }
+  function barStr(lvl) {
+    var full = 0, empty = 10;
+    if (lvl > 0) full = lvl * 2;
+    empty = 10 - full;
+    return '\u2588'.repeat(full) + '\u2591'.repeat(empty);
+  }
+
+  function startOver() {
+    if (!confirm('Clear all answers and start over?')) return;
+    state.steps = [];
+    clearDraft();
+    render();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Bootstrap
+  // ---------------------------------------------------------------------------
+
+  function boot() {
+    root = document.getElementById('assessment-root');
+    loadAllData().then(function () {
+      loadDraft();
+      render();
+    }).catch(function (err) {
+      root.innerHTML = '<p class="error">Could not load assessment data. ' + String(err) + '</p>';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();

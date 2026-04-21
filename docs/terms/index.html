@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Terms of service &mdash; AI Posture</title>
+  <meta name="description" content="Terms of service for aiposture.org. What the pre-assessment is, what it is not, and how the spec is licensed.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://aiposture.org/terms/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="/favicon.svg" color="#4f46e5">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="robots" content="index, follow">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f8f9fa;
+      --text: #1a1d24;
+      --text-muted: #5a6170;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-soft: #eef2ff;
+      --amber: #b45309;
+      --amber-soft: #fef3c7;
+      --border: #e5e7eb;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --max-width: 760px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); }
+    a:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
+
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--accent); color: #fff; padding: 0.5rem 1rem; z-index: 100; }
+    .skip-link:focus { left: 0; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+
+    nav { border-bottom: 1px solid var(--border); padding: 1rem 0; background: var(--bg); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 0.55rem; }
+    nav .logo svg { color: var(--accent); flex: 0 0 auto; }
+    nav .logo:hover svg { color: var(--accent-hover); }
+    nav .links { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    nav .links a { color: var(--text-muted); text-decoration: none; }
+    nav .links a:hover { color: var(--text); }
+
+    main { padding: 2.5rem 0 4rem; }
+    h1 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.75rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1rem; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+    p { margin-bottom: 0.85rem; }
+    ul { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.3rem; }
+    strong { font-weight: 600; }
+    code { font-family: var(--mono); font-size: 0.88em; background: var(--accent-soft); color: var(--accent); padding: 0.1em 0.4em; border-radius: 4px; }
+
+    .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+    .meta .sep { color: var(--border); }
+    .version { font-family: var(--mono); font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--border); }
+
+    .beta-banner {
+      background: var(--amber-soft);
+      border: 1px solid #fcd34d;
+      border-left: 4px solid var(--amber);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .beta-banner strong { color: var(--amber); }
+
+    .callout {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+    footer a { color: var(--text); }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="AI Posture home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="20" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="20" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      </svg>
+      <span>AI Posture</span>
+    </a>
+    <div class="links">
+      <a href="/assess/">Assess</a>
+      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" target="_blank" rel="noopener">Spec</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="container">
+    <h1>Terms of service</h1>
+    <p class="meta">
+      <span class="version">v0.1.0 draft</span>
+      <span class="sep">&middot;</span>
+      Effective <time datetime="2026-04-20">April 20, 2026</time>
+      <span class="sep">&middot;</span>
+      <a href="https://github.com/snapsynapse/ai-posture/commits/main/docs/terms/index.html">Revision history</a>
+    </p>
+
+    <div class="beta-banner">
+      <strong>Beta notice.</strong> These terms are a working draft under legal review. The pre-assessment and framework are provided as a beta. Terms may change before general availability. Material changes update the effective date above and are visible in the repository commit history.
+    </div>
+
+    <h2>1. Acceptance</h2>
+    <p>By using <a href="https://aiposture.org/">aiposture.org</a>, including the pre-assessment at <a href="https://aiposture.org/assess/">aiposture.org/assess/</a>, you agree to these terms. If you do not agree, do not use the site.</p>
+
+    <h2>2. Who we are</h2>
+    <p>The service is operated by PAICE.work PBC, a US public benefit corporation. The AI Posture framework and pre-assessment are stewarded by PAICE.work PBC under a planned transition to an independent steward (PAICE Foundation).</p>
+
+    <h2>3. What the pre-assessment is</h2>
+    <p>The pre-assessment is a Bayesian adaptive self-administered tool that produces an <strong>estimated</strong> AI Posture (formally Aggregated Intelligence Posture) for your organization based on your answers. The output is labeled an estimate, not a verified assertion.</p>
+
+    <h2>4. What the pre-assessment is not</h2>
+    <ul>
+      <li><strong>Not a certification.</strong> No seal. No attestation of compliance.</li>
+      <li><strong>Not an audit.</strong> No independent verification. No evidence collection.</li>
+      <li><strong>Not legal advice.</strong> The Regulation vector discusses obligations. It does not tell you how to meet them for your jurisdiction. Consult qualified counsel for legal questions.</li>
+      <li><strong>Not a substitute for per-vector measurement.</strong> Verified assertions require the reference implementations named in the framework documentation.</li>
+      <li><strong>Not a scoring leaderboard.</strong> No public directory of scores is published. Only aggregate statistics, without attribution.</li>
+      <li><strong>Not a sales qualifier.</strong> Low estimates do not gate access to reference products. High estimates do not unlock anything.</li>
+    </ul>
+
+    <h2>5. Your answers, your rights</h2>
+    <p>You retain all rights to the answers you provide. During the pre-assessment, your answers are stored only in your browser's <code>sessionStorage</code> and are not transmitted to us. If per-run storage is enabled in a future release, the privacy policy will govern retention and deletion.</p>
+    <p>By submitting answers for storage (when that feature is live), you grant PAICE.work PBC a non-exclusive license to use the answers in aggregate, non-identifying form to publish ecosystem statistics and to recalibrate the pre-assessment's likelihood tables. This license does not extend to identified use or third-party disclosure of your individual run.</p>
+
+    <h2>6. Licensing of framework materials</h2>
+    <p>The AI Posture specification (<a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md">SPEC.md</a>), the pre-assessment question bank, likelihood tables, and rubric content are released under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License (CC BY 4.0)</a>. You may reimplement, translate, adapt, and redistribute them under the terms of that license.</p>
+    <p>Reference implementations (the code powering this site) are released under the <a href="https://github.com/snapsynapse/ai-posture/blob/main/LICENSE">MIT license</a>.</p>
+
+    <h2>7. Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the pre-assessment to make, publish, or imply a verified compliance or certification claim.</li>
+      <li>Misrepresent the result as anything other than an estimate.</li>
+      <li>Access the service in a manner intended to disrupt, degrade, or overwhelm it.</li>
+      <li>Reverse-engineer the service to extract personal data about other users. The service is designed so that no such data exists, but the prohibition stands regardless.</li>
+      <li>Use the service in any way that violates applicable law.</li>
+    </ul>
+
+    <h2>8. No warranties</h2>
+    <p>The service is provided "as is" and "as available." To the maximum extent permitted by law, PAICE.work PBC disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, reliability, and availability. The estimate produced by the pre-assessment is not guaranteed to be correct. Likelihood tables are expert-elicited and subject to recalibration.</p>
+
+    <h2>9. Limitation of liability</h2>
+    <p>To the maximum extent permitted by law, in no event shall PAICE.work PBC, its officers, directors, employees, contractors, or affiliates be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, revenue, data, or goodwill, arising out of or related to your use of the service, whether based on contract, tort, strict liability, or any other legal theory. The total aggregate liability for any claim arising out of or related to the service is limited to USD 100.</p>
+
+    <h2>10. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless PAICE.work PBC from any claims, damages, or expenses (including reasonable attorneys' fees) arising from your use of the service in violation of these terms or applicable law, or from any representation you make about the estimate that exceeds what the estimate actually supports.</p>
+
+    <h2>11. Third-party links</h2>
+    <p>The site links to third-party resources, including reference products (<a href="https://paice.work/">PAICE.work</a>, <a href="https://siteline.to/">Siteline</a>, <a href="https://everyailaw.com/">EveryAILaw</a>), the PAICE newsletter hosted on Substack, and others. We do not control third parties and are not responsible for their content, terms, or practices.</p>
+
+    <h2>12. Changes to the service</h2>
+    <p>The pre-assessment is a beta offering. We may add, remove, or change features without notice. The question bank and likelihood tables are versioned. Completed runs are tagged with the version under which they ran, so recalibration does not retroactively change prior results.</p>
+
+    <h2>13. Changes to these terms</h2>
+    <p>Material changes trigger a new effective date at the top of this page. Continued use after the effective date constitutes acceptance of the updated terms. The repository commit history is authoritative.</p>
+
+    <h2>14. Governing law</h2>
+    <p>These terms are governed by the laws of the State of Delaware, United States, without regard to conflict-of-law principles. Any dispute arising out of or related to these terms will be resolved in the state or federal courts sitting in Delaware, and you consent to personal jurisdiction there. If you are a consumer located in a jurisdiction whose law grants you mandatory rights that cannot be waived, those rights are preserved.</p>
+
+    <div class="callout">
+      <strong>Jurisdiction note.</strong> Because the pre-assessment does not collect personal data during the flow and relies on opt-in email only at the end, most consumer-law concerns do not attach. Where they do, the strictest applicable jurisdiction governs.
+    </div>
+
+    <h2>15. Severability</h2>
+    <p>If any provision of these terms is held unenforceable, the remaining provisions remain in effect.</p>
+
+    <h2>16. Contact</h2>
+    <p>Legal inquiries: <a href="mailto:legal@paice.work">legal@paice.work</a>.</p>
+    <p>Privacy inquiries: <a href="mailto:privacy@paice.work">privacy@paice.work</a>.</p>
+    <p>Framework and spec: <a href="https://github.com/snapsynapse/ai-posture">github.com/snapsynapse/ai-posture</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p><a href="/">AI Posture</a> &middot; <a href="/assess/">Assess</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a></p>
+    <p style="margin-top: 0.3rem; font-size: 0.8rem;">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+  </div>
+</footer>
+
+</body>
+</html>

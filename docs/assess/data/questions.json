@@ -1,0 +1,237 @@
+{
+  "version": "1.0.0",
+  "openers": [
+    {
+      "id": "O1",
+      "primary_vector": "People",
+      "type": "single",
+      "text": "Does your organization acknowledge in writing that people use AI in their work?",
+      "options": [
+        { "key": "a", "label": "Yes, written policy exists naming AI use." },
+        { "key": "b", "label": "Partial. AI is mentioned but not governed." },
+        { "key": "c", "label": "No written acknowledgment, but people use AI here." },
+        { "key": "d", "label": "People do not use AI here." },
+        { "key": "e", "label": "Don't know." }
+      ],
+      "na_trigger": "d",
+      "na_probe": {
+        "prompt": "You indicated people do not use AI in your organization. A quick check before we record that. In the last 30 days, has anyone on staff used a general-purpose chatbot (ChatGPT, Claude, Gemini, Copilot), AI-assisted search, transcription, translation, code completion, summarization, image generation, or a productivity feature that runs on an LLM?",
+        "options": [
+          { "key": "confirm", "label": "Confirmed. No such use. Report this vector as N/A." },
+          { "key": "revise", "label": "Actually yes, at least one of those applies. Revise my answer." }
+        ],
+        "revise_to": "c"
+      }
+    },
+    {
+      "id": "O2",
+      "primary_vector": "Regulation",
+      "type": "multi",
+      "text": "In which of the following does your organization operate, sell to customers, or employ people? Select all that apply.",
+      "options": [
+        { "key": "eu", "label": "European Union" },
+        { "key": "us_high", "label": "California, Colorado, Utah, or New York City" },
+        { "key": "us_other", "label": "Other US states" },
+        { "key": "uk", "label": "United Kingdom" },
+        { "key": "other", "label": "Other jurisdiction with AI-specific regulation" },
+        { "key": "none", "label": "None of the above" },
+        { "key": "dk", "label": "Don't know" }
+      ],
+      "na_trigger": "none",
+      "na_probe": {
+        "prompt": "You selected 'None of the above.' A quick check. Does your organization sell to, employ, or serve anyone located in the EU, UK, California, Colorado, Utah, or New York City, even occasionally or remotely?",
+        "options": [
+          { "key": "confirm", "label": "Confirmed. No exposure. Report Regulation as N/A." },
+          { "key": "revise", "label": "Actually yes, at least one applies. Let me reselect." }
+        ],
+        "revise_to": null
+      }
+    },
+    {
+      "id": "O3",
+      "primary_vector": "Infrastructure",
+      "type": "single",
+      "text": "Does your organization operate digital systems reachable from outside the organization?",
+      "options": [
+        { "key": "a", "label": "Yes, public-facing (website, APIs, customer-facing apps)." },
+        { "key": "b", "label": "Yes, employees and known partners only. No public surface." },
+        { "key": "c", "label": "No external-facing digital systems." },
+        { "key": "d", "label": "Don't know." }
+      ],
+      "na_trigger": "c",
+      "na_probe": {
+        "prompt": "You indicated no external-facing digital systems. A quick check. Does your organization have any website, booking form, contact page, customer portal, mobile app, or API endpoint reachable from the public internet?",
+        "options": [
+          { "key": "confirm", "label": "Confirmed. Fully internal. Report Infrastructure as N/A." },
+          { "key": "revise", "label": "Actually yes, something is reachable. Revise my answer." }
+        ],
+        "revise_to": "b"
+      }
+    }
+  ],
+  "banks": {
+    "Infrastructure": [
+      {
+        "id": "I1",
+        "text": "Has your organization completed a scan of its digital surfaces for AI agent readiness?",
+        "options": [
+          { "key": "a", "label": "Yes, report exists." },
+          { "key": "b", "label": "In progress." },
+          { "key": "c", "label": "No." },
+          { "key": "d", "label": "Not sure what this means." }
+        ]
+      },
+      {
+        "id": "I2",
+        "text": "Based on scan findings, has your organization deployed machine-readable declarations (llms.txt, structured data, agent-legible identifiers) on any critical surface, and confirmed the change with a follow-up scan?",
+        "options": [
+          { "key": "a", "label": "Deployed and confirmed." },
+          { "key": "b", "label": "Deployed, not confirmed by follow-up." },
+          { "key": "c", "label": "Planned but not yet deployed." },
+          { "key": "d", "label": "No." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "I3",
+        "text": "Do agent-readiness scans run on a declared cadence, with drift between scans tracked?",
+        "options": [
+          { "key": "a", "label": "Both cadence and drift tracking." },
+          { "key": "b", "label": "Recurring scans, no drift tracking." },
+          { "key": "c", "label": "One-time or ad-hoc scans only." },
+          { "key": "d", "label": "No recurring scans." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "I4",
+        "text": "Does the organization maintain a declared framework-review cadence for agent-readiness practices, with a review artifact from the most recent cycle?",
+        "options": [
+          { "key": "a", "label": "Declared cadence and recent artifact." },
+          { "key": "b", "label": "Informal review, no declared cadence." },
+          { "key": "c", "label": "No review process." },
+          { "key": "d", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "I5",
+        "text": "Are new deployments or releases automatically scored for agent readiness at release time?",
+        "options": [
+          { "key": "a", "label": "At every release." },
+          { "key": "b", "label": "Manual check at release." },
+          { "key": "c", "label": "No release-time check." },
+          { "key": "d", "label": "Don't know." }
+        ]
+      }
+    ],
+    "Regulation": [
+      {
+        "id": "R1",
+        "text": "Has your organization built an obligation register that maps AI-specific regulatory requirements to the jurisdictions where you operate, sell, or employ?",
+        "options": [
+          { "key": "a", "label": "Yes, register exists." },
+          { "key": "b", "label": "In progress." },
+          { "key": "c", "label": "No." },
+          { "key": "d", "label": "Not sure what this means." }
+        ]
+      },
+      {
+        "id": "R2",
+        "text": "Have the obligations in your register been translated into controls, with traceability from statute to control, for at least one jurisdiction?",
+        "options": [
+          { "key": "a", "label": "Yes, with documented traceability." },
+          { "key": "b", "label": "Controls exist, traceability informal." },
+          { "key": "c", "label": "Register exists, controls in progress." },
+          { "key": "d", "label": "No." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "R3",
+        "text": "Do controls cover all in-scope jurisdictions, with active monitoring of regulatory change and documented interpretations of ambiguous requirements?",
+        "options": [
+          { "key": "a", "label": "All three." },
+          { "key": "b", "label": "Some but not all." },
+          { "key": "c", "label": "Primary jurisdiction only." },
+          { "key": "d", "label": "No." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "R4",
+        "text": "Does the organization maintain a declared framework-review cadence for its regulatory compliance practices, with a review artifact from the most recent cycle?",
+        "options": [
+          { "key": "a", "label": "Declared cadence and recent artifact." },
+          { "key": "b", "label": "Informal review, no declared cadence." },
+          { "key": "c", "label": "No review process." },
+          { "key": "d", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "R5",
+        "text": "Is regulatory coverage refreshed continuously as a measured ratio, with a defined workflow to ingest a new jurisdiction in days rather than months?",
+        "options": [
+          { "key": "a", "label": "Both continuous refresh and rapid intake." },
+          { "key": "b", "label": "Continuous refresh, slower intake." },
+          { "key": "c", "label": "Ad-hoc refresh only." },
+          { "key": "d", "label": "No." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      }
+    ],
+    "People": [
+      {
+        "id": "P1",
+        "text": "Has your organization completed a baseline assessment of how people actually use AI in their work, a measurement of behavior rather than a survey of attitudes?",
+        "options": [
+          { "key": "a", "label": "Yes, report exists." },
+          { "key": "b", "label": "In progress." },
+          { "key": "c", "label": "No." },
+          { "key": "d", "label": "Not sure what this means." }
+        ]
+      },
+      {
+        "id": "P2",
+        "text": "In the last year, has any policy, training, or practice change traced back to findings from a behavioral AI assessment?",
+        "options": [
+          { "key": "a", "label": "Yes, with documented traceability." },
+          { "key": "b", "label": "Yes, informal traceability." },
+          { "key": "c", "label": "No." },
+          { "key": "d", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "P3",
+        "text": "Does your organization measure AI-collaboration behavior at a cohort level (across teams or functions), with privacy-preserving aggregation, on a recurring cadence?",
+        "options": [
+          { "key": "a", "label": "All three." },
+          { "key": "b", "label": "Some but not all." },
+          { "key": "c", "label": "One-time baseline only." },
+          { "key": "d", "label": "No." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "P5",
+        "text": "Does the organization maintain a declared framework-review cadence for its AI-collaboration practices, with a review artifact from the most recent cycle?",
+        "options": [
+          { "key": "a", "label": "Declared cadence and recent artifact." },
+          { "key": "b", "label": "Informal review, no declared cadence." },
+          { "key": "c", "label": "No review process." },
+          { "key": "d", "label": "Don't know." }
+        ]
+      },
+      {
+        "id": "P4",
+        "text": "Is behavioral AI assessment continuous (not episodic) and paired with a verifiable attestation mechanism?",
+        "options": [
+          { "key": "a", "label": "Both." },
+          { "key": "b", "label": "Continuous but no attestation." },
+          { "key": "c", "label": "Attestation but not continuous." },
+          { "key": "d", "label": "Neither." },
+          { "key": "e", "label": "Don't know." }
+        ]
+      }
+    ]
+  }
+}

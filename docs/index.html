@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>AI Posture &mdash; The Aggregated Intelligence Posture framework</title>
-  <meta name="description" content="AI Posture (AIP) is a unified governance score for human-AI collaboration. One score across three vectors — People, Infrastructure, Regulation — bounded by the weakest.">
+  <meta name="description" content="AI Posture is a unified governance score for human-AI collaboration. One score across People, Infrastructure, and Regulation, bounded by the weakest.">
   <meta name="keywords" content="ai posture, aggregated intelligence posture, aip, ai governance, ai maturity model, paice, human-ai collaboration, ai readiness">
-  <meta name="author" content="Sam Rogers">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <meta name="theme-color" content="#4f46e5">
   <link rel="canonical" href="https://aiposture.org/">
@@ -26,9 +25,8 @@
   <meta property="og:description" content="The Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
   <meta property="og:url" content="https://aiposture.org/">
   <meta property="og:locale" content="en_US">
-  <meta property="article:published_time" content="2026-04-04T00:00:00Z">
-  <meta property="article:modified_time" content="2026-04-19T00:00:00Z">
-  <meta property="article:author" content="Sam Rogers">
+  <meta property="article:published_time" content="2026-04-19T00:00:00Z">
+  <meta property="article:modified_time" content="2026-04-20T00:00:00Z">
   <meta property="article:publisher" content="https://paice.work/">
   <meta property="article:section" content="Open Patterns">
   <meta property="article:tag" content="ai-posture">
@@ -40,11 +38,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Posture">
   <meta name="twitter:description" content="The Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
-  <meta name="twitter:site" content="@snapsynapse">
-  <meta name="twitter:creator" content="@snapsynapse">
-
-  <link rel="me" href="https://github.com/snapsynapse">
-  <link rel="me" href="https://www.linkedin.com/in/samrogers">
 
   <script type="application/ld+json">
   {
@@ -52,17 +45,16 @@
     "@type": "TechArticle",
     "headline": "AI Posture",
     "alternativeHeadline": "The Aggregated Intelligence Posture framework",
-    "description": "The Aggregated Intelligence Posture (AIP) is a unified governance score for human-AI collaboration, combining three vectors (People, Infrastructure, Regulation) on a five-level maturity model. An organization's AIP is bounded by its weakest vector.",
+    "description": "AI Posture is a unified governance score for human-AI collaboration, combining three vectors (People, Infrastructure, Regulation) on a five-level maturity model. An organization's AI Posture is bounded by its weakest vector.",
     "inLanguage": "en",
     "url": "https://aiposture.org/",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/" },
-    "datePublished": "2026-04-04",
-    "dateModified": "2026-04-19",
+    "datePublished": "2026-04-19",
+    "dateModified": "2026-04-20",
     "author": {
-      "@type": "Person",
-      "name": "Sam Rogers",
-      "url": "https://paice.work/",
-      "affiliation": { "@type": "Organization", "name": "PAICE.work PBC" }
+      "@type": "Organization",
+      "name": "PAICE.work PBC",
+      "url": "https://paice.work/"
     },
     "publisher": {
       "@type": "Organization",
@@ -89,7 +81,7 @@
     "@type": "DefinedTerm",
     "name": "Aggregated Intelligence Posture",
     "alternateName": ["AIP", "AI Posture", "Aggregated Intelligence Posture"],
-    "description": "A unified governance score for human-AI collaboration, computed across three vectors (People, Infrastructure, Regulation) on a five-level maturity model (Perceiving, Assessing, Integrating, Calibrated, Engineered). An organization's AIP is bounded by its lowest vector.",
+    "description": "A unified governance score for human-AI collaboration, computed across three vectors (People, Infrastructure, Regulation) on a five-level maturity model (Perceiving, Assessing, Integrating, Calibrated, Engineered). An organization's AI Posture is bounded by its lowest vector.",
     "url": "https://aiposture.org/",
     "inDefinedTermSet": {
       "@type": "DefinedTermSet",
@@ -303,60 +295,53 @@
     .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
     .btn-primary:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 
-    /* Level picker teaser */
-    .picker {
-      background: var(--bg-alt);
+    /* Assessment card */
+    .assessment-card {
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 2rem;
-      margin: 0 auto 2rem;
+      padding: 2.25rem 2.25rem 2rem;
+      margin: 0 auto;
       max-width: 760px;
       text-align: left;
     }
-    .picker h2 { text-align: center; margin-bottom: 0.5rem; font-size: 1.35rem; }
-    .picker .picker-intro { text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.75rem; }
-    .picker-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .picker-field label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-    .picker-field select {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 0.95rem;
-      font-family: inherit;
-    }
-    .picker-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-    .picker-result {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
+    .assessment-tag {
+      display: inline-block;
+      font-size: 0.7rem;
       font-family: var(--mono);
-      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
     }
-    .picker-result .result-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem; }
-    .picker-result .result-label { width: 10em; color: var(--text-muted); font-size: 0.85rem; }
-    .picker-result .result-bar { flex: 1; height: 10px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-    .picker-result .result-bar > span { display: block; height: 100%; background: var(--accent); transition: width 0.25s; }
-    .picker-result .result-level { width: 6.5em; text-align: right; font-weight: 700; color: var(--text); font-size: 0.85rem; }
-    .picker-result hr { border: none; border-top: 1px solid var(--border); margin: 0.9rem 0; }
-    .picker-result .aip-headline { font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.35rem; }
-    .picker-result .aip-note { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .assessment-card h2 { font-size: 1.55rem; margin-bottom: 0.5rem; }
+    .assessment-lead { font-size: 1.05rem; color: var(--text); margin-bottom: 1.25rem; }
+    .assessment-features { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .assessment-features li {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      padding: 0.55rem 0 0.55rem 1.5rem;
+      position: relative;
+      border-top: 1px solid var(--border);
+    }
+    .assessment-features li:first-child { border-top: none; padding-top: 0; }
+    .assessment-features li:first-child::before { top: 0.1rem; }
+    .assessment-features li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .assessment-features strong { color: var(--text); font-weight: 700; }
 
     /* Levels table */
     table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
@@ -415,8 +400,7 @@
       h1 { font-size: 2rem; }
       .hero { padding: 3rem 0 2rem; }
       .pillars { grid-template-columns: 1fr; }
-      .picker-grid { grid-template-columns: 1fr; }
-      .picker-result .result-label { width: 8em; }
+      .assessment-card { padding: 1.5rem; }
       nav .links { display: none; }
       nav .links.mobile-compact { display: flex; gap: 0.75rem; }
       .footer-grid { flex-direction: column; }
@@ -443,15 +427,8 @@
       <span>AI Posture</span>
     </a>
     <div class="links mobile-compact">
-      <a href="#framework">Framework</a>
-      <a href="#levels">Levels</a>
       <a href="/assess/">Assess</a>
-      <a href="https://github.com/snapsynapse/ai-posture" class="gh-star" target="_blank" rel="noopener" aria-label="Star snapsynapse/ai-posture on GitHub">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-          <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
-        </svg>
-        <span>Star on GitHub</span>
-      </a>
+      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" target="_blank" rel="noopener">Spec</a>
     </div>
   </div>
 </nav>
@@ -460,73 +437,42 @@
 <section class="hero">
   <div class="container">
     <h1>Where your org stands. And how.</h1>
-    <p class="subtitle">The Aggregated Intelligence Posture (AIP) framework. One score across three vectors &mdash; People, Infrastructure, Regulation &mdash; bounded by the weakest.</p>
+    <p class="subtitle">Aggregated Intelligence Posture framework. One score across People, Infrastructure, and Regulation. Maturity models have matured.</p>
     <p class="byline">
-      By <a href="https://www.linkedin.com/in/samrogers" target="_blank" rel="noopener author">Sam Rogers</a>, <a href="https://paice.work/" target="_blank" rel="noopener">PAICE.work PBC</a>
+      A <a href="https://paice.work/" target="_blank" rel="noopener">PAICE.work PBC</a> project
       <span class="sep">&middot;</span>
-      Published <time datetime="2026-04-04">April 4, 2026</time>
+      Published <time datetime="2026-04-19">April 19, 2026</time>
       <span class="sep">&middot;</span>
-      Updated <time datetime="2026-04-19">April 19, 2026</time>
+      Updated <time datetime="2026-04-20">April 20, 2026</time>
       <span class="sep">&middot;</span>
-      <span class="version">v0.1.0</span>
+      <span class="version">v0.2.0</span>
       <span class="sep">&middot;</span>
       <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC&nbsp;BY&nbsp;4.0</a>
     </p>
-    <p class="hook">AI governance is three problems, not one. How your people collaborate with AI. How your digital presence works with agents. How you prepare for AI-specific regulation. You are only as mature as your weakest vector.</p>
+    <p class="hook">AI governance isn&rsquo;t just one problem. How your people collaborate with AI, how agent-ready your infrastructure is, how prepared you are for AI-specific regulations, these all matter. Your org is only as strong as the weakest link.</p>
 
     <div class="cta-row">
-      <a href="/assess/" class="btn btn-primary">Take the full assessment &rarr;</a>
+      <a href="/assess/" class="btn btn-primary">Estimate your AI Posture &rarr;</a>
       <a href="#framework" class="btn btn-secondary">Read the framework</a>
     </div>
   </div>
 </section>
 
-<section class="alt" id="picker">
+<section class="alt" id="assessment">
   <div class="container">
-    <div class="picker">
-      <h2>Quick posture check</h2>
-      <p class="picker-intro">Pick your organization&rsquo;s current level on each vector. Your AIP is bounded by the lowest.</p>
-      <div class="picker-grid">
-        <div class="picker-field">
-          <label for="v-people">People</label>
-          <select id="v-people" aria-label="People vector level">
-            <option value="">&mdash; select &mdash;</option>
-            <option value="1">1. Perceiving</option>
-            <option value="2">2. Assessing</option>
-            <option value="3">3. Integrating</option>
-            <option value="4">4. Calibrated</option>
-            <option value="5">5. Engineered</option>
-          </select>
-        </div>
-        <div class="picker-field">
-          <label for="v-infra">Infrastructure</label>
-          <select id="v-infra" aria-label="Infrastructure vector level">
-            <option value="">&mdash; select &mdash;</option>
-            <option value="1">1. Perceiving</option>
-            <option value="2">2. Assessing</option>
-            <option value="3">3. Integrating</option>
-            <option value="4">4. Calibrated</option>
-            <option value="5">5. Engineered</option>
-          </select>
-        </div>
-        <div class="picker-field">
-          <label for="v-reg">Regulation</label>
-          <select id="v-reg" aria-label="Regulation vector level">
-            <option value="">&mdash; select &mdash;</option>
-            <option value="1">1. Perceiving</option>
-            <option value="2">2. Assessing</option>
-            <option value="3">3. Integrating</option>
-            <option value="4">4. Calibrated</option>
-            <option value="5">5. Engineered</option>
-          </select>
-        </div>
+    <div class="assessment-card">
+      <div class="assessment-tag">Pre-assessment</div>
+      <h2>Estimate your AI Posture</h2>
+      <p class="assessment-lead">You&rsquo;re 5-7 minutes from your estimated AI Posture and evidence checklist per vector. No cookies, no cost, no gate.</p>
+      <ul class="assessment-features">
+        <li><strong>Adaptive.</strong> Three openers set scope. Then up to five Bayesian-adaptive questions per in-scope vector. Normally fewer.</li>
+        <li><strong>Estimate-labeled.</strong> A point estimate per vector with full posterior on hover. Aggregate AI Posture bounded by the weakest in-scope vector.</li>
+        <li><strong>Evidence checklist.</strong> Per vector, the artifacts that would turn the estimate into a verified assertion.</li>
+        <li><strong>Client-side.</strong> Answers live in your browser tab. Aggregate analytics only. No personal identifiers.</li>
+      </ul>
+      <div class="cta-row" style="justify-content: flex-start;">
+        <a href="/assess/" class="btn btn-primary">Start the pre-assessment &rarr;</a>
       </div>
-      <div class="picker-result" id="picker-result" aria-live="polite">
-        <p class="aip-note">Select a level on each vector to see your Aggregated Intelligence Posture.</p>
-      </div>
-      <p style="text-align: center; margin-top: 1.25rem; font-size: 0.9rem;">
-        <a href="/assess/">Want a derived score? Take the 15-question assessment &rarr;</a>
-      </p>
     </div>
   </div>
 </section>
@@ -555,7 +501,7 @@
     </div>
 
     <h3 style="margin-top: 2.5rem;">The constraint rule</h3>
-    <p><strong>Your AIP is the minimum of your three vector levels.</strong> An organization Calibrated on People but Perceiving on Regulation has an AIP of Perceiving. This is structural, not a scoring convenience.</p>
+    <p><strong>Your AI Posture is the minimum of your three vector levels.</strong> An organization Calibrated on People but Perceiving on Regulation has an AI Posture of Perceiving. This is structural, not a scoring convenience.</p>
     <p>You cannot be Calibrated on compliance if your people have no evidence of AI collaboration behavior. You cannot be Engineered on People if your infrastructure is not usable by agents. You cannot be Calibrated on Infrastructure if you don&rsquo;t know which standards to build toward. The vectors constrain each other because the domains do.</p>
   </div>
 </section>
@@ -591,20 +537,20 @@
   </div>
 </section>
 
-<section id="assess-cta">
+<section id="spec">
   <div class="container" style="text-align: center;">
-    <h2>Ready for a deeper read?</h2>
-    <p style="max-width: 620px; margin: 0 auto 2rem; color: var(--text-muted);">The quick check above takes your word for it. The full assessment asks fifteen questions &mdash; five per vector &mdash; and derives the level from what you answer. Client-side, nothing transmitted.</p>
+    <h2>Read the spec</h2>
+    <p style="max-width: 620px; margin: 0 auto 2rem; color: var(--text-muted);">The normative definition of AI Posture lives in SPEC.md. It covers the vector set, the five-level model, the constraint rule, decay, and the relationship to NIST AI RMF, ISO/IEC 42001, and the EU AI Act.</p>
     <div class="cta-row">
-      <a href="/assess/" class="btn btn-primary">Take the assessment &rarr;</a>
-      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" class="btn btn-secondary" target="_blank" rel="noopener">Read the spec</a>
+      <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" class="btn btn-primary" target="_blank" rel="noopener">SPEC.md &rarr;</a>
+      <a href="/assess/" class="btn btn-secondary">Estimate your posture</a>
     </div>
 
     <aside class="canonical-note" role="note" style="text-align: left;">
       <strong>Canonical reference.</strong> This page is the authoritative definition of the
       Aggregated Intelligence Posture framework. Any cross-posts or references should cite
       <a href="https://aiposture.org/">aiposture.org</a> as canonical.
-      Last substantive revision: <time datetime="2026-04-19">2026-04-19</time>.
+      Last substantive revision: <time datetime="2026-04-20">2026-04-20</time>.
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/SPEC.md" target="_blank" rel="noopener">Revision history &rarr;</a>
     </aside>
   </div>
@@ -612,70 +558,11 @@
 </main>
 
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-meta">
-        <p>AI Posture v0.1.0 &middot; <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC BY 4.0</a> (spec) &middot; <a href="https://github.com/snapsynapse/ai-posture/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a> (code)</p>
-        <p>A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project by <a href="https://www.linkedin.com/in/samrogers" target="_blank" rel="noopener author">Sam Rogers</a>.</p>
-        <p style="margin-top: 0.5rem;">Three vectors: <a href="https://paice.work/" target="_blank" rel="noopener">PAICE.work</a> &middot; <a href="https://siteline.to/" target="_blank" rel="noopener">Siteline</a> &middot; <a href="https://everyailaw.com/" target="_blank" rel="noopener">EveryAILaw</a></p>
-      </div>
-      <div class="footer-links">
-        <a href="/assess/">Assess</a>
-        <a href="https://github.com/snapsynapse/ai-posture" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md" target="_blank" rel="noopener">Specification</a>
-        <a href="https://github.com/snapsynapse/ai-posture/commits/main/SPEC.md" target="_blank" rel="noopener">Revisions</a>
-        <a href="/llms.txt">llms.txt</a>
-      </div>
-    </div>
+  <div class="container" style="text-align: center;">
+    <p><a href="/">AI Posture</a> &middot; <a href="/assess/">Assess</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a></p>
+    <p style="margin-top: 0.3rem; font-size: 0.8rem;">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
   </div>
 </footer>
-
-<script>
-(function () {
-  var LEVELS = ['Perceiving', 'Assessing', 'Integrating', 'Calibrated', 'Engineered'];
-  var VECTORS = [
-    { id: 'v-people', label: 'People' },
-    { id: 'v-infra',  label: 'Infrastructure' },
-    { id: 'v-reg',    label: 'Regulation' }
-  ];
-  var result = document.getElementById('picker-result');
-
-  function render() {
-    var values = VECTORS.map(function (v) {
-      var el = document.getElementById(v.id);
-      var n = parseInt(el.value, 10);
-      return { label: v.label, n: isNaN(n) ? 0 : n };
-    });
-    if (values.some(function (v) { return v.n === 0; })) {
-      result.innerHTML = '<p class="aip-note">Select a level on each vector to see your Aggregated Intelligence Posture.</p>';
-      return;
-    }
-    var min = Math.min.apply(null, values.map(function (v) { return v.n; }));
-    var constraining = values.filter(function (v) { return v.n === min; }).map(function (v) { return v.label; }).join(', ');
-    var rows = values.map(function (v) {
-      var pct = (v.n / 5) * 100;
-      return '<div class="result-row">' +
-        '<span class="result-label">' + v.label + '</span>' +
-        '<span class="result-bar"><span style="width:' + pct + '%"></span></span>' +
-        '<span class="result-level">' + LEVELS[v.n - 1] + '</span>' +
-      '</div>';
-    }).join('');
-    var nextLevel = min < 5 ? LEVELS[min] : null;
-    var nextAction = nextLevel
-      ? 'Advance ' + constraining + ' to ' + nextLevel + '.'
-      : 'All three vectors are Engineered. Advance the frontier.';
-    result.innerHTML =
-      rows +
-      '<hr>' +
-      '<div class="aip-headline">Aggregated Intelligence Posture: ' + LEVELS[min - 1] + '</div>' +
-      '<div class="aip-note"><strong>Constraining vector:</strong> ' + constraining + '. ' + nextAction + '</div>';
-  }
-
-  VECTORS.forEach(function (v) {
-    document.getElementById(v.id).addEventListener('change', render);
-  });
-})();
-</script>
 
 </body>
 </html>

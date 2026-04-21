@@ -31,18 +31,17 @@ keywords:
   - ai readiness
 
 # Authorship
-author_name: Sam Rogers
-author_url: https://www.linkedin.com/in/samrogers
+# Individual author intentionally omitted — attribution is to PAICE.work PBC.
 publisher_name: PAICE.work PBC
 publisher_url: https://paice.work/
-twitter_handle: "@snapsynapse"
+# twitter_handle intentionally omitted — no social handle on meta tags.
 
 # Dates
-date_published: "2026-04-04"
-date_modified: "2026-04-19"
+date_published: "2026-04-19"
+date_modified: "2026-04-20"
 
 # Versioning
-version: v0.1.0
+version: v0.2.0
 canonical_file: SPEC.md
 
 # Theme
@@ -51,7 +50,7 @@ dark_mode_default: false
 
 # Publish layout
 publish_root: "docs/"
-mode: generate
+mode: enhance
 
 # JSON-LD
 defined_term_alternate_names:
@@ -74,8 +73,15 @@ same_as:
 # Secondary demo
 secondary_demo:
   path: /assess/
-  label: Take the full assessment
+  label: Take the pre-assessment
+
+# Supporting pages
+supporting_pages:
+  - path: /privacy/
+    label: Privacy policy
+  - path: /terms/
+    label: Terms of service
 
 # OG image
-og_image_source: null   # skip; add later
+og_image_source: null   # deferred per owner 2026-04-20
 ```
