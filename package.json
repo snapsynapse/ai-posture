@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-spec.js"
+    "build": "node scripts/build-spec.js",
+    "test": "node --test"
   }
 }

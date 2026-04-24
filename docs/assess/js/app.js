@@ -19,19 +19,26 @@
     } catch (e) { /* ignore */ }
   }
 
-  var tracked = { started: false, completed: false };
-
   // ---------------------------------------------------------------------------
   // Data loading
   // ---------------------------------------------------------------------------
 
   var DATA = { questions: null, likelihoods: null, rubric: null };
 
+  function loadJson(url) {
+    return fetch(url).then(function (r) {
+      if (!r || !r.ok) {
+        throw new Error('Failed to load ' + url + ' (' + (r && typeof r.status !== 'undefined' ? r.status : 'unknown') + ')');
+      }
+      return r.json();
+    });
+  }
+
   function loadAllData() {
     return Promise.all([
-      fetch(DATA_BASE + 'questions.json').then(function (r) { return r.json(); }),
-      fetch(DATA_BASE + 'likelihoods.json').then(function (r) { return r.json(); }),
-      fetch(DATA_BASE + 'rubric.json').then(function (r) { return r.json(); })
+      loadJson(DATA_BASE + 'questions.json'),
+      loadJson(DATA_BASE + 'likelihoods.json'),
+      loadJson(DATA_BASE + 'rubric.json')
     ]).then(function (parts) {
       DATA.questions = parts[0];
       DATA.likelihoods = parts[1];
@@ -53,8 +60,50 @@
     version: '1.0.0',
     scopeLabel: '',
     steps: [],
-    stage: 'start' // start -> O1 -> (probe) -> O2 -> (probe) -> O3 -> (probe) -> bank:Infrastructure -> bank:Regulation -> bank:People -> result
+    stage: 'start', // start -> O1 -> (probe) -> O2 -> (probe) -> O3 -> (probe) -> bank:Infrastructure -> bank:Regulation -> bank:People -> result
+    analytics: {
+      startedTracked: false,
+      completedTracked: false
+    }
   };
+
+  function normalizeState(nextState) {
+    var normalized = nextState || {};
+    if (!normalized.version) normalized.version = '1.0.0';
+    if (!normalized.scopeLabel) normalized.scopeLabel = '';
+    normalized.steps = sanitizeSteps(normalized.steps);
+    if (!normalized.stage) normalized.stage = 'start';
+    if (!normalized.analytics) normalized.analytics = {};
+    normalized.analytics.startedTracked = !!normalized.analytics.startedTracked;
+    normalized.analytics.completedTracked = !!normalized.analytics.completedTracked;
+    return normalized;
+  }
+
+  function sanitizeSteps(steps) {
+    if (!Array.isArray(steps)) return [];
+    var out = [];
+    steps.forEach(function (step) {
+      if (!step || typeof step !== 'object') return;
+      if (step.type === 'opener') {
+        if (typeof step.id !== 'string') return;
+        out.push({ type: 'opener', id: step.id, value: step.value, skip: !!step.skip });
+        return;
+      }
+      if (step.type === 'probe') {
+        if (typeof step.id !== 'string') return;
+        if (step.choice !== 'confirm' && step.choice !== 'revise') return;
+        out.push({ type: 'probe', id: step.id, choice: step.choice });
+        return;
+      }
+      if (step.type === 'bank') {
+        if (VECTOR_ORDER.indexOf(step.vector) < 0) return;
+        if (typeof step.qid !== 'string') return;
+        if (typeof step.optIdx !== 'number' || !isFinite(step.optIdx) || step.optIdx < 0) return;
+        out.push({ type: 'bank', vector: step.vector, qid: step.qid, optIdx: step.optIdx });
+      }
+    });
+    return out;
+  }
 
   function saveDraft() {
     try {
@@ -68,7 +117,7 @@
       if (!raw) return false;
       var parsed = JSON.parse(raw);
       if (parsed && parsed.version === '1.0.0') {
-        state = parsed;
+        state = normalizeState(parsed);
         return true;
       }
     } catch (e) { /* ignore */ }
@@ -245,8 +294,8 @@
       renderBankQuestion(stage.vector);
     } else if (stage.kind === 'result') {
       renderResult();
-      if (!tracked.completed) {
-        tracked.completed = true;
+      if (!state.analytics.completedTracked) {
+        state.analytics.completedTracked = true;
         var r = computePosteriors();
         var modes = {};
         VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
@@ -265,30 +314,48 @@
     saveDraft();
   }
 
-  function progressCounts() {
+  function isVectorComplete(vector, inScope) {
+    if (!inScope[vector]) return true;
+    var answers = bankAnswersByVector()[vector];
+    if (answers.length >= 5) return true;
+    return B.shouldStop(currentPosteriorFor(vector), remainingBankIds(vector));
+  }
+
+  function progressCounts(stage) {
     var openers = currentOpeners();
     var answered = 0;
     var total = 3; // openers
     Object.keys(openers).forEach(function (k) { if (openers[k]) answered++; });
-    // Add bank question counts
     var built;
     try { built = B.buildPriors(openers); } catch (e) { built = { inScope: { Infrastructure: true, Regulation: true, People: true } }; }
-    VECTOR_ORDER.forEach(function (v) {
-      if (built.inScope[v]) total += 5;
-    });
     var banks = bankAnswersByVector();
+    if (stage && stage.kind === 'result') {
+      VECTOR_ORDER.forEach(function (v) {
+        answered += banks[v].length;
+      });
+      return { answered: answered, total: answered };
+    }
     VECTOR_ORDER.forEach(function (v) {
       answered += banks[v].length;
+      if (!built.inScope[v]) return;
+      total += banks[v].length;
+      if (!isVectorComplete(v, built.inScope)) total += 1;
     });
     return { answered: answered, total: total };
   }
 
   function renderProgress(stage) {
-    var pc = progressCounts();
+    var pc = progressCounts(stage);
     var barFill = document.getElementById('bar');
+    var progressLabel = document.getElementById('progress-label');
     if (!barFill) return;
     var pct = pc.total > 0 ? (pc.answered / pc.total) * 100 : 0;
     barFill.style.width = pct + '%';
+    if (progressLabel) {
+      progressLabel.textContent = stage && stage.kind === 'result'
+        ? 'Assessment complete'
+        : pc.answered + ' of ' + pc.total + ' steps complete';
+    }
   }
 
   // --- Opener screen ---
@@ -342,8 +409,8 @@
     // If the user is re-answering this opener, truncate history from its
     // previous location forward (so subsequent answers recompute cleanly).
     truncateFrom({ type: 'opener', id: def.id });
-    if (!tracked.started) {
-      tracked.started = true;
+    if (!state.analytics.startedTracked) {
+      state.analytics.startedTracked = true;
       track('assessment_started', { version: state.version });
     }
     state.steps.push({ type: 'opener', id: def.id, value: value, skip: false });
@@ -494,6 +561,9 @@
       var after = stageFingerprint();
       if (after !== before) break;
     }
+    if (deriveStage().kind !== 'result') {
+      state.analytics.completedTracked = false;
+    }
     render();
   }
 
@@ -515,11 +585,10 @@
   // --- Result screen ---
   function renderResult() {
     var r = computePosteriors();
-    var openers = currentOpeners();
     var modes = {};
     VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
     var aggregate = B.aggregateAIPosture(modes, r.inScope);
-    var aggregateName = aggregate == null ? 'Undefined' : LEVEL_NAMES[aggregate];
+    var aggregateName = aggregate == null ? 'No In-Scope Vectors' : LEVEL_NAMES[aggregate];
 
     // Constraining vector(s): in-scope, level == aggregate.
     var constraining = [];
@@ -533,7 +602,9 @@
       el('div', { class: 'result-tag' }, ['Estimated']),
       el('h2', null, ['AI Posture: ' + aggregateName]),
       el('p', { class: 'result-note' }, [
-        'This is an estimate, not a verified assertion. The evidence checklist below shows what would make it verified per vector.'
+        aggregate == null
+          ? 'Each vector was confirmed out of scope during the opener checks, so no aggregate posture is calculated.'
+          : 'This is an estimate, not a verified assertion. The evidence checklist below shows what would make it verified per vector.'
       ])
     ]));
 
@@ -569,12 +640,20 @@
     wrap.appendChild(el('h3', null, ['Evidence checklist']));
     wrap.appendChild(el('p', { class: 'sub' }, ['Artifacts that would turn this estimate into a verified assertion at each vector\u2019s current estimated level.']));
     VECTOR_ORDER.forEach(function (v) {
-      var lvl = r.inScope[v] ? modes[v] : 0;
+      if (!r.inScope[v]) {
+        wrap.appendChild(el('div', { class: 'evidence-block' }, [
+          el('h4', null, [v + ' — N/A']),
+          el('p', { class: 'assertion' }, ['This vector was confirmed out of scope during the opener check and is excluded from the aggregate posture calculation.']),
+          el('p', { class: 'test' }, ['No evidence checklist applies unless the scope answer changes.'])
+        ]));
+        return;
+      }
+      var lvl = modes[v];
       var rubricEntry = DATA.rubric.vectors[v].find(function (e) { return e.level === lvl; });
       if (!rubricEntry) return;
       var items = (rubricEntry.evidence || []).map(function (t) { return el('li', null, [t]); });
       wrap.appendChild(el('div', { class: 'evidence-block' }, [
-        el('h4', null, [v + ' — ' + rubricEntry.name + (r.inScope[v] ? '' : ' (N/A)')]),
+        el('h4', null, [v + ' — ' + rubricEntry.name]),
         el('p', { class: 'assertion' }, ['\u201C' + rubricEntry.assertion + '\u201D']),
         el('ul', null, items),
         el('p', { class: 'test' }, [el('strong', null, ['Test: ']), rubricEntry.test])
@@ -632,8 +711,44 @@
   function startOver() {
     if (!confirm('Clear all answers and start over?')) return;
     state.steps = [];
+    state.analytics.startedTracked = false;
+    state.analytics.completedTracked = false;
     clearDraft();
     render();
+  }
+
+  if (typeof window !== 'undefined' && window.__AIPostureTestMode) {
+    window.__AIPostureTestHooks = {
+      setData: function (next) { DATA = next; },
+      setRoot: function (nextRoot) { root = nextRoot; },
+      setState: function (nextState) {
+        state = normalizeState(JSON.parse(JSON.stringify(nextState)));
+      },
+      getState: function () { return JSON.parse(JSON.stringify(state)); },
+      setTracked: function (nextTracked) {
+        state.analytics.startedTracked = !!(nextTracked && nextTracked.started);
+        state.analytics.completedTracked = !!(nextTracked && nextTracked.completed);
+      },
+      getTracked: function () {
+        return {
+          started: !!(state.analytics && state.analytics.startedTracked),
+          completed: !!(state.analytics && state.analytics.completedTracked)
+        };
+      },
+      currentOpeners: currentOpeners,
+      bankAnswersByVector: bankAnswersByVector,
+      computePosteriors: computePosteriors,
+      deriveStage: deriveStage,
+      progressCounts: progressCounts,
+      renderProgress: renderProgress,
+      renderResult: renderResult,
+      render: render,
+      startOver: startOver,
+      loadAllData: loadAllData,
+      loadDraft: loadDraft,
+      submitProbe: submitProbe,
+      goBack: goBack
+    };
   }
 
   // ---------------------------------------------------------------------------
@@ -646,7 +761,7 @@
       loadDraft();
       render();
     }).catch(function (err) {
-      root.innerHTML = '<p class="error">Could not load assessment data. ' + String(err) + '</p>';
+      root.innerHTML = '<p class="error">Could not load assessment data. ' + String(err && err.message ? err.message : err) + '</p>';
     });
   }
 

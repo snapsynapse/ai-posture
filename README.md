@@ -26,6 +26,7 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - `docs/` — canonical site source (GitHub Pages root)
 - `docs/spec/` — generated spec page (do not edit directly; run `npm run build`)
 - `docs/assess/` — client-side Bayesian adaptive self-assessment
+- `tests/` — regression, engine, and data-contract tests for the assessment flow
 - `docs/privacy/`, `docs/terms/` — supporting legal pages (beta drafts)
 
 ## Build
@@ -34,6 +35,12 @@ The spec page at `docs/spec/index.html` is generated from `SPEC.md`. After editi
 
 ```
 npm run build
+```
+
+To run the assessment test suite:
+
+```
+npm test
 ```
 
 The script (`scripts/build-spec.js`) reads the YAML frontmatter and Markdown sections from `SPEC.md` and writes a fully rendered HTML page. No dependencies beyond Node.js.
@@ -45,7 +52,13 @@ To update the spec:
 
 ## Analytics and privacy
 
-The site uses PostHog in cookie-less mode. No cross-session user stitching, no autocapture, no session recording. Event payloads record question identifiers and aggregate posture outcomes only, never answer content. Pre-assessment state persists in `sessionStorage` while the tab is open and is never transmitted during the flow. See the privacy policy for the full posture.
+The site uses PostHog in cookie-less mode. No cross-session user stitching, no autocapture, no session recording. Event payloads record question identifiers and aggregate posture outcomes only, never answer content. Pre-assessment state persists in `sessionStorage` while the tab is open and is never transmitted during the flow.
+
+The assessment runtime now treats tracking flags as part of the persisted draft state so reloads and reruns do not double-count or suppress completion events. Stored draft payloads are normalized on load, and malformed steps are dropped rather than trusted.
+
+Adaptive completion is reflected in the visible progress indicator. Vectors explicitly confirmed as out of scope are labeled `N/A`, excluded from the aggregate posture calculation, and do not reuse level-0 `Ignoring` evidence text.
+
+See the privacy policy for the full posture.
 
 ## Governance
 
