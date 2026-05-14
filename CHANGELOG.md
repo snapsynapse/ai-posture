@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.3.1 spec + roadmap + result artifacts - 2026-05-14
+
+Patch release. No scoring, likelihood, prior, or aggregation-rule changes.
+
+- Added `ROADMAP.md` with remaining v1 work, operational follow-up, recalibration gates, and v2 backlog.
+- Added roadmap items for design-basis documentation, public validation backlog, weakest-link stress tests, and adjacent-framework crosswalk.
+- Added result-page verification handoff links and local artifacts: copyable summary, downloadable JSON estimate, and browser print/save-PDF path.
+- Added metadata evals to prevent homepage/spec version drift and verify the homepage repo-updated date wiring.
+- Updated homepage version and metadata from v0.2.0/v0.3.0 drift to v0.3.1.
+- Fixed reporting-format scorecard alignment in the homepage and generated spec page.
+- Updated `HANDOFF.md` to reflect live OG image, local artifact path, and result-page analytics events.
+
+## result artifacts + handoff links - 2026-05-14
+
+Pre-assessment result-page progress against the v1 roadmap.
+
+- Added verification handoff links for People, Infrastructure, Regulation, and generic assessor fallback.
+- Added local result artifacts: copyable plain-text summary, downloadable JSON estimate, and browser print/save-PDF path.
+- Added `handoff_clicked` tracking on result handoff links and `pdf_requested` tracking on print/save-PDF action.
+- Added print CSS for result output.
+- Added regression coverage for handoff rendering and JSON artifact structure.
+- Updated `HANDOFF.md` so the roadmap reflects the live OG image and local artifact path.
+
 ## site + tooling — 2026-04-20
 
 Spec page, AIP→AI Posture terminology, and build pipeline.

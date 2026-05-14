@@ -11,20 +11,22 @@ Current-state snapshot. Prior sessions built the runtime described in [PRD.md](P
   - Stop condition: max posterior ≥ 0.70 or bank exhausted or L0-skip
   - Per-vector mode plus full posterior on hover
   - Evidence checklist per vector pulled from rubric
+  - Verification handoff links for People, Infrastructure, Regulation, and generic assessor path
+  - Local artifacts on the result screen: copyable summary, downloadable JSON estimate, browser print/save-PDF path
   - Back button revises any prior answer, posterior recomputes forward
   - sessionStorage draft persistence, no cookies
 - PostHog cookie-less analytics (`persistence: memory`, `person_profiles: never`, autocapture/recording/heatmaps disabled)
-  - Events: `assessment_started`, `question_answered` (question_id only), `assessment_completed` (per-vector levels + aggregate)
+  - Events: `assessment_started`, `question_answered` (question_id only), `assessment_completed` (per-vector levels + aggregate), `handoff_clicked`, `pdf_requested`
 - Privacy policy at `docs/privacy/` (beta draft, under legal review)
 - Terms of service at `docs/terms/` (beta draft, under legal review)
 - Consistent header and footer across landing, assess, privacy, terms
+- OG image live at `docs/imgs/og.png`
 
 ## Deferred
 
-- Email delivery of PDF and JSON artifacts (would require a backend endpoint; Resend + Vercel identified as likely path, not yet configured)
+- Email delivery of generated artifacts (would require a backend endpoint; Resend + Vercel identified as likely path, not yet configured)
 - Per-run record storage with random-ID retention (deferred with email; no backend in play)
-- PDF generation (client-side via jsPDF planned for v1, not yet wired)
-- OG image (1200×630) for share cards (deferred)
+- Native client-side PDF generation via jsPDF remains deferred. Current v1 path uses browser print/save-PDF.
 - Newsletter capture on landing page (planned to flow into https://paice.substack.com, not yet configured)
 
 ## Open for v1

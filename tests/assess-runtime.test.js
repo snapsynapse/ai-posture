@@ -292,9 +292,41 @@ test('all vectors confirmed N/A produce an undefined aggregate with no constrain
 
   assert.equal(root.textContent.includes('AI Posture: No In-Scope Vectors'), true);
   assert.equal(root.textContent.includes('Advance the frontier.'), false);
-  assert.equal(root.textContent.includes('People — N/A'), true);
-  assert.equal(root.textContent.includes('Regulation — N/A'), true);
-  assert.equal(root.textContent.includes('Infrastructure — N/A'), true);
+  assert.equal(root.textContent.includes('People - N/A'), true);
+  assert.equal(root.textContent.includes('Regulation - N/A'), true);
+  assert.equal(root.textContent.includes('Infrastructure - N/A'), true);
+});
+
+test('result renders verification handoff links', () => {
+  const { hooks, root } = loadRuntime();
+  hooks.setState(completedState());
+
+  hooks.renderResult();
+
+  assert.equal(root.textContent.includes('Paths to verification'), true);
+  assert.equal(root.textContent.includes('People reference implementation - https://paice.work/'), true);
+  assert.equal(root.textContent.includes('Infrastructure reference implementation - https://siteline.to/'), true);
+  assert.equal(root.textContent.includes('Regulation reference implementation - https://everyailaw.com/'), true);
+  assert.equal(root.textContent.includes('Find an assessor - https://paice.foundation/'), true);
+});
+
+test('JSON artifact exposes aggregate, vector posteriors, and estimate notice', () => {
+  const { hooks } = loadRuntime();
+  hooks.setState(completedState());
+
+  const artifact = hooks.buildJsonArtifact();
+
+  assert.equal(artifact.type, 'AI Posture Pre-Assessment Result');
+  assert.equal(artifact.source, 'https://aiposture.org/assess/');
+  assert.equal(artifact.estimate_label, 'estimated AI Posture');
+  assert.equal(artifact.notice, 'This is an estimate, not a verified assertion.');
+  assert.equal(typeof artifact.aggregate.level_name, 'string');
+  assert.deepEqual(Object.keys(artifact.vectors), ['Infrastructure', 'Regulation', 'People']);
+  assert.equal(artifact.vectors.Infrastructure.posterior.length, 6);
+  assert.equal(
+    artifact.vectors.Infrastructure.posterior.reduce((sum, value) => sum + value, 0) > 0.999,
+    true
+  );
 });
 
 test('normalizeState drops malformed stored steps', () => {

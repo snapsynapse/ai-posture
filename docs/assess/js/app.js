@@ -10,6 +10,12 @@
   var STORAGE_KEY = 'aip.assess.v1.draft';
   var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
   var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
+  var HANDOFF_URLS = {
+    People: 'https://paice.work/',
+    Infrastructure: 'https://siteline.to/',
+    Regulation: 'https://everyailaw.com/',
+    Generic: 'https://paice.foundation/'
+  };
 
   function track(event, props) {
     try {
@@ -167,6 +173,26 @@
       }
     });
     return { priors: built.priors, inScope: built.inScope, posteriors: posts };
+  }
+
+  function resultSnapshot() {
+    var r = computePosteriors();
+    var modes = {};
+    VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
+    var aggregate = B.aggregateAIPosture(modes, r.inScope);
+    var aggregateName = aggregate == null ? 'No In-Scope Vectors' : LEVEL_NAMES[aggregate];
+    var constraining = [];
+    VECTOR_ORDER.forEach(function (v) {
+      if (r.inScope[v] && modes[v] === aggregate) constraining.push(v);
+    });
+    return {
+      aggregate: aggregate,
+      aggregateName: aggregateName,
+      modes: modes,
+      inScope: r.inScope,
+      posteriors: r.posteriors,
+      constraining: constraining
+    };
   }
 
   // Decide the current stage given step history.
@@ -584,17 +610,12 @@
 
   // --- Result screen ---
   function renderResult() {
-    var r = computePosteriors();
-    var modes = {};
-    VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
-    var aggregate = B.aggregateAIPosture(modes, r.inScope);
-    var aggregateName = aggregate == null ? 'No In-Scope Vectors' : LEVEL_NAMES[aggregate];
-
-    // Constraining vector(s): in-scope, level == aggregate.
-    var constraining = [];
-    VECTOR_ORDER.forEach(function (v) {
-      if (r.inScope[v] && modes[v] === aggregate) constraining.push(v);
-    });
+    var snapshot = resultSnapshot();
+    var aggregate = snapshot.aggregate;
+    var aggregateName = snapshot.aggregateName;
+    var modes = snapshot.modes;
+    var r = { inScope: snapshot.inScope, posteriors: snapshot.posteriors };
+    var constraining = snapshot.constraining;
 
     var wrap = el('div', { class: 'result' });
 
@@ -642,7 +663,7 @@
     VECTOR_ORDER.forEach(function (v) {
       if (!r.inScope[v]) {
         wrap.appendChild(el('div', { class: 'evidence-block' }, [
-          el('h4', null, [v + ' — N/A']),
+          el('h4', null, [v + ' - N/A']),
           el('p', { class: 'assertion' }, ['This vector was confirmed out of scope during the opener check and is excluded from the aggregate posture calculation.']),
           el('p', { class: 'test' }, ['No evidence checklist applies unless the scope answer changes.'])
         ]));
@@ -653,16 +674,33 @@
       if (!rubricEntry) return;
       var items = (rubricEntry.evidence || []).map(function (t) { return el('li', null, [t]); });
       wrap.appendChild(el('div', { class: 'evidence-block' }, [
-        el('h4', null, [v + ' — ' + rubricEntry.name]),
+        el('h4', null, [v + ' - ' + rubricEntry.name]),
         el('p', { class: 'assertion' }, ['\u201C' + rubricEntry.assertion + '\u201D']),
         el('ul', null, items),
         el('p', { class: 'test' }, [el('strong', null, ['Test: ']), rubricEntry.test])
       ]));
     });
 
+    // Handoff links
+    wrap.appendChild(el('h3', null, ['Paths to verification']));
+    wrap.appendChild(el('ul', { class: 'handoff' }, [
+      handoffItem('People', 'People reference implementation', HANDOFF_URLS.People),
+      handoffItem('Infrastructure', 'Infrastructure reference implementation', HANDOFF_URLS.Infrastructure),
+      handoffItem('Regulation', 'Regulation reference implementation', HANDOFF_URLS.Regulation),
+      handoffItem('Generic', 'Find an assessor', HANDOFF_URLS.Generic)
+    ]));
+
     // Plain-text report block (copyable)
     wrap.appendChild(el('h3', null, ['Shareable summary']));
-    wrap.appendChild(el('pre', { class: 'report' }, [buildTextReport(aggregateName, modes, r.inScope, constraining)]));
+    var textReport = buildTextReport(aggregateName, modes, r.inScope, constraining);
+    wrap.appendChild(el('pre', { class: 'report' }, [textReport]));
+    wrap.appendChild(el('div', { class: 'artifact-actions' }, [
+      el('button', { type: 'button', class: 'btn btn-secondary', onclick: copyTextReport }, ['Copy summary']),
+      el('button', { type: 'button', class: 'btn btn-secondary', onclick: downloadJsonArtifact }, ['Download JSON']),
+      el('button', { type: 'button', class: 'btn btn-secondary', onclick: printResult }, ['Print or save PDF'])
+    ]));
+    wrap.appendChild(el('p', { class: 'artifact-note' }, ['Artifacts are generated in this browser session. Email delivery and retained run records are not deployed yet.']));
+
 
     // What this is not
     wrap.appendChild(el('details', { class: 'not-panel' }, [
@@ -685,6 +723,18 @@
     root.appendChild(wrap);
   }
 
+  function handoffItem(destination, label, url) {
+    return el('li', null, [
+      el('a', {
+        href: url,
+        target: '_blank',
+        rel: 'noopener',
+        onclick: function () { track('handoff_clicked', { destination: destination, url: url }); }
+      }, [label]),
+      ' - ' + url
+    ]);
+  }
+
   function buildTextReport(aggregateName, modes, inScope, constraining) {
     var lines = [];
     lines.push('Aggregated Intelligence Posture (estimated): ' + aggregateName);
@@ -700,6 +750,64 @@
     lines.push('  Source: https://aiposture.org/assess/');
     return lines.join('\n');
   }
+
+  function buildJsonArtifact() {
+    var snapshot = resultSnapshot();
+    var vectors = {};
+    VECTOR_ORDER.forEach(function (v) {
+      vectors[v] = {
+        in_scope: !!snapshot.inScope[v],
+        level: snapshot.inScope[v] ? snapshot.modes[v] : null,
+        level_name: snapshot.inScope[v] ? LEVEL_NAMES[snapshot.modes[v]] : 'N/A',
+        posterior: snapshot.posteriors[v].map(function (x) { return Number(x.toFixed(6)); })
+      };
+    });
+    return {
+      type: 'AI Posture Pre-Assessment Result',
+      version: state.version,
+      generated_at: new Date().toISOString(),
+      source: 'https://aiposture.org/assess/',
+      estimate_label: 'estimated AI Posture',
+      aggregate: {
+        level: snapshot.aggregate,
+        level_name: snapshot.aggregateName
+      },
+      constraining_vectors: snapshot.constraining,
+      vectors: vectors,
+      notice: 'This is an estimate, not a verified assertion.'
+    };
+  }
+
+  function copyTextReport() {
+    var snapshot = resultSnapshot();
+    var report = buildTextReport(snapshot.aggregateName, snapshot.modes, snapshot.inScope, snapshot.constraining);
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(report).catch(function () {
+        alert('Copy failed. Select the summary text manually.');
+      });
+      return;
+    }
+    alert('Clipboard access is unavailable. Select the summary text manually.');
+  }
+
+  function downloadJsonArtifact() {
+    var payload = buildJsonArtifact();
+    var blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'ai-posture-estimate.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function printResult() {
+    track('pdf_requested', { method: 'browser_print' });
+    window.print();
+  }
+
   function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s; }
   function barStr(lvl) {
     var full = 0, empty = 10;
@@ -742,6 +850,8 @@
       progressCounts: progressCounts,
       renderProgress: renderProgress,
       renderResult: renderResult,
+      resultSnapshot: resultSnapshot,
+      buildJsonArtifact: buildJsonArtifact,
       render: render,
       startOver: startOver,
       loadAllData: loadAllData,

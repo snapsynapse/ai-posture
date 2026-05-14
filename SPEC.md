@@ -1,8 +1,8 @@
 ---
-version: v0.3.0
+version: v0.3.1
 status: Published
 published: 2026-04-19
-last_modified: 2026-04-20
+last_modified: 2026-05-14
 license: CC BY 4.0
 ---
 
@@ -99,7 +99,7 @@ Scope: Acme Corp, organizational
 Stamped: 2026-04-20
 Next review: 2026-10-20
 
-  People:          Calibrating     ████████░░    since 2025-09-01
+  People:          Calibrating    ████████░░    since 2025-09-01
   Infrastructure:  Integrating    ██████░░░░    since 2026-02-14
   Regulation:      Assessing      ████░░░░░░    since 2026-04-20
 

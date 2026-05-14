@@ -26,7 +26,7 @@
   <meta property="og:url" content="https://aiposture.org/">
   <meta property="og:locale" content="en_US">
   <meta property="article:published_time" content="2026-04-19T00:00:00Z">
-  <meta property="article:modified_time" content="2026-04-20T00:00:00Z">
+  <meta property="article:modified_time" content="2026-05-14T00:00:00Z">
   <meta property="article:section" content="Open Patterns">
   <meta property="article:tag" content="ai-posture">
   <meta property="article:tag" content="aggregated-intelligence-posture">
@@ -54,7 +54,7 @@
     "url": "https://aiposture.org/",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/" },
     "datePublished": "2026-04-19",
-    "dateModified": "2026-04-20",
+    "dateModified": "2026-05-14",
     "author": {
       "@type": "Organization",
       "name": "PAICE.work PBC",
@@ -433,9 +433,9 @@
     <p class="byline">
       Published <time datetime="2026-04-19">April 19, 2026</time>
       <span class="sep">&middot;</span>
-      Updated <time datetime="2026-04-20">April 20, 2026</time>
+      Repo updated <time id="repo-updated" datetime="2026-04-23">April 23, 2026</time>
       <span class="sep">&middot;</span>
-      <span class="version">v0.2.0</span>
+      <span class="version">v0.3.1</span>
       <span class="sep">&middot;</span>
       <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC&nbsp;BY&nbsp;4.0</a>
     </p>
@@ -519,7 +519,7 @@ Scope: Acme Corp, organizational
 Stamped: 2026-04-20
 Next review: 2026-10-20
 
-  People:          Calibrating     ████████░░    since 2025-09-01
+  People:          Calibrating    ████████░░    since 2025-09-01
   Infrastructure:  Integrating    ██████░░░░    since 2026-02-14
   Regulation:      Assessing      ████░░░░░░    since 2026-04-20
 
@@ -541,7 +541,7 @@ Next review: 2026-10-20
       <strong>Canonical reference.</strong> This page is the authoritative definition of the
       Aggregated Intelligence Posture framework. Any cross-posts or references should cite
       <a href="https://aiposture.org/">aiposture.org</a> as canonical.
-      Last substantive revision: <time datetime="2026-04-20">2026-04-20</time>.
+      Last substantive revision: <time datetime="2026-05-14">2026-05-14</time>.
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/SPEC.md" target="_blank" rel="noopener">Revision history &rarr;</a>
     </aside>
   </div>
@@ -554,5 +554,33 @@ Next review: 2026-10-20
   </div>
 </footer>
 
+<script>
+(function () {
+  'use strict';
+
+  var updated = document.getElementById('repo-updated');
+  if (!updated || typeof fetch !== 'function') return;
+
+  fetch('https://api.github.com/repos/snapsynapse/ai-posture', {
+    headers: { Accept: 'application/vnd.github+json' }
+  })
+    .then(function (response) {
+      if (!response.ok) throw new Error('GitHub API unavailable');
+      return response.json();
+    })
+    .then(function (repo) {
+      if (!repo || !repo.pushed_at) return;
+      var pushed = new Date(repo.pushed_at);
+      if (Number.isNaN(pushed.getTime())) return;
+      updated.setAttribute('datetime', pushed.toISOString().slice(0, 10));
+      updated.textContent = pushed.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    })
+    .catch(function () {});
+})();
+</script>
 </body>
 </html>

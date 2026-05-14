@@ -177,6 +177,9 @@
     .handoff li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
     .handoff li:last-child { border-bottom: none; }
 
+    .artifact-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0.75rem 0 1.5rem; }
+    .artifact-note { font-size: 0.85rem; color: var(--text-muted); margin-top: -0.75rem; margin-bottom: 1.25rem; }
+
     .report { background: #0f1117; color: #e1e4ed; padding: 1rem 1.25rem; border-radius: 8px; font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; overflow-x: auto; white-space: pre; }
 
     .not-panel { margin-top: 1.5rem; padding: 0.85rem 1rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; }
@@ -194,6 +197,16 @@
       .q-text { font-size: 1.1rem; }
       .vrow .vlabel { width: 7em; }
       .vrow .vlevel { width: 5.5em; }
+    }
+
+    @media print {
+      nav, .progress, footer, .q-actions, .artifact-actions, .artifact-note, .not-panel { display: none !important; }
+      body { background: #fff; color: #111827; }
+      main { padding: 0; }
+      .container { max-width: none; padding: 0; }
+      .result { padding: 0; }
+      .report { white-space: pre-wrap; color: #111827; background: #fff; border: 1px solid #d1d5db; }
+      a { color: #111827; text-decoration: underline; }
     }
   </style>
 </head>
