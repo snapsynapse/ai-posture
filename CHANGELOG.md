@@ -1,5 +1,18 @@
 # Changelog
 
+## GuideCheck adoption - 2026-05-25
+
+Assistant-facing instruction surface update. No scoring, likelihood, prior, or aggregation-rule changes.
+
+- Added a GuideCheck Human-Verifiable Assistant Guide artifact at `docs/.well-known/assistant-guide.txt`.
+- Added a Level 4 sidecar manifest at `docs/.well-known/assistant-guide-manifest.json`.
+- Added a repository hash anchor at `assistant-guide.sha256`.
+- Added a byte-identical repository-root mirror at `assistant-guide.txt` for source review.
+- Added assistant-guide discovery from all public HTML page heads, footers, `docs/llms.txt`, and `docs/sitemap.xml`.
+- Corrected stale `docs/llms.txt` spec version and Level 0 terminology.
+- Documented the adoption in `README.md`, `HANDOFF.md`, and standards-level `INTENT.md`.
+- Added metadata evals for assistant-guide discovery, manifest integrity, byte-profile limits, and `llms.txt` terminology drift.
+
 ## v0.3.1 spec + roadmap + result artifacts - 2026-05-14
 
 Patch release. No scoring, likelihood, prior, or aggregation-rule changes.

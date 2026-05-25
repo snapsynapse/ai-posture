@@ -21,6 +21,10 @@ Current-state snapshot. Prior sessions built the runtime described in [PRD.md](P
 - Terms of service at `docs/terms/` (beta draft, under legal review)
 - Consistent header and footer across landing, assess, privacy, terms
 - OG image live at `docs/imgs/og.png`
+- GuideCheck Level 4 assistant guide at `docs/.well-known/assistant-guide.txt`
+  - Sidecar manifest at `docs/.well-known/assistant-guide-manifest.json`
+  - Repository mirror at `assistant-guide.txt`
+  - Hash anchor at `assistant-guide.sha256`
 
 ## Deferred
 
@@ -49,7 +53,7 @@ Current-state snapshot. Prior sessions built the runtime described in [PRD.md](P
 2. **No em dashes. No semicolons.** In all user-facing copy.
 3. **Bare-domain URLs with https.** Never www. Never http.
 4. **Back button works on every question screen except the first opener.** Posterior recomputes forward on revision.
-5. **L0-skip rule.** If opener indicates Ignoring for a vector, skip the bank and report L0 with educational framing.
+5. **L0-skip rule.** If opener indicates N/A for a vector, skip the bank and report N/A with educational framing.
 6. **N/A is falsifiable.** Educational follow-up dialog required for any N/A declaration.
 7. **Uncertainty visible.** Point estimate primary, full posterior on hover.
 8. **Estimate labeling.** Result always labeled "estimated AI Posture." Never "verified" or "assessed."
@@ -64,4 +68,4 @@ Current-state snapshot. Prior sessions built the runtime described in [PRD.md](P
 
 ## Governance
 
-Stewarded by PAICE.work PBC. Transition to an independent steward (PAICE Foundation) is planned. Structural decisions captured in [CHANGELOG.md](CHANGELOG.md). Questions on intent should reference SPEC.md v0.3.0 and PRD.md v0.1.1 (dated 2026-04-20).
+Stewarded by PAICE.work PBC. Transition to an independent steward (PAICE Foundation) is planned. Structural decisions captured in [CHANGELOG.md](CHANGELOG.md). Questions on intent should reference SPEC.md v0.3.1 and PRD.md v0.1.1.

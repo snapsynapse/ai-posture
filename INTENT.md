@@ -1,7 +1,7 @@
 ---
 title: "AI Posture INTENT"
-version: "0.1.0"
-last_updated: 2026-04-20
+version: "0.1.1"
+last_updated: 2026-05-25
 status: working-hypothesis
 description: "Standards-level strategy for the AI Posture framework. Subscribes to portfolio-level working hypotheses. Defines stewardship principles, vector admission criteria, recalibration gates, contribution norms."
 tags: [intent, strategy, ai-posture, standards]
@@ -28,6 +28,8 @@ Position within portfolio: AI Posture is the first category-ownership claim unde
 4. **Bounded by the weakest in-scope vector.** The constraint rule is structural, not a scoring convenience. Domains constrain each other in practice; the framework expresses that reality.
 
 5. **Time-stamped assertion, not guarantee.** Every posture report has a next-review date and decays as a signal. Duration at level is a trust signal, not a gate.
+
+6. **Assistant-facing instructions are human-verifiable.** AI Posture adopts the GuideCheck Human-Verifiable Assistant Guide profile for repository and site maintenance instructions. The canonical artifact is `https://aiposture.org/.well-known/assistant-guide.txt`, with a Level 4 sidecar manifest and a byte-identical repository-root mirror for source review.
 
 ## Vector admission criteria
 
@@ -93,7 +95,7 @@ Subscribes to: Measurement Authority, Calibration Compounding (both from the por
 
 Current tier: working hypothesis.
 
-Last review: 2026-04-20.
+Last review: 2026-05-25.
 
 Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment completions, whichever comes first.
 
@@ -106,4 +108,5 @@ Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment c
 
 ## Changelog
 
+- 2026-05-25 v0.1.1 - Adopted GuideCheck for assistant-facing repository maintenance instructions. Added canonical `assistant-guide.txt` publication path, Level 4 sidecar manifest, repository hash anchor, and repository mirror requirement.
 - **2026-04-20 v0.1.0** — Initial standards-level INTENT. Subscribes to portfolio working hypotheses. Formalizes stewardship principles, vector admission criteria, recalibration gates, contribution norms, and relationship to reference implementations.

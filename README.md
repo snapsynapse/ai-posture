@@ -8,6 +8,7 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - Specification: [SPEC.md](SPEC.md)
 - Pre-assessment PRD: [PRD.md](PRD.md)
 - Self-assessment: https://aiposture.org/assess/
+- Assistant guide: https://aiposture.org/.well-known/assistant-guide.txt
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
 
@@ -24,6 +25,8 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - `CHANGELOG.md` — spec and PRD change log
 - `scripts/build-spec.js` — generates `docs/spec/index.html` from `SPEC.md`
 - `docs/` — canonical site source (GitHub Pages root)
+- `docs/.well-known/assistant-guide.txt` — GuideCheck Human-Verifiable Assistant Guide profile artifact
+- `docs/.well-known/assistant-guide-manifest.json` — GuideCheck Level 4 sidecar manifest
 - `docs/spec/` — generated spec page (do not edit directly; run `npm run build`)
 - `docs/assess/` — client-side Bayesian adaptive self-assessment
 - `tests/` — regression, engine, and data-contract tests for the assessment flow
@@ -65,6 +68,12 @@ See the privacy policy for the full posture.
 Stewarded by PAICE.work PBC (US public benefit corporation). A transition to an independent steward (PAICE Foundation) is planned.
 
 Contributions from outside the current steward's product line are welcome. The spec does not favor any particular reference implementation.
+
+## Assistant guide
+
+AI Posture adopts the GuideCheck Human-Verifiable Assistant Guide profile for assistant-facing repository maintenance instructions. The public artifact is served at https://aiposture.org/.well-known/assistant-guide.txt and mirrored at repository root as `assistant-guide.txt`.
+
+The guide publishes a Level 4 sidecar manifest at https://aiposture.org/.well-known/assistant-guide-manifest.json. The repository hash anchor is `assistant-guide.sha256`.
 
 ## License
 
