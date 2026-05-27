@@ -1,9 +1,9 @@
 # AI Posture Pre-Assessment PRD
 
-Version: v0.1.1
+Version: v0.1.2
 Status: Draft
-Last modified: 2026-04-20
-Related spec: SPEC.md (v0.3.0)
+Last modified: 2026-05-27
+Related spec: SPEC.md (v0.3.2)
 Canonical URL: https://aiposture.org/assess/
 
 ## Purpose

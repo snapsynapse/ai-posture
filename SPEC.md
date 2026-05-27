@@ -1,8 +1,8 @@
 ---
-version: v0.3.1
+version: v0.3.2
 status: Published
 published: 2026-04-19
-last_modified: 2026-05-14
+last_modified: 2026-05-27
 license: CC BY 4.0
 ---
 

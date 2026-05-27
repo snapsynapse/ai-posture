@@ -1,9 +1,10 @@
 # Changelog
 
-## positioning research notes - 2026-05-27
+## v0.3.2 spec + agent surfaces - 2026-05-27
 
-Non-normative support material, contribution surfaces, and machine-readable artifacts for framework positioning and validation. No scoring, likelihood, prior, or aggregation-rule changes.
+Patch release. Non-normative support material, contribution surfaces, and machine-readable artifacts for framework positioning and validation. No scoring, likelihood, prior, or aggregation-rule changes.
 
+- Bumped SPEC.md to v0.3.2, PRD.md to v0.1.2, and package.json to 0.3.2.
 - Added `docs/research/README.md` as the research notes index.
 - Added `docs/research/design-basis-open-questions.md` to document design assumptions, open questions, and revision triggers.
 - Added `docs/research/validation-backlog.md` to turn framework assumptions into testable validation questions.
