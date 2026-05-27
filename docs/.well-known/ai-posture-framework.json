@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "name": "AI Posture",
+  "formal_name": "Aggregated Intelligence Posture",
+  "description": "A unified maturity assertion for human-AI collaboration across in-scope vectors, bounded by the weakest vector.",
+  "canonical_url": "https://aiposture.org/",
+  "repository_url": "https://github.com/snapsynapse/ai-posture",
+  "spec": {
+    "version": "v0.3.1",
+    "status": "Published",
+    "url": "https://aiposture.org/spec/",
+    "source_url": "https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md",
+    "license": "CC BY 4.0"
+  },
+  "pre_assessment": {
+    "url": "https://aiposture.org/assess/",
+    "label": "estimated AI Posture",
+    "verified": false,
+    "notice": "This is an estimate, not a verified assertion."
+  },
+  "constraint_rule": {
+    "summary": "AI Posture equals the minimum of the in-scope vector levels.",
+    "aggregation": "minimum",
+    "na_vectors_excluded": true,
+    "falsified_na_invalidates_assertion": true
+  },
+  "vectors": [
+    {
+      "name": "People",
+      "span": "Inside-out",
+      "measures": "How effectively humans in the organization collaborate with AI.",
+      "artifact_class": "Behavioral assessment with verifiable telemetry",
+      "reference_implementation": "https://paice.work/"
+    },
+    {
+      "name": "Infrastructure",
+      "span": "Bottom-up through outer surface",
+      "measures": "How ready the organization's digital systems are for AI agent interaction.",
+      "artifact_class": "Agent-readiness scans, machine-readable declarations, structured identifiers",
+      "reference_implementation": "https://siteline.to/"
+    },
+    {
+      "name": "Regulation",
+      "span": "Top-down",
+      "measures": "How completely the organization has met its AI-specific obligations across binding jurisdictions.",
+      "artifact_class": "Obligation register with verifiable coverage, recorded interpretations with authorities",
+      "reference_implementation": "https://everyailaw.com/"
+    }
+  ],
+  "levels": [
+    {
+      "level": 0,
+      "name": "N/A",
+      "meaning": "The vector does not apply to this organization at this time."
+    },
+    {
+      "level": 1,
+      "name": "Perceiving",
+      "meaning": "The organization is aware the domain exists but has not acted."
+    },
+    {
+      "level": 2,
+      "name": "Assessing",
+      "meaning": "The organization has begun inventorying its state but has no deliberate practice."
+    },
+    {
+      "level": 3,
+      "name": "Integrating",
+      "meaning": "Deliberate practice is in place and evidence is starting to accumulate."
+    },
+    {
+      "level": 4,
+      "name": "Calibrating",
+      "meaning": "Practice is measured, tuned, and defensible to outside inspection."
+    },
+    {
+      "level": 5,
+      "name": "Engineering",
+      "meaning": "Practice is systematized and the organization advances the frontier rather than catching up."
+    }
+  ],
+  "agent_resources": {
+    "llms": "https://aiposture.org/llms.txt",
+    "assistant_guide": "https://aiposture.org/.well-known/assistant-guide.txt",
+    "assistant_guide_manifest": "https://aiposture.org/.well-known/assistant-guide-manifest.json",
+    "estimate_result_schema": "https://aiposture.org/assess/schema/estimate-result.schema.json"
+  }
+}

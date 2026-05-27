@@ -9,6 +9,8 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - Pre-assessment PRD: [PRD.md](PRD.md)
 - Self-assessment: https://aiposture.org/assess/
 - Assistant guide: https://aiposture.org/.well-known/assistant-guide.txt
+- Framework profile: https://aiposture.org/.well-known/ai-posture-framework.json
+- Estimate result schema: https://aiposture.org/assess/schema/estimate-result.schema.json
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
 
@@ -22,6 +24,7 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 
 - `SPEC.md` — normative specification (YAML frontmatter + Markdown body)
 - `PRD.md` — pre-assessment product requirements (question bank, likelihood tables, rubric tables, runtime flow)
+- `CONTRIBUTING.md` - contribution boundaries and verification guidance
 - `CHANGELOG.md` — spec and PRD change log
 - `scripts/build-spec.js` — generates `docs/spec/index.html` from `SPEC.md`
 - `docs/` — canonical site source (GitHub Pages root)
@@ -29,6 +32,10 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - `docs/.well-known/assistant-guide-manifest.json` — GuideCheck Level 4 sidecar manifest
 - `docs/spec/` — generated spec page (do not edit directly; run `npm run build`)
 - `docs/assess/` — client-side Bayesian adaptive self-assessment
+- `docs/assess/schema/` - JSON Schema for local assessment artifacts
+- `docs/.well-known/ai-posture-framework.json` - machine-readable framework profile
+- `docs/research/` - non-normative design basis, validation backlog, stress tests, and positioning crosswalk
+- `.github/ISSUE_TEMPLATE/` - structured intake for spec changes, vector proposals, validation findings, and terminology feedback
 - `tests/` — regression, engine, and data-contract tests for the assessment flow
 - `docs/privacy/`, `docs/terms/` — supporting legal pages (beta drafts)
 
@@ -68,6 +75,16 @@ See the privacy policy for the full posture.
 Stewarded by PAICE.work PBC (US public benefit corporation). A transition to an independent steward (PAICE Foundation) is planned.
 
 Contributions from outside the current steward's product line are welcome. The spec does not favor any particular reference implementation.
+
+## Research notes
+
+Non-normative positioning and validation notes live in `docs/research/`:
+
+- [Research notes index](docs/research/README.md)
+- [Design basis and open questions](docs/research/design-basis-open-questions.md)
+- [Validation backlog](docs/research/validation-backlog.md)
+- [Weakest-link and level-semantics stress tests](docs/research/weakest-link-stress-tests.md)
+- [Adjacent-framework crosswalk](docs/research/adjacent-framework-crosswalk.md)
 
 ## Assistant guide
 

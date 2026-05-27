@@ -32,8 +32,18 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 - [Self-assessment](https://aiposture.org/assess/): Bayesian adaptive pre-assessment
 - [Assistant Guide](https://aiposture.org/.well-known/assistant-guide.txt): bounded assistant maintenance instructions
 - [Assistant Guide Manifest](https://aiposture.org/.well-known/assistant-guide-manifest.json): GuideCheck Level 4 sidecar manifest
+- [Framework Profile](https://aiposture.org/.well-known/ai-posture-framework.json): machine-readable framework terms, vectors, levels, and key agent resources
+- [Estimate Result Schema](https://aiposture.org/assess/schema/estimate-result.schema.json): JSON Schema for downloadable pre-assessment estimate artifacts
 - [Privacy policy](https://aiposture.org/privacy/): Data handling, retention, cookie-less analytics posture
 - [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), beta notice, warranty disclaimers
+
+## Positioning and validation
+
+- [Research notes index](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/README.md): entry point for non-normative positioning and validation support
+- [Design basis and open questions](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/design-basis-open-questions.md): design assumptions, provisional questions, and revision triggers
+- [Validation backlog](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/validation-backlog.md): testable assumptions and data-model implications
+- [Weakest-link stress tests](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/weakest-link-stress-tests.md): edge cases for minimum-vector aggregation and shared level semantics
+- [Adjacent-framework crosswalk](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/adjacent-framework-crosswalk.md): relationship to governance, risk, compliance, maturity, and behavior-change models
 
 ## Links
 

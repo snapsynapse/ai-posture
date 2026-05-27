@@ -1,5 +1,22 @@
 # Changelog
 
+## positioning research notes - 2026-05-27
+
+Non-normative support material, contribution surfaces, and machine-readable artifacts for framework positioning and validation. No scoring, likelihood, prior, or aggregation-rule changes.
+
+- Added `docs/research/README.md` as the research notes index.
+- Added `docs/research/design-basis-open-questions.md` to document design assumptions, open questions, and revision triggers.
+- Added `docs/research/validation-backlog.md` to turn framework assumptions into testable validation questions.
+- Added `docs/research/weakest-link-stress-tests.md` to pressure-test minimum-vector aggregation and shared level semantics.
+- Added `docs/research/adjacent-framework-crosswalk.md` to clarify how AI Posture relates to governance, risk, compliance, maturity, and behavior-change models.
+- Added `docs/.well-known/ai-posture-framework.json` as a machine-readable framework profile.
+- Added `docs/assess/schema/estimate-result.schema.json` for downloadable estimate artifacts.
+- Extended downloadable estimate artifacts with scope and per-vector evidence checklist fields.
+- Added `CONTRIBUTING.md` and issue templates for spec changes, vector proposals, validation findings, and terminology feedback.
+- Added framework profile and estimate schema discovery from `docs/llms.txt` and `docs/sitemap.xml`.
+- Linked the research notes from `README.md` and marked the related ROADMAP items complete.
+- Added `HANDOFF.md` to `.gitignore` and removed it from the tracked index so future handoff notes remain local.
+
 ## GuideCheck adoption - 2026-05-25
 
 Assistant-facing instruction surface update. No scoring, likelihood, prior, or aggregation-rule changes.

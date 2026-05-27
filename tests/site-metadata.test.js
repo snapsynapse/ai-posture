@@ -13,6 +13,9 @@ const TERMS = fs.readFileSync(path.join(ROOT, 'docs/terms/index.html'), 'utf8');
 const NOT_FOUND = fs.readFileSync(path.join(ROOT, 'docs/404.html'), 'utf8');
 const LLMS = fs.readFileSync(path.join(ROOT, 'docs/llms.txt'), 'utf8');
 const SITEMAP = fs.readFileSync(path.join(ROOT, 'docs/sitemap.xml'), 'utf8');
+const FRAMEWORK_PROFILE = JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/.well-known/ai-posture-framework.json'), 'utf8'));
+const ESTIMATE_SCHEMA = JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/assess/schema/estimate-result.schema.json'), 'utf8'));
+const CONTRIBUTING = fs.readFileSync(path.join(ROOT, 'CONTRIBUTING.md'), 'utf8');
 
 function frontmatter(markdown) {
   const match = markdown.match(/^---\n([\s\S]*?)\n---/);
@@ -71,10 +74,69 @@ test('public metadata discovers the assistant guide', () => {
   assert.equal(SITEMAP.includes('https://aiposture.org/.well-known/assistant-guide-manifest.json'), true);
 });
 
+test('public metadata discovers machine-readable framework surfaces', () => {
+  const frameworkUrl = 'https://aiposture.org/.well-known/ai-posture-framework.json';
+  const schemaUrl = 'https://aiposture.org/assess/schema/estimate-result.schema.json';
+
+  assert.equal(LLMS.includes(frameworkUrl), true);
+  assert.equal(LLMS.includes(schemaUrl), true);
+  assert.equal(SITEMAP.includes(frameworkUrl), true);
+  assert.equal(SITEMAP.includes(schemaUrl), true);
+  assert.equal(FRAMEWORK_PROFILE.agent_resources.estimate_result_schema, schemaUrl);
+  assert.equal(ESTIMATE_SCHEMA.$id, schemaUrl);
+});
+
+test('framework profile follows current spec terminology and version', () => {
+  const fm = frontmatter(SPEC);
+
+  assert.equal(FRAMEWORK_PROFILE.spec.version, fm.version);
+  assert.equal(FRAMEWORK_PROFILE.spec.status, fm.status);
+  assert.equal(FRAMEWORK_PROFILE.canonical_url, 'https://aiposture.org/');
+  assert.equal(FRAMEWORK_PROFILE.constraint_rule.aggregation, 'minimum');
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.vectors.map(vector => vector.name),
+    ['People', 'Infrastructure', 'Regulation']
+  );
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.levels.map(level => level.name),
+    ['N/A', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering']
+  );
+});
+
+test('estimate result schema matches runtime artifact contract', () => {
+  assert.equal(ESTIMATE_SCHEMA.properties.type.const, 'AI Posture Pre-Assessment Result');
+  assert.equal(ESTIMATE_SCHEMA.properties.source.const, 'https://aiposture.org/assess/');
+  assert.equal(ESTIMATE_SCHEMA.properties.estimate_label.const, 'estimated AI Posture');
+  assert.equal(ESTIMATE_SCHEMA.properties.notice.const, 'This is an estimate, not a verified assertion.');
+  assert.equal(ESTIMATE_SCHEMA.required.includes('scope'), true);
+  assert.equal(ESTIMATE_SCHEMA.required.includes('vectors'), true);
+  assert.equal(
+    ESTIMATE_SCHEMA.$defs.vector_result.required.includes('evidence_checklist'),
+    true
+  );
+});
+
+test('contribution intake surfaces exist for framework feedback', () => {
+  const templates = [
+    '.github/ISSUE_TEMPLATE/spec-change.md',
+    '.github/ISSUE_TEMPLATE/vector-proposal.md',
+    '.github/ISSUE_TEMPLATE/validation-finding.md',
+    '.github/ISSUE_TEMPLATE/copy-terminology.md'
+  ];
+
+  assert.equal(CONTRIBUTING.includes('Vector proposals must satisfy the published admission criteria'), true);
+
+  for (const template of templates) {
+    assert.equal(fs.existsSync(path.join(ROOT, template)), true, `${template} must exist`);
+  }
+});
+
 test('llms summary does not drift from current spec terminology', () => {
   const fm = frontmatter(SPEC);
 
   assert.equal(LLMS.includes(`Normative specification (${fm.version})`), true);
   assert.equal(LLMS.includes('Level 0 (Ignoring)'), false);
   assert.equal(LLMS.includes('Level 0 is a falsifiable scope boundary'), true);
+  assert.equal(LLMS.includes('Positioning and validation'), true);
+  assert.equal(LLMS.includes('docs/research/README.md'), true);
 });

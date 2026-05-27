@@ -140,7 +140,7 @@ Acceptance criteria:
 
 ### 7. Design basis and open questions note
 
-Status: proposed from external handoff, accepted as roadmap candidate.
+Status: complete.
 
 Intent fit: strong. The INTENT document frames AI Posture as a working hypothesis under Measurement Authority and Calibration Compounding. A thin rationale layer makes those bets inspectable without making the core spec academic.
 
@@ -148,13 +148,14 @@ Spec fit: strong if kept separate from SPEC.md. SPEC.md already contains the fir
 
 PRD fit: indirect. The PRD is about the pre-assessment product. This artifact supports credibility, reviewer alignment, and future calibration, but it should not block the remaining v1 runtime work.
 
-Work remaining:
+Artifact: [docs/research/design-basis-open-questions.md](docs/research/design-basis-open-questions.md)
 
-- Create `docs/research/design-basis-open-questions.md` or equivalent.
-- Keep it under 900 words.
-- Cover observable artifacts, minimum-vector aggregation, time-stamped assertions, provisional assumptions, and revision triggers.
-- Link to it from README.md and ROADMAP.md, not from the first screen of the product.
-- Do not include citation placeholders or named-reader framing.
+Completed:
+
+- Created a non-normative design-basis note under `docs/research/`.
+- Covered observable artifacts, minimum-vector aggregation, time-stamped assertions, provisional assumptions, and revision triggers.
+- Linked it from README.md and ROADMAP.md, not from the first screen of the product.
+- Avoided citation placeholders and named-reader framing.
 
 Acceptance criteria:
 
@@ -165,7 +166,7 @@ Acceptance criteria:
 
 ### 8. Public validation backlog
 
-Status: proposed from external handoff, accepted as roadmap candidate.
+Status: complete.
 
 Intent fit: strong. This directly supports recalibration gates and contribution norms.
 
@@ -173,12 +174,14 @@ Spec fit: strong. It should test the assumptions already named in SPEC.md: cross
 
 PRD fit: strong if sequenced before retained run records. The delivery backend and record model should preserve enough data to support later validation without violating the privacy model.
 
-Work remaining:
+Artifact: [docs/research/validation-backlog.md](docs/research/validation-backlog.md)
 
-- Create `docs/research/validation-backlog.md`.
-- Group validation questions into construct validity, inter-rater reliability, cross-vector comparability, freshness semantics, weakest-link validity, and stakeholder interpretability.
-- For each question, name likely data source, lightweight method, and what finding would trigger a spec or PRD revision.
-- Identify which validation questions require retained run records, verified follow-up assessments, or qualitative reviewer feedback.
+Completed:
+
+- Created a validation backlog under `docs/research/`.
+- Grouped validation questions into construct validity, inter-rater reliability, cross-vector comparability, freshness semantics, weakest-link validity, stakeholder interpretability, and vector sufficiency.
+- Named likely data sources, lightweight methods, and revision triggers.
+- Documented data-model implications for retained records, verified follow-up matching, and qualitative reviewer feedback.
 
 Acceptance criteria:
 
@@ -188,7 +191,7 @@ Acceptance criteria:
 
 ### 9. Weakest-link and level-semantics stress tests
 
-Status: proposed from external handoff, accepted as roadmap candidate.
+Status: complete.
 
 Intent fit: strong. This pressure-tests the two design choices most likely to attract serious critique.
 
@@ -196,12 +199,14 @@ Spec fit: strong. The constraint rule and shared level semantics are normative i
 
 PRD fit: moderate. Results may change explanatory copy, result guidance, or future question-bank design. They should not change scoring without a spec revision.
 
-Work remaining:
+Artifact: [docs/research/weakest-link-stress-tests.md](docs/research/weakest-link-stress-tests.md)
 
-- Generate edge-case scenarios where minimum-vector aggregation feels surprising.
-- Classify each scenario as keep rule, improve guidance, or candidate spec revision.
-- Review whether Perceiving, Assessing, Integrating, Calibrating, and Engineering carry equivalent weight across People, Infrastructure, and Regulation.
-- Convert accepted findings into copy changes, validation backlog items, or spec issues.
+Completed:
+
+- Generated edge-case scenarios where minimum-vector aggregation may feel surprising.
+- Classified scenarios as keep rule, improve guidance, or candidate spec revision.
+- Reviewed level-name semantics across People, Infrastructure, and Regulation.
+- Captured watchpoints for future copy changes, validation backlog items, or spec issues.
 
 Acceptance criteria:
 
@@ -211,7 +216,7 @@ Acceptance criteria:
 
 ### 10. Adjacent-framework crosswalk
 
-Status: proposed from external handoff, accepted as lower-priority roadmap candidate.
+Status: complete.
 
 Intent fit: moderate to strong. It supports contribution and reviewer conversations, but it is not required for the product to function.
 
@@ -219,11 +224,13 @@ Spec fit: strong if scoped carefully. SPEC.md already states orthogonality to NI
 
 PRD fit: low. This is ecosystem positioning, not pre-assessment runtime work.
 
-Work remaining:
+Artifact: [docs/research/adjacent-framework-crosswalk.md](docs/research/adjacent-framework-crosswalk.md)
 
-- Create a concise crosswalk against governance management systems, risk frameworks, capability maturity models, and behavior-change/adoption models.
-- Compare unit of analysis, evidence type, aggregation logic, treatment of time, treatment of human behavior, and usefulness for boards and regulators.
-- Keep named third-party comparisons out of public docs unless sources are verified and stable.
+Completed:
+
+- Created a concise crosswalk against governance management systems, risk frameworks, compliance and legal conformance programs, capability maturity models, and behavior-change/adoption models.
+- Compared unit of analysis, evidence type, aggregation logic, treatment of time, treatment of human behavior, and usefulness for boards, regulators, partners, customers, practitioners, and agents.
+- Kept named third-party comparisons out of public docs.
 
 Acceptance criteria:
 

@@ -755,11 +755,17 @@
     var snapshot = resultSnapshot();
     var vectors = {};
     VECTOR_ORDER.forEach(function (v) {
+      var rubricRows = DATA.rubric && DATA.rubric.vectors && DATA.rubric.vectors[v];
+      var rubricRow = null;
+      if (snapshot.inScope[v] && Array.isArray(rubricRows)) {
+        rubricRow = rubricRows.find(function (row) { return row.level === snapshot.modes[v]; });
+      }
       vectors[v] = {
         in_scope: !!snapshot.inScope[v],
         level: snapshot.inScope[v] ? snapshot.modes[v] : null,
         level_name: snapshot.inScope[v] ? LEVEL_NAMES[snapshot.modes[v]] : 'N/A',
-        posterior: snapshot.posteriors[v].map(function (x) { return Number(x.toFixed(6)); })
+        posterior: snapshot.posteriors[v].map(function (x) { return Number(x.toFixed(6)); }),
+        evidence_checklist: rubricRow && Array.isArray(rubricRow.evidence) ? rubricRow.evidence.slice() : []
       };
     });
     return {
@@ -768,6 +774,9 @@
       generated_at: new Date().toISOString(),
       source: 'https://aiposture.org/assess/',
       estimate_label: 'estimated AI Posture',
+      scope: {
+        label: state.scopeLabel || null
+      },
       aggregate: {
         level: snapshot.aggregate,
         level_name: snapshot.aggregateName

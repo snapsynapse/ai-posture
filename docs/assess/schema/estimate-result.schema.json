@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiposture.org/assess/schema/estimate-result.schema.json",
+  "title": "AI Posture Pre-Assessment Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "version",
+    "generated_at",
+    "source",
+    "estimate_label",
+    "scope",
+    "aggregate",
+    "constraining_vectors",
+    "vectors",
+    "notice"
+  ],
+  "properties": {
+    "type": { "const": "AI Posture Pre-Assessment Result" },
+    "version": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source": { "const": "https://aiposture.org/assess/" },
+    "estimate_label": { "const": "estimated AI Posture" },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": ["string", "null"] }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "level_name"],
+      "properties": {
+        "level": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+        "level_name": {
+          "type": "string",
+          "enum": ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"]
+        }
+      }
+    },
+    "constraining_vectors": {
+      "type": "array",
+      "items": { "enum": ["Infrastructure", "Regulation", "People"] },
+      "uniqueItems": true
+    },
+    "vectors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Infrastructure", "Regulation", "People"],
+      "properties": {
+        "Infrastructure": { "$ref": "#/$defs/vector_result" },
+        "Regulation": { "$ref": "#/$defs/vector_result" },
+        "People": { "$ref": "#/$defs/vector_result" }
+      }
+    },
+    "notice": { "const": "This is an estimate, not a verified assertion." }
+  },
+  "$defs": {
+    "vector_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["in_scope", "level", "level_name", "posterior", "evidence_checklist"],
+      "properties": {
+        "in_scope": { "type": "boolean" },
+        "level": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+        "level_name": {
+          "type": "string",
+          "enum": ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"]
+        },
+        "posterior": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "evidence_checklist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

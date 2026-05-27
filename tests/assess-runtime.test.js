@@ -320,9 +320,14 @@ test('JSON artifact exposes aggregate, vector posteriors, and estimate notice', 
   assert.equal(artifact.source, 'https://aiposture.org/assess/');
   assert.equal(artifact.estimate_label, 'estimated AI Posture');
   assert.equal(artifact.notice, 'This is an estimate, not a verified assertion.');
+  assert.equal(artifact.scope.label, null);
   assert.equal(typeof artifact.aggregate.level_name, 'string');
   assert.deepEqual(Object.keys(artifact.vectors), ['Infrastructure', 'Regulation', 'People']);
   assert.equal(artifact.vectors.Infrastructure.posterior.length, 6);
+  assert.equal(
+    artifact.vectors.Infrastructure.evidence_checklist.length > 0,
+    true
+  );
   assert.equal(
     artifact.vectors.Infrastructure.posterior.reduce((sum, value) => sum + value, 0) > 0.999,
     true
