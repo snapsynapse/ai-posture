@@ -1,0 +1,20 @@
+name = "ai-posture-worker"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+account_id = "d0f3df068c5873f126e83591246f1b29"
+
+# Public vars (safe to commit). Secrets go via `wrangler secret put`.
+[vars]
+SITE_ORIGIN = "https://aiposture.org"
+API_ORIGIN = "https://api.aiposture.org"
+RESEND_FROM = "AI Posture <noreply@aiposture.org>"
+
+# D1 binding. database_id is filled in after `wrangler d1 create ai_posture`.
+[[d1_databases]]
+binding = "DB"
+database_name = "ai_posture"
+database_id = "299cdd40-a0d9-452e-8b89-7b23047a64e3"
+
+[[routes]]
+pattern = "api.aiposture.org"
+custom_domain = true

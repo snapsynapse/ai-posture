@@ -12,24 +12,25 @@ The remaining roadmap is mostly about turning the client-side estimate into an o
 
 ### 1. Newsletter capture on landing page
 
-Status: not started.
+Status: shipped 2026-05-27.
 
-PRD reference: landing page optional newsletter email capture, stored in `sessionStorage`, feeds https://paice.substack.com.
+PRD reference: landing page optional newsletter email capture. Implementation diverged from the original Substack handoff in favor of a self-hosted Resend-backed double opt-in flow, so subscriber list lives in our infrastructure and can be reused for AI Posture-specific updates separately from the PAICE Substack.
 
-Work remaining:
+Delivered:
 
-- Add an email capture form to the landing page.
-- Store the entered email in `sessionStorage` only.
-- Prefill the assessment result artifact email field once that field exists.
-- Route newsletter subscription to https://paice.substack.com under Substack's double opt-in behavior.
-- Track `email_captured` without recording the address.
-- Update privacy copy if the final flow differs from current Substack disclosure.
+- Email capture form on the landing page with client-side validation and sessionStorage prefill.
+- Cloudflare Worker backend at `api.aiposture.org` (source under `worker/`) handling subscribe and confirm endpoints.
+- Cloudflare D1 stores subscriber rows with status (`pending` / `confirmed`).
+- Resend delivers the confirmation email from `noreply@aiposture.org`; double opt-in enforced server-side.
+- Result-page artifact email field can prefill from the landing-page sessionStorage value once that field exists (Item 4).
+- PostHog `email_captured` event fires after successful submit; the address itself is never sent to PostHog.
+- Privacy policy and terms updated to disclose Resend as a processor and Cloudflare D1 as the subscription store, with deletion path via privacy@paice.work.
 
-Acceptance criteria:
+Acceptance criteria met:
 
 - No cookies.
-- No server-side storage in this repo.
-- Invalid email is rejected client-side before handoff.
+- Email is stored only in our subscription table; the assessment record model (Item 2) remains unaffected.
+- Invalid email is rejected client-side before submit; server re-validates.
 - PostHog event records only that capture happened.
 
 ### 2. Optional artifact delivery backend

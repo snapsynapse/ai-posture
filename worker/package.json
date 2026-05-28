@@ -1,0 +1,16 @@
+{
+  "name": "ai-posture-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:apply:local": "wrangler d1 execute ai_posture --local --file=./schema.sql",
+    "db:apply:remote": "wrangler d1 execute ai_posture --remote --file=./schema.sql",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

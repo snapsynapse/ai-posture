@@ -1,5 +1,18 @@
 # Changelog
 
+## newsletter capture - 2026-05-27
+
+Non-normative product change. No scoring, likelihood, prior, aggregation-rule, or spec changes.
+
+- Shipped the landing-page newsletter capture (ROADMAP Item 1). Double opt-in, no cookies.
+- Added `worker/` Cloudflare Worker backend with two endpoints: `POST /api/newsletter` and `GET /api/newsletter/confirm`. Hosted at `api.aiposture.org`.
+- Added Cloudflare D1 database `ai_posture` with a `newsletter` table.
+- Resend (`noreply@aiposture.org`) sends confirmation emails. DKIM, SPF, and DMARC configured on the new Cloudflare-hosted DNS zone for aiposture.org.
+- Moved aiposture.org authoritative DNS from Namecheap to Cloudflare to support Workers routing on the same domain.
+- Privacy policy: replaced the Substack-only newsletter section with an AI Posture subscription disclosure (Resend as processor, deletion via privacy@paice.work, double opt-in). Effective date bumped to 2026-05-27.
+- Terms of service: added §11 third-party processors paragraph (Cloudflare and Resend) and a new §12 covering the AI Posture newsletter. Renumbered subsequent sections. Effective date bumped to 2026-05-27.
+- ROADMAP Item 1 marked shipped; Items 2 and 4 unchanged.
+
 ## wire-format decision - 2026-05-27
 
 Non-normative decision log. No scoring, likelihood, prior, aggregation-rule, or spec changes.

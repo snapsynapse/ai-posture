@@ -1,0 +1,3 @@
+# Copy to .dev.vars (gitignored) and fill in.
+# Production: set via `wrangler secret put RESEND_API_KEY`.
+RESEND_API_KEY=re_xxx_replace_me

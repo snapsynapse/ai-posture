@@ -17,3 +17,8 @@ venv/
 /.agents
 HANDOFF.md
 handoffs/
+
+# worker
+worker/.dev.vars
+worker/.wrangler/
+worker/node_modules/

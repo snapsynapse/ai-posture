@@ -547,6 +547,20 @@ Next review: 2026-10-20
     </aside>
   </div>
 </section>
+
+<section id="newsletter" aria-labelledby="newsletter-heading">
+  <div class="container" style="max-width: 620px; text-align: center;">
+    <h2 id="newsletter-heading">Get AI Posture updates</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Occasional notes when the spec or pre-assessment changes. Double opt-in. No tracking pixels. Unsubscribe anytime.</p>
+    <form id="newsletter-form" novalidate style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; align-items: stretch;">
+      <label for="newsletter-email" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">Email address</label>
+      <input type="email" id="newsletter-email" name="email" required autocomplete="email" inputmode="email" placeholder="you@example.com" aria-describedby="newsletter-status" style="flex: 1 1 260px; min-width: 220px; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem;">
+      <button type="submit" class="btn btn-primary" id="newsletter-submit">Subscribe</button>
+    </form>
+    <p id="newsletter-status" role="status" aria-live="polite" style="margin-top: 0.75rem; min-height: 1.5em; color: var(--text-muted); font-size: 0.95rem;"></p>
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">By subscribing you agree to our <a href="/privacy/">privacy policy</a>. Email is stored only to deliver these updates.</p>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -581,6 +595,77 @@ Next review: 2026-10-20
       });
     })
     .catch(function () {});
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:8787'
+    : 'https://api.aiposture.org';
+  var STORAGE_KEY = 'aiposture.newsletter.email';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  var form = document.getElementById('newsletter-form');
+  var input = document.getElementById('newsletter-email');
+  var status = document.getElementById('newsletter-status');
+  var submit = document.getElementById('newsletter-submit');
+  if (!form || !input || !status || !submit) return;
+
+  function setStatus(msg, kind) {
+    status.textContent = msg;
+    status.style.color = kind === 'error' ? '#b91c1c' : (kind === 'ok' ? '#15803d' : 'var(--text-muted)');
+  }
+
+  function track(event) {
+    try {
+      if (window.posthog && typeof window.posthog.capture === 'function') {
+        window.posthog.capture(event, {});
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  try {
+    var saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) input.value = saved;
+  } catch (e) { /* ignore */ }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    if (!EMAIL_RE.test(email) || email.length > 254) {
+      setStatus('Enter a valid email address.', 'error');
+      input.focus();
+      return;
+    }
+    try { sessionStorage.setItem(STORAGE_KEY, email); } catch (e) { /* ignore */ }
+
+    submit.disabled = true;
+    setStatus('Sending confirmation email…', null);
+
+    fetch(API_BASE + '/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'landing' })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.body && res.body.error || 'request_failed');
+        track('email_captured');
+        if (res.body.status === 'already_confirmed') {
+          setStatus('You are already subscribed. Thanks.', 'ok');
+        } else {
+          setStatus('Check your inbox for a confirmation link.', 'ok');
+        }
+        submit.disabled = false;
+      })
+      .catch(function () {
+        setStatus('Could not subscribe right now. Try again later.', 'error');
+        submit.disabled = false;
+      });
+  });
 })();
 </script>
 </body>
