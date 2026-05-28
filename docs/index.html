@@ -652,13 +652,14 @@ Next review: 2026-10-20
     })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
       .then(function (res) {
+        if (res.body && res.body.error === 'rate_limited') {
+          setStatus('Too many attempts. Try again in an hour.', 'error');
+          submit.disabled = false;
+          return;
+        }
         if (!res.ok) throw new Error(res.body && res.body.error || 'request_failed');
         track('email_captured');
-        if (res.body.status === 'already_confirmed') {
-          setStatus('You are already subscribed. Thanks.', 'ok');
-        } else {
-          setStatus('Check your inbox for a confirmation link.', 'ok');
-        }
+        setStatus('If that address is new, check your inbox for a confirmation link.', 'ok');
         submit.disabled = false;
       })
       .catch(function () {

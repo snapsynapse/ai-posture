@@ -3,6 +3,7 @@
 
 import { json } from './index.js';
 import { sendEmail } from './resend.js';
+import { rateLimit, clientIp } from './ratelimit.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -24,6 +25,16 @@ export function generateToken() {
 }
 
 export async function handleNewsletterSubscribe(request, env, origin) {
+  const ip = clientIp(request);
+  const rl = await rateLimit(env, 'newsletter_subscribe', ip);
+  if (!rl.allowed) {
+    return json(
+      { error: 'rate_limited', message: 'Too many requests. Try again in an hour.' },
+      { status: 429, headers: { 'Retry-After': '3600' } },
+      origin
+    );
+  }
+
   let body;
   try {
     body = await request.json();
@@ -37,42 +48,41 @@ export async function handleNewsletterSubscribe(request, env, origin) {
 
   const email = normalizeEmail(body.email);
   const source = typeof body.source === 'string' ? body.source.slice(0, 64) : null;
-  const token = generateToken();
   const now = Math.floor(Date.now() / 1000);
 
-  // Upsert: if pending row exists, refresh token; if confirmed, no-op (return success
-  // so we don't leak subscription state to a casual probe).
+  // Read existing row to decide whether a confirmation email is actually needed.
+  // We do NOT leak that information back to the caller — response is uniform.
   const existing = await env.DB
     .prepare('SELECT status FROM newsletter WHERE email = ?')
     .bind(email)
     .first();
 
-  if (existing?.status === 'confirmed') {
-    return json({ ok: true, status: 'already_confirmed' }, {}, origin);
+  if (existing?.status !== 'confirmed') {
+    const token = generateToken();
+    await env.DB
+      .prepare(
+        `INSERT INTO newsletter (email, status, confirm_token, created_at, source)
+         VALUES (?, 'pending', ?, ?, ?)
+         ON CONFLICT(email) DO UPDATE SET
+           confirm_token = excluded.confirm_token,
+           created_at    = excluded.created_at,
+           source        = excluded.source,
+           status        = 'pending'`
+      )
+      .bind(email, token, now, source)
+      .run();
+
+    const confirmUrl = `${env.API_ORIGIN}/api/newsletter/confirm?t=${token}`;
+
+    await sendEmail(env, {
+      to: email,
+      subject: 'Confirm your AI Posture subscription',
+      text: confirmText(confirmUrl),
+      html: confirmHtml(confirmUrl),
+    });
   }
 
-  await env.DB
-    .prepare(
-      `INSERT INTO newsletter (email, status, confirm_token, created_at, source)
-       VALUES (?, 'pending', ?, ?, ?)
-       ON CONFLICT(email) DO UPDATE SET
-         confirm_token = excluded.confirm_token,
-         created_at    = excluded.created_at,
-         source        = excluded.source,
-         status        = 'pending'`
-    )
-    .bind(email, token, now, source)
-    .run();
-
-  const confirmUrl = `${env.API_ORIGIN}/api/newsletter/confirm?t=${token}`;
-
-  await sendEmail(env, {
-    to: email,
-    subject: 'Confirm your AI Posture subscription',
-    text: confirmText(confirmUrl),
-    html: confirmHtml(confirmUrl),
-  });
-
+  // Uniform response — does not reveal whether the address was new or already confirmed.
   return json({ ok: true, status: 'pending' }, {}, origin);
 }
 
