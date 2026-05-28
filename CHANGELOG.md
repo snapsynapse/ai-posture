@@ -1,6 +1,12 @@
-
-
 # Changelog
+
+## v0.4.0 release - 2026-05-28
+
+Minor release. Adds the first server-side surface to the project: a Cloudflare Worker backend at `api.aiposture.org` (with D1 storage and Resend transactional email) that powers newsletter signup, double opt-in, and email delivery of the JSON estimate artifact. No scoring, likelihood, prior, aggregation-rule, or spec changes. SPEC.md remains at v0.3.2.
+
+- Bumped package.json to 0.4.0.
+- Shipped ROADMAP Items 1, 2, and 4. Item 3 (PDF email delivery) remains deferred.
+- See the per-feature sections below for the detail trail of this release.
 
 ## artifact email delivery + result email field - 2026-05-28
 
