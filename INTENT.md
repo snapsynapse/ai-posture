@@ -108,5 +108,6 @@ Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment c
 
 ## Changelog
 
+- 2026-05-27 - Decision logged. W3C EARL 1.0 selected as the primary wire format for verified per-vector assessments. OSCAL Assessment Results 1.1.2 retained as a deferred projection target with explicit re-open triggers. Rationale, alternatives, and revision triggers in `docs/research/wire-format-earl.md`. No stewardship-principle changes; this is a positioning decision under the externally-verifiable and obligation-anchored principles already in force.
 - 2026-05-25 v0.1.1 - Adopted GuideCheck for assistant-facing repository maintenance instructions. Added canonical `assistant-guide.txt` publication path, Level 4 sidecar manifest, repository hash anchor, and repository mirror requirement.
 - **2026-04-20 v0.1.0** — Initial standards-level INTENT. Subscribes to portfolio working hypotheses. Formalizes stewardship principles, vector admission criteria, recalibration gates, contribution norms, and relationship to reference implementations.

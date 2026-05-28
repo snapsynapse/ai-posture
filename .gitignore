@@ -16,3 +16,4 @@ build/
 venv/
 /.agents
 HANDOFF.md
+handoffs/

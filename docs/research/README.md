@@ -8,6 +8,7 @@ These notes are non-normative. They support positioning, validation, and contrib
 - [Validation backlog](validation-backlog.md): testable questions for construct validity, reviewer agreement, cross-vector comparability, freshness, weakest-link validity, stakeholder interpretation, and vector sufficiency.
 - [Weakest-link and level-semantics stress tests](weakest-link-stress-tests.md): edge cases for minimum-vector aggregation and shared level names.
 - [Adjacent-framework crosswalk](adjacent-framework-crosswalk.md): how AI Posture relates to governance, risk, compliance, maturity, and behavior-change models without claiming replacement.
+- [Wire format for verified AI Posture assessments](wire-format-earl.md): why W3C EARL 1.0 is the primary wire format for verified per-vector assessments and why OSCAL Assessment Results is retained as a deferred projection target.
 
 ## Boundaries
 

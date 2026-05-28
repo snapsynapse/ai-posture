@@ -85,6 +85,7 @@ Non-normative positioning and validation notes live in `docs/research/`:
 - [Validation backlog](docs/research/validation-backlog.md)
 - [Weakest-link and level-semantics stress tests](docs/research/weakest-link-stress-tests.md)
 - [Adjacent-framework crosswalk](docs/research/adjacent-framework-crosswalk.md)
+- [Wire format for verified AI Posture assessments](docs/research/wire-format-earl.md)
 
 ## Assistant guide
 

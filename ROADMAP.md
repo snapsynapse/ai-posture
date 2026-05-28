@@ -255,9 +255,71 @@ Acceptance criteria:
 - Any terminology change preserves compatibility with SPEC.md.
 - Any visible copy changes preserve estimate labeling and no-certification boundaries.
 
+## Wire format and projections
+
+### 12. EARL wire format for verified assessments
+
+Status: planned for v1.1.
+
+PRD reference: out of PRD scope. The PRD covers the pre-assessment estimate. This item covers the wire format for verified per-vector assessments produced by reference implementations.
+
+Design basis: [docs/research/wire-format-earl.md](docs/research/wire-format-earl.md)
+
+Work remaining:
+
+- Author the AI Posture EARL profile under `schema/earl/v0/`.
+- Publish `context.jsonld` defining AI-Posture-local terms (`apos:vector`, `apos:level`, `apos:nextReview`, `apos:atLevelSince`, `apos:scope`, `apos:postureLevel`, `apos:constrainingVector`).
+- Publish `shapes.ttl` with SHACL shapes for required fields, vector enum, level enum, date constraints, evidence-pointer requirement, and weakest-link coherence.
+- Publish `profile.md` describing required EARL fields per Assertion, vector tagging rules, level encoding (per-Assertion EARL outcome plus per-vector `apos:level`), evidence-pointer requirements, weakest-link aggregation expectation, scope declaration, and N/A handling.
+- Publish `example.jsonld` rendering the SPEC.md Acme Corp reporting block.
+- Ship a thin validator CLI under MIT license.
+- Publish the profile at `https://aiposture.org/schema/earl/v0/` as the canonical IRI base.
+- Document emitter expectations in reference-implementation guidance.
+
+Acceptance criteria:
+
+- Profile validates against W3C EARL 1.0 vocabulary.
+- `example.jsonld` passes SHACL shapes.
+- `example.jsonld` renders identically to the SPEC.md reporting block when transformed.
+- Schema IRI base is stable, versioned, and resolves to the published profile.
+- AI Posture criterion IRIs are mintable in the `https://aiposture.org/criteria/` namespace and carry optional `dct:source` linkage to external obligation identifiers (for example Obligation-First IRIs) where known.
+
+### 13. OSCAL Assessment Results projection
+
+Status: deferred.
+
+Rationale: EARL is structurally 1:1 with AI Posture and is the primary wire format under item 12. OSCAL adds federal-compliance reach that AI Posture does not have a consumer for today. Mapping EARL to OSCAL Assessment Results 1.1.2 is mechanical and can be added when a consumer materializes.
+
+Re-open triggers:
+
+- A GRC platform, auditor, or federal-compliance consumer commits to ingesting AI Posture assessments.
+- A FedRAMP-adjacent AI overlay ships.
+- Obligation-First publishes its OSCAL Catalog projection (Obligation-First ROADMAP deferred decision #16).
+
+Work remaining when re-opened:
+
+- Build `scripts/earl-to-oscal` projector.
+- Author a stub OSCAL Catalog whose controls `link` to AI Posture criterion IRIs and, when available, Obligation-First Obligation IRIs.
+- Validate output against the NIST OSCAL validator.
+- Document projection guarantees and known lossy transformations.
+
+### 14. AI-regulator format alignment watch
+
+Status: open watch.
+
+Watch for convergence in: EU AI Act conformance reporting tooling, ISO/IEC 42001 audit-format direction, NIST AI RMF crosswalks emitting machine-readable conformance.
+
+Trigger to act: any of the above standardizes on a wire format other than EARL or OSCAL, or signals strong adoption of one over the other in AI-governance reporting.
+
+Work when triggered:
+
+- Reopen the wire-format decision in [docs/research/wire-format-earl.md](docs/research/wire-format-earl.md) under its revision triggers.
+- Decide whether to add a third projection target, switch primary, or hold.
+- Document the outcome in CHANGELOG.md.
+
 ## Recalibration gates
 
-### 12. First 100 completions recalibration
+### 15. First 100 completions recalibration
 
 Status: waiting on usage.
 
@@ -278,7 +340,7 @@ Acceptance criteria:
 - Major recalibration bumps the minor version.
 - Old assessments remain interpretable under their original table version.
 
-### 13. Annual recalibration
+### 16. Annual recalibration
 
 Status: future scheduled work.
 
@@ -294,7 +356,7 @@ Acceptance criteria:
 
 ## V2 backlog
 
-### 14. Shareable URL
+### 17. Shareable URL
 
 Status: deferred to v2.
 
@@ -305,7 +367,7 @@ Work remaining:
 - Decide whether permalink stores full result server-side or encodes a minimized client-side payload.
 - Add deletion and expiry behavior if server-side storage is used.
 
-### 15. Third-party sharing opt-in
+### 18. Third-party sharing opt-in
 
 Status: deferred to v2.
 
@@ -315,7 +377,7 @@ Work remaining:
 - Define recipient, payload, retention, and revocation behavior.
 - Update privacy and terms before launch.
 
-### 16. Weekly Opener 2 jurisdiction refresh
+### 19. Weekly Opener 2 jurisdiction refresh
 
 Status: deferred to v2.
 
@@ -328,7 +390,7 @@ Work remaining:
 - Preserve historical interpretation of old assessments.
 - Add tests for changed option keys and likelihood-table compatibility.
 
-### 17. Cross-vector belief propagation
+### 20. Cross-vector belief propagation
 
 Status: deferred to v2.
 
@@ -338,7 +400,7 @@ Work remaining:
 - Keep explainability high enough that result users can understand why their estimate moved.
 - Add regression tests for propagation behavior.
 
-### 18. Larger question banks
+### 21. Larger question banks
 
 Status: deferred until calibration data exists.
 

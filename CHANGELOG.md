@@ -1,5 +1,17 @@
 # Changelog
 
+## wire-format decision - 2026-05-27
+
+Non-normative decision log. No scoring, likelihood, prior, aggregation-rule, or spec changes.
+
+- Decided W3C EARL 1.0 as the primary wire format for verified per-vector assessments produced by reference implementations. OSCAL Assessment Results 1.1.2 is retained as a deferred projection target, not a primary format.
+- Added `docs/research/wire-format-earl.md` documenting the decision, alternatives considered, adoption considerations, open questions, and revision triggers.
+- Added ROADMAP items 12 (EARL profile authoring for v1.1), 13 (OSCAL projection, deferred with explicit re-open triggers), and 14 (AI-regulator format alignment watch).
+- Renumbered prior ROADMAP items: Recalibration gates 12 to 15 and 13 to 16; V2 backlog 14 to 17, 15 to 18, 16 to 19, 17 to 20, and 18 to 21.
+- Linked the new research note from `README.md` and `docs/research/README.md`.
+- Added `handoffs/` to `.gitignore` so future session handoff folders stay local.
+- Pre-assessment estimate output is unchanged. The EARL profile concerns verified assessments only.
+
 ## v0.3.2 spec + agent surfaces - 2026-05-27
 
 Patch release. Non-normative support material, contribution surfaces, and machine-readable artifacts for framework positioning and validation. No scoring, likelihood, prior, or aggregation-rule changes.
