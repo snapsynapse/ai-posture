@@ -35,32 +35,28 @@ Acceptance criteria met:
 
 ### 2. Optional artifact delivery backend
 
-Status: deferred.
+Status: shipped 2026-05-28 (JSON only; PDF email delivery deferred to Item 3).
 
 PRD reference: optional email-delivered PDF and JSON artifact, email dissociated after delivery, per-run record stored under a random opaque ID.
 
-Likely path noted in handoff: Resend + Vercel. No backend is currently configured.
+Delivered:
 
-Work remaining:
+- `POST /api/deliver` on the Cloudflare Worker accepts `{ email, payload }`, validates the payload shape, rate-limits per IP, generates a 256-bit opaque run ID, stores the record in D1 `assessments`, and sends the JSON artifact as a Resend email attachment.
+- Email address is stored on the record only during the send; after a successful send the column is nulled out and `delivered_at` is set. The stored record then carries no direct identifier.
+- Delivery failures remove the partial record entirely (no orphan PII).
+- Result screen success/failure states wired through the email field UI.
+- PostHog `delivery_requested` event records that a delivery happened, never the address or artifact.
+- Deletion is request-based via privacy@paice.work using the run ID (included in the delivery email). A self-serve deletion endpoint is on the future backlog but not blocking.
+- Retention enforcement (three-year purge) is manual until the volume warrants a Worker Cron Trigger; documented gap.
 
-- Choose hosting/runtime for the delivery endpoint.
-- Generate a random opaque run ID.
-- Persist completed assessment record without direct identifiers.
-- Accept an email address only for artifact delivery.
-- Deliver JSON and PDF artifacts by email.
-- Dissociate email from the assessment record after delivery.
-- Return clear success and failure states to the result screen.
-- Track `email_captured` and delivery request events without recording the address.
-- Add deletion-request support keyed by run ID.
+Acceptance criteria met:
 
-Acceptance criteria:
-
-- Email is not retained after delivery.
-- Assessment record contains timestamp, opener answers, per-vector answers, posteriors, and aggregate.
-- Assessment record does not contain name, organization, email, IP address, or direct identifier.
-- Retention policy is three years.
-- Delivery failure does not create an additional retained record.
-- Privacy and terms pages match the deployed behavior before launch.
+- Email is not retained after successful delivery.
+- Assessment record contains created_at, payload (aggregate, per-vector levels and posteriors, scope label, generated_at), and delivered_at.
+- Assessment record does not contain name, organization, IP address, or direct identifier; email column nulled after delivery.
+- Retention policy documented in privacy as three years (enforcement TBD, see above).
+- Delivery failure removes the record &mdash; no orphan record retained.
+- Privacy and terms pages reflect deployed behavior.
 
 ### 3. Native PDF generation
 
@@ -83,24 +79,23 @@ Acceptance criteria:
 
 ### 4. Result email field
 
-Status: not implemented.
+Status: shipped 2026-05-28.
 
 PRD reference: final screen includes email field with prefill from front-page capture if provided.
 
-Work remaining:
+Delivered:
 
-- Add result-page email field only when delivery backend exists.
-- Prefill from landing-page `sessionStorage` newsletter capture when present.
-- Keep newsletter opt-in and artifact delivery conceptually separate.
-- Validate address before submission.
-- Show single confirmation screen after successful request.
+- Email field added to the result screen below the artifact-actions row.
+- Prefills from the landing-page `sessionStorage` key (`aiposture.newsletter.email`) when present.
+- Newsletter opt-in (landing) and artifact delivery (result) are functionally separate endpoints: subscribing to the newsletter never triggers an artifact send, and requesting an artifact never adds to the newsletter list.
+- Client-side validation rejects malformed addresses before submit; server re-validates.
+- Single confirmation message replaces the form on success (input + button disabled, success status text shown).
 
-Acceptance criteria:
+Acceptance criteria met:
 
-- No account.
-- No dashboard.
-- No double opt-in for artifact delivery.
-- Newsletter subscription remains separate and uses Substack behavior.
+- No account, no dashboard.
+- No double opt-in for artifact delivery (single-shot send).
+- Newsletter subscription remains a separate flow with its own double opt-in and is now self-hosted on Resend (see Item 1) rather than Substack.
 
 ### 5. Legal copy finalization
 

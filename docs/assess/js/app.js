@@ -8,6 +8,11 @@
   var B = window.AIPostureBayes;
   var DATA_BASE = './data/';
   var STORAGE_KEY = 'aip.assess.v1.draft';
+  var NEWSLETTER_EMAIL_KEY = 'aiposture.newsletter.email';
+  var API_BASE = (typeof location !== 'undefined' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1'))
+    ? 'http://localhost:8787'
+    : 'https://api.aiposture.org';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
   var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
   var HANDOFF_URLS = {
@@ -699,7 +704,11 @@
       el('button', { type: 'button', class: 'btn btn-secondary', onclick: downloadJsonArtifact }, ['Download JSON']),
       el('button', { type: 'button', class: 'btn btn-secondary', onclick: printResult }, ['Print or save PDF'])
     ]));
-    wrap.appendChild(el('p', { class: 'artifact-note' }, ['Artifacts are generated in this browser session. Email delivery and retained run records are not deployed yet.']));
+    wrap.appendChild(el('p', { class: 'artifact-note' }, ['Artifacts are generated in this browser session. You can also have the JSON emailed to you.']));
+
+    // Delivery form
+    var deliveryForm = buildDeliveryForm();
+    wrap.appendChild(deliveryForm);
 
 
     // What this is not
@@ -797,6 +806,93 @@
       return;
     }
     alert('Clipboard access is unavailable. Select the summary text manually.');
+  }
+
+  function buildDeliveryForm() {
+    var section = el('div', { class: 'delivery' });
+    section.appendChild(el('h3', null, ['Email me this estimate']));
+    section.appendChild(el('p', { class: 'delivery-note' }, [
+      'We send the JSON artifact once and remove your email from the stored record after delivery. Records are retained for up to three years; request deletion via privacy@paice.work.'
+    ]));
+
+    var form = el('form', { class: 'delivery-form', novalidate: 'novalidate' });
+    var input = el('input', {
+      type: 'email',
+      id: 'delivery-email',
+      name: 'email',
+      required: 'required',
+      autocomplete: 'email',
+      inputmode: 'email',
+      placeholder: 'you@example.com',
+      'aria-describedby': 'delivery-status'
+    });
+    var label = el('label', { for: 'delivery-email', class: 'visually-hidden' }, ['Email address']);
+    var submit = el('button', { type: 'submit', class: 'btn btn-primary' }, ['Email JSON']);
+
+    try {
+      var saved = sessionStorage.getItem(NEWSLETTER_EMAIL_KEY);
+      if (saved) input.value = saved;
+    } catch (e) { /* ignore */ }
+
+    form.appendChild(label);
+    form.appendChild(input);
+    form.appendChild(submit);
+
+    var status = el('p', {
+      id: 'delivery-status',
+      class: 'delivery-status',
+      role: 'status',
+      'aria-live': 'polite'
+    });
+
+    section.appendChild(form);
+    section.appendChild(status);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!EMAIL_RE.test(email) || email.length > 254) {
+        status.textContent = 'Enter a valid email address.';
+        status.className = 'delivery-status delivery-status-error';
+        input.focus();
+        return;
+      }
+      try { sessionStorage.setItem(NEWSLETTER_EMAIL_KEY, email); } catch (e) { /* ignore */ }
+
+      submit.disabled = true;
+      status.textContent = 'Sending…';
+      status.className = 'delivery-status';
+
+      var payload = buildJsonArtifact();
+
+      fetch(API_BASE + '/api/deliver', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, payload: payload })
+      })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+        .then(function (res) {
+          if (res.body && res.body.error === 'rate_limited') {
+            status.textContent = 'Too many requests. Try again in an hour.';
+            status.className = 'delivery-status delivery-status-error';
+            submit.disabled = false;
+            return;
+          }
+          if (!res.ok) throw new Error(res.body && res.body.error || 'request_failed');
+          track('delivery_requested');
+          status.textContent = 'Sent. Check your inbox. The email is removed from our record after delivery.';
+          status.className = 'delivery-status delivery-status-ok';
+          input.disabled = true;
+          submit.disabled = true;
+        })
+        .catch(function () {
+          status.textContent = 'Could not send right now. Try again later.';
+          status.className = 'delivery-status delivery-status-error';
+          submit.disabled = false;
+        });
+    });
+
+    return section;
   }
 
   function downloadJsonArtifact() {

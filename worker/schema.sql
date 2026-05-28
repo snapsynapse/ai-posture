@@ -23,3 +23,16 @@ CREATE TABLE IF NOT EXISTS rate_limit (
 );
 
 CREATE INDEX IF NOT EXISTS idx_rate_limit_bucket ON rate_limit (bucket_hour);
+
+-- Completed assessment records. Stored under a random opaque run_id.
+-- email is captured only for delivery and is nulled out after a successful send.
+-- payload is the JSON artifact (aggregate, vectors, constraining vectors, etc).
+CREATE TABLE IF NOT EXISTS assessments (
+  run_id        TEXT PRIMARY KEY,
+  created_at    INTEGER NOT NULL,
+  email         TEXT,
+  delivered_at  INTEGER,
+  payload       TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_assessments_created ON assessments (created_at);

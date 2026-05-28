@@ -128,7 +128,7 @@
     <p class="meta">
       <span class="version">v0.1.0 draft</span>
       <span class="sep">&middot;</span>
-      Effective <time datetime="2026-05-27">May 27, 2026</time>
+      Effective <time datetime="2026-05-28">May 28, 2026</time>
       <span class="sep">&middot;</span>
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/docs/privacy/index.html">Revision history</a>
     </p>
@@ -149,7 +149,7 @@
     <p>While you are taking the pre-assessment, your in-progress answers are stored in <code>sessionStorage</code> in your browser. This is not a cookie. It is local to the browser tab, cleared when the tab closes, and never transmitted to us by the assessment itself. No server-side record of your answers is written during the flow.</p>
 
     <div class="note">
-      <strong>Current status.</strong> Newsletter signup (described below) is live. Per-run storage of completed assessments and email delivery of PDF and JSON artifacts are described in this policy but are not yet deployed. When they are, this notice will be removed and the effective date will change.
+      <strong>Current status.</strong> Newsletter signup and on-request email delivery of the JSON estimate artifact are live. Native PDF email delivery is not yet shipped &mdash; the browser print-to-PDF path on the result screen is the current way to obtain a PDF. When PDF email delivery ships, this notice will be updated.
     </div>
 
     <h3>Privacy-respecting analytics</h3>
@@ -158,18 +158,19 @@
       <li><code>assessment_started</code></li>
       <li><code>question_answered</code> (records the question identifier only, never your answer)</li>
       <li><code>assessment_completed</code> (records per-vector levels and the aggregate estimate, not individual answers)</li>
-      <li><code>email_captured</code> (records that an email was submitted, not the address)</li>
+      <li><code>email_captured</code> (records that a newsletter email was submitted, not the address)</li>
+      <li><code>delivery_requested</code> (records that an artifact delivery was requested, not the address or the artifact)</li>
       <li><code>pdf_requested</code></li>
       <li><code>handoff_clicked</code> (records the destination URL, not who clicked)</li>
     </ul>
     <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, and rage-click detection are disabled.</p>
 
-    <h3>Completed-assessment record (when deployed)</h3>
-    <p>When you complete a pre-assessment, we intend to store a per-run record under a random opaque identifier. The record will contain: timestamp, opener answers, per-vector answers, computed posteriors, and the resulting AI Posture aggregate. The record does not contain your name, organization, email address, IP address, or any other direct identifier.</p>
-    <p>Retention is three years. You may request deletion of a specific record using the identifier included in the delivery email, by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a>.</p>
+    <h3>Completed-assessment record</h3>
+    <p>If you request email delivery of your estimate, we store a per-run record under a random opaque identifier (the &ldquo;run ID&rdquo;). The record contains: timestamp, the JSON artifact (aggregate posture, per-vector levels and posteriors, scope label if you set one, generated-at timestamp), and the delivered-at timestamp. The record does not contain your name, organization, IP address, or any other direct identifier.</p>
+    <p>Retention is three years. You may request deletion of a specific record by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a> with the run ID included in your delivery email.</p>
 
-    <h3>Email delivery (when deployed)</h3>
-    <p>If you request a PDF or JSON artifact by email, we use your address solely to deliver the artifact. After delivery, the email address is dissociated from the assessment record. We do not retain the address for marketing or re-use. If delivery fails, no additional record is created.</p>
+    <h3>Email delivery</h3>
+    <p>If you request the JSON artifact by email from the result screen, we use your address solely to deliver the artifact. Your email address is stored on the assessment record only until the email is sent successfully, after which it is removed; the stored record then carries no direct identifier. If delivery fails, the partial record is removed entirely. We do not retain your email address for marketing or re-use after delivery.</p>
 
     <h3>Newsletter signup</h3>
     <p>If you subscribe to AI Posture updates from the landing page, your email address is stored in our database (Cloudflare D1) to send you those updates. We use double opt-in: you must click a confirmation link before subscription becomes active.</p>

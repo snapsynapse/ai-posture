@@ -5,6 +5,7 @@
 //   GET    /healthz                  — liveness
 
 import { handleNewsletterSubscribe, handleNewsletterConfirm } from './newsletter.js';
+import { handleDeliver } from './deliver.js';
 
 const ALLOWED_ORIGINS = new Set([
   'https://aiposture.org',
@@ -54,6 +55,10 @@ export default {
 
     if (url.pathname === '/api/newsletter/confirm' && request.method === 'GET') {
       return handleNewsletterConfirm(url, env);
+    }
+
+    if (url.pathname === '/api/deliver' && request.method === 'POST') {
+      return handleDeliver(request, env, origin);
     }
 
     return json({ error: 'not_found' }, { status: 404 }, origin);

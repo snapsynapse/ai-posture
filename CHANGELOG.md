@@ -1,4 +1,19 @@
+
+
 # Changelog
+
+## artifact email delivery + result email field - 2026-05-28
+
+Non-normative product change. No scoring, likelihood, prior, aggregation-rule, or spec changes.
+
+- Shipped ROADMAP Items 2 and 4: optional artifact delivery backend (JSON only) and result-screen email field.
+- Added `worker/src/deliver.js` and the `POST /api/deliver` route. Validates payload shape, rate-limits per IP, stores the record in D1 `assessments` under a 256-bit opaque run ID, sends the JSON artifact as a Resend attachment, then nulls the email column and stamps `delivered_at`. Delivery failures remove the partial record entirely.
+- Added the `assessments` table to `worker/schema.sql`.
+- Result screen now includes an "Email me this estimate" form. Prefills from the landing-page newsletter sessionStorage key when present. Newsletter opt-in and artifact delivery remain separate endpoints.
+- Privacy policy updated: completed-assessment record description, email delivery description, current-status notice. PostHog event list now includes `delivery_requested`. Effective date bumped to 2026-05-28.
+- Terms of service effective date bumped to 2026-05-28.
+- ROADMAP Items 2 and 4 marked shipped; PDF email delivery remains under Item 3 (deferred); per-run self-serve deletion endpoint and three-year retention purge documented as open future work.
+- Tests added for delivery validation and the result-screen surface.
 
 ## newsletter capture - 2026-05-27
 
