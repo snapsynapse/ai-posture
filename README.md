@@ -14,6 +14,18 @@ Status: beta. The spec, landing page, pre-assessment, and supporting legal pages
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
 
+## Who this is for
+
+Governance, risk, and compliance leaders who need one defensible readiness score across people, infrastructure, and regulation — instead of three disconnected tools that never combine into a posture.
+
+## What problem it solves
+
+Organizations adopt AI across people, infrastructure, and regulation but have no single measure of combined readiness. AI Posture produces one governance score, bounded by the weakest vector, so the gap that actually limits you is visible.
+
+## Canonical URL
+
+https://aiposture.org/
+
 ## Three vectors
 
 - People — [PAICE.work](https://paice.work/)
