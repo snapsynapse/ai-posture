@@ -50,6 +50,6 @@ test('terms disclose Cloudflare and Resend as processors and cover the newslette
 });
 
 test('privacy and terms effective dates have been updated for the newsletter+delivery work', () => {
-  assert.match(PRIVACY, /datetime="2026-05-2[78]"/);
-  assert.match(TERMS, /datetime="2026-05-2[78]"/);
+  assert.match(PRIVACY, /datetime="2026-05-30"/);
+  assert.match(TERMS, /datetime="2026-05-30"/);
 });

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.4.1 hardening release - 2026-05-30
+
+Patch hardening release. No scoring, likelihood, prior, aggregation-rule, or spec changes. SPEC.md remains at v0.3.2.
+
+- Replaced permissive artifact-delivery payload checks with strict server-side validation matching the published estimate-result schema shape.
+- Added regression coverage for spoofed type strings, wrong source URLs, missing estimate notices, HTML-like level names, malformed vectors, malformed posteriors, duplicate constraining vectors, and runtime-generated artifact compatibility.
+- Corrected public metadata drift for the May 28 assessment, privacy, and terms changes in `docs/sitemap.xml`.
+- Corrected stale privacy and terms copy around live on-request JSON artifact delivery.
+- Restored release integrity expectations for the GuideCheck assistant-guide manifest by publishing the missing immutable `assistant-guide-v1.0.0` release before the v0.4.1 release.
+
 ## v0.4.0 release - 2026-05-28
 
 Minor release. Adds the first server-side surface to the project: a Cloudflare Worker backend at `api.aiposture.org` (with D1 storage and Resend transactional email) that powers newsletter signup, double opt-in, and email delivery of the JSON estimate artifact. No scoring, likelihood, prior, aggregation-rule, or spec changes. SPEC.md remains at v0.3.2.

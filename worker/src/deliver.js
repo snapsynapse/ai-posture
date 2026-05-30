@@ -9,13 +9,119 @@ import { rateLimit, clientIp } from './ratelimit.js';
 import { isValidEmail, normalizeEmail, generateToken } from './newsletter.js';
 
 const MAX_PAYLOAD_BYTES = 32 * 1024; // 32 KiB — comfortably above any real artifact
+const VECTOR_NAMES = ['Infrastructure', 'Regulation', 'People'];
+const LEVEL_NAMES = ['N/A', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
+const TOP_LEVEL_KEYS = [
+  'type',
+  'version',
+  'generated_at',
+  'source',
+  'estimate_label',
+  'scope',
+  'aggregate',
+  'constraining_vectors',
+  'vectors',
+  'notice',
+];
+
+function isPlainObject(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === null || Object.getPrototypeOf(proto) === null;
+}
+
+function hasExactKeys(value, keys) {
+  const actual = Object.keys(value).sort();
+  const expected = keys.slice().sort();
+  return actual.length === expected.length && actual.every((key, index) => key === expected[index]);
+}
+
+function isValidLevel(value) {
+  return value === null || (Number.isInteger(value) && value >= 1 && value <= 5);
+}
+
+function isValidLevelName(value) {
+  return LEVEL_NAMES.includes(value);
+}
+
+function isValidPosterior(value) {
+  return Array.isArray(value) &&
+    value.length === 6 &&
+    value.every((entry) => typeof entry === 'number' && Number.isFinite(entry) && entry >= 0 && entry <= 1);
+}
+
+function isValidEvidenceChecklist(value) {
+  return Array.isArray(value) &&
+    value.every((entry) => typeof entry === 'string' && entry.length > 0);
+}
+
+function isValidDateTime(value) {
+  if (typeof value !== 'string') return false;
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z$/);
+  if (!match) return false;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return false;
+  const [, year, month, day, hour, minute, second] = match.map(Number);
+  return date.getUTCFullYear() === year &&
+    date.getUTCMonth() + 1 === month &&
+    date.getUTCDate() === day &&
+    date.getUTCHours() === hour &&
+    date.getUTCMinutes() === minute &&
+    date.getUTCSeconds() === second;
+}
+
+function isValidScope(value) {
+  return isPlainObject(value) &&
+    hasExactKeys(value, ['label']) &&
+    (value.label === null || typeof value.label === 'string');
+}
+
+function isValidAggregate(value) {
+  return isPlainObject(value) &&
+    hasExactKeys(value, ['level', 'level_name']) &&
+    isValidLevel(value.level) &&
+    isValidLevelName(value.level_name);
+}
+
+function isValidConstrainingVectors(value) {
+  if (!Array.isArray(value)) return false;
+  const seen = new Set();
+  for (const vector of value) {
+    if (!VECTOR_NAMES.includes(vector) || seen.has(vector)) return false;
+    seen.add(vector);
+  }
+  return true;
+}
+
+function isValidVectorResult(value) {
+  return isPlainObject(value) &&
+    hasExactKeys(value, ['in_scope', 'level', 'level_name', 'posterior', 'evidence_checklist']) &&
+    typeof value.in_scope === 'boolean' &&
+    isValidLevel(value.level) &&
+    isValidLevelName(value.level_name) &&
+    isValidPosterior(value.posterior) &&
+    isValidEvidenceChecklist(value.evidence_checklist);
+}
+
+function isValidVectors(value) {
+  if (!isPlainObject(value) || !hasExactKeys(value, VECTOR_NAMES)) return false;
+  return VECTOR_NAMES.every((vector) => isValidVectorResult(value[vector]));
+}
 
 export function isValidPayload(p) {
-  if (!p || typeof p !== 'object') return false;
-  if (typeof p.type !== 'string' || !p.type.toLowerCase().includes('ai posture')) return false;
-  if (!p.aggregate || typeof p.aggregate !== 'object') return false;
-  if (!p.vectors || typeof p.vectors !== 'object') return false;
-  return true;
+  return isPlainObject(p) &&
+    hasExactKeys(p, TOP_LEVEL_KEYS) &&
+    p.type === 'AI Posture Pre-Assessment Result' &&
+    typeof p.version === 'string' &&
+    p.version.length > 0 &&
+    isValidDateTime(p.generated_at) &&
+    p.source === 'https://aiposture.org/assess/' &&
+    p.estimate_label === 'estimated AI Posture' &&
+    isValidScope(p.scope) &&
+    isValidAggregate(p.aggregate) &&
+    isValidConstrainingVectors(p.constraining_vectors) &&
+    isValidVectors(p.vectors) &&
+    p.notice === 'This is an estimate, not a verified assertion.';
 }
 
 export function generateRunId() {

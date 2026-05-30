@@ -788,7 +788,7 @@
       },
       aggregate: {
         level: snapshot.aggregate,
-        level_name: snapshot.aggregateName
+        level_name: snapshot.aggregate == null ? 'N/A' : snapshot.aggregateName
       },
       constraining_vectors: snapshot.constraining,
       vectors: vectors,

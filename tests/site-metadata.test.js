@@ -28,6 +28,19 @@ function frontmatter(markdown) {
   return data;
 }
 
+function sitemapLastmod(url) {
+  const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = SITEMAP.match(new RegExp(`<loc>${escaped}<\\/loc>\\s*<lastmod>(\\d{4}-\\d{2}-\\d{2})<\\/lastmod>`));
+  assert.ok(match, `sitemap must include ${url}`);
+  return match[1];
+}
+
+function effectiveDate(html) {
+  const match = html.match(/Effective <time datetime="(\d{4}-\d{2}-\d{2})">/);
+  assert.ok(match, 'page must include an effective date');
+  return match[1];
+}
+
 test('homepage and generated spec page use SPEC.md version', () => {
   const fm = frontmatter(SPEC);
 
@@ -59,6 +72,12 @@ test('homepage repo-updated date is wired to GitHub pushed_at with static fallba
     true,
     'homepage updater must use GitHub pushed_at, not local commit date'
   );
+});
+
+test('sitemap lastmod tracks changed public assessment and legal surfaces', () => {
+  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-05-30');
+  assert.equal(sitemapLastmod('https://aiposture.org/privacy/'), effectiveDate(PRIVACY));
+  assert.equal(sitemapLastmod('https://aiposture.org/terms/'), effectiveDate(TERMS));
 });
 
 test('public metadata discovers the assistant guide', () => {
