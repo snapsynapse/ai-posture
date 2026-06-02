@@ -18,6 +18,19 @@
     "verified": false,
     "notice": "This is an estimate, not a verified assertion."
   },
+  "papers": [
+    {
+      "title": "One Number You Can Defend",
+      "type": "whitepaper",
+      "audience": "governance, risk, and compliance leaders",
+      "url": "https://aiposture.org/papers/",
+      "pdf": "https://aiposture.org/papers/ai-posture-whitepaper-v1.pdf",
+      "audio": "https://aiposture.org/papers/stop-averaging-your-ai-risks.m4a",
+      "video": "https://youtu.be/f_BGJaMmYO0",
+      "published": "2026-06",
+      "license": "CC BY 4.0"
+    }
+  ],
   "constraint_rule": {
     "summary": "AI Posture equals the minimum of the in-scope vector levels.",
     "aggregation": "minimum",
@@ -83,6 +96,7 @@
     "llms": "https://aiposture.org/llms.txt",
     "assistant_guide": "https://aiposture.org/.well-known/assistant-guide.txt",
     "assistant_guide_manifest": "https://aiposture.org/.well-known/assistant-guide-manifest.json",
-    "estimate_result_schema": "https://aiposture.org/assess/schema/estimate-result.schema.json"
+    "estimate_result_schema": "https://aiposture.org/assess/schema/estimate-result.schema.json",
+    "papers": "https://aiposture.org/papers/"
   }
 }
