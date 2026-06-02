@@ -30,8 +30,6 @@
       --accent: #4f46e5;
       --accent-hover: #4338ca;
       --accent-soft: #eef2ff;
-      --amber: #b45309;
-      --amber-soft: #fef3c7;
       --border: #e5e7eb;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
@@ -70,17 +68,6 @@
     .meta .sep { color: var(--border); }
     .version { font-family: var(--mono); font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--border); }
 
-    .beta-banner {
-      background: var(--amber-soft);
-      border: 1px solid #fcd34d;
-      border-left: 4px solid var(--amber);
-      padding: 1rem 1.25rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-    }
-    .beta-banner strong { color: var(--amber); }
-
     .callout {
       background: var(--bg-alt);
       border: 1px solid var(--border);
@@ -117,6 +104,7 @@
     <div class="links">
       <a href="/assess/">Assess</a>
       <a href="/spec/">Spec</a>
+      <a href="/papers/">Papers</a>
     </div>
   </div>
 </nav>
@@ -125,16 +113,13 @@
   <div class="container">
     <h1>Terms of service</h1>
     <p class="meta">
-      <span class="version">v0.1.0 draft</span>
+      <span class="version">v0.1.0</span>
       <span class="sep">&middot;</span>
-      Effective <time datetime="2026-05-30">May 30, 2026</time>
+      Effective <time datetime="2026-05-29">May 29, 2026</time>
       <span class="sep">&middot;</span>
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/docs/terms/index.html">Revision history</a>
     </p>
 
-    <div class="beta-banner">
-      <strong>Beta notice.</strong> These terms are a working draft under legal review. The pre-assessment and framework are provided as a beta. Terms may change before general availability. Material changes update the effective date above and are visible in the repository commit history.
-    </div>
 
     <h2>1. Acceptance</h2>
     <p>By using <a href="https://aiposture.org/">aiposture.org</a>, including the pre-assessment at <a href="https://aiposture.org/assess/">aiposture.org/assess/</a>, you agree to these terms. If you do not agree, do not use the site.</p>
@@ -184,13 +169,13 @@
 
     <h2>11. Third-party links and processors</h2>
     <p>The site links to third-party resources, including reference products (<a href="https://paice.work/">PAICE.work</a>, <a href="https://siteline.to/">Siteline</a>, <a href="https://everyailaw.com/">EveryAILaw</a>), the PAICE newsletter hosted on Substack, and others. We do not control third parties and are not responsible for their content, terms, or practices.</p>
-    <p>We use <a href="https://www.cloudflare.com/">Cloudflare</a> (Workers and D1) to host the API and database, and <a href="https://resend.com/">Resend</a> to deliver newsletter and (when deployed) artifact emails. These are processors acting under our instructions. See the <a href="/privacy/">privacy policy</a> for details on what each handles.</p>
+    <p>We use <a href="https://cloudflare.com/">Cloudflare</a> (Workers and D1) to host the API and database, and <a href="https://resend.com/">Resend</a> to deliver newsletter and artifact emails. These are processors acting under our instructions. See the <a href="/privacy/">privacy policy</a> for details on what each handles.</p>
 
     <h2>12. AI Posture newsletter</h2>
     <p>If you subscribe to the AI Posture newsletter, you agree to receive occasional updates about the spec and pre-assessment at the email address you provided. Subscription is double opt-in: it is not active until you click the confirmation link. You may unsubscribe at any time as described in the <a href="/privacy/">privacy policy</a>. The AI Posture newsletter is separate from the PAICE newsletter on Substack.</p>
 
     <h2>13. Changes to the service</h2>
-    <p>The pre-assessment is a beta offering. We may add, remove, or change features without notice. The question bank and likelihood tables are versioned. Completed runs are tagged with the version under which they ran, so recalibration does not retroactively change prior results.</p>
+    <p>The pre-assessment is provided on an as-is, evolving basis. We may add, remove, or change features without notice. The question bank and likelihood tables are versioned. Completed runs are tagged with the version under which they ran, so recalibration does not retroactively change prior results.</p>
 
     <h2>14. Changes to these terms</h2>
     <p>Material changes trigger a new effective date at the top of this page. Continued use after the effective date constitutes acceptance of the updated terms. The repository commit history is authoritative.</p>

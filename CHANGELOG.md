@@ -1,5 +1,47 @@
 # Changelog
 
+## v1.0.0 release - 2026-06-01
+
+First stable release. The specification is promoted from v0.3.2 to v1.0.0, locking the three-vector set (People, Infrastructure, Regulation). No scoring, likelihood, prior, or aggregation-rule changes accompany the promotion; the normative content is the v0.3.2 text declared stable. The pre-assessment product, site, and agent surfaces are aligned to v1.0.0.
+
+Release gate:
+
+- ROADMAP Item 5 (legal copy) complete: counsel gave verbal approval as-is on 2026-05-29. Privacy and terms verified against deployed worker behavior on 2026-06-01.
+- ROADMAP Item 6 (Analytics QA) complete (see below).
+- ROADMAP Item 3 (native PDF) remains deferred and is explicitly non-blocking for v1.0.0; browser print/save-PDF covers the need.
+
+Version alignment:
+
+- Bumped `package.json` 0.4.1 to 1.0.0 and SPEC.md frontmatter v0.3.2 to v1.0.0 (`last_modified` 2026-06-01, status remains Published).
+- Updated the displayed spec version to v1.0.0 across the landing byline, the spec page (title, OG/Twitter cards, JSON-LD `version`, byline), `llms.txt`, and `.well-known/ai-posture-framework.json`. Updated the PRD's related-spec cross-reference.
+- Refreshed `sitemap.xml` lastmod to 2026-06-01 for the landing, spec, and framework-descriptor URLs; privacy and terms lastmod track their 2026-05-29 effective date per the legal-page convention.
+- INTENT (0.1.1) and PRD (v0.1.2) retain their own document version lines.
+
+Analytics QA (Item 6):
+
+- Audited PostHog init and every event payload: confirmed memory-only persistence, `person_profiles: 'never'`, and no autocapture, session recording, heatmaps, or rage-click detection; verified no event payload carries answer text, email, name, organization, or any direct identifier.
+- Reconciled the privacy policy's closed event list against deployed code. Added the previously-undisclosed `$pageview` event (on via `capture_pageview: true`) to the list with a no-identity, no-cross-session note. List now matches the 8 events that actually fire.
+
+Legal copy (Item 5):
+
+- Removed the beta-notice callouts from the privacy and terms pages and the now-unused `.beta-banner` rules and `--amber` CSS variables. Dropped the `draft` suffix from both version badges. Both pages now declare an effective date of 2026-05-29.
+- Reworded the terms "Changes to the service" clause from "The pre-assessment is a beta offering" to "provided on an as-is, evolving basis," preserving the change-without-notice provision without the beta framing.
+- Corrected stale copy: privacy "deliver artifacts you request (email, when deployed)" and the terms processor line "(when deployed) artifact emails" now reflect that email artifact delivery is live; normalized a `www.cloudflare.com` link to the bare domain.
+
+Documentation hygiene:
+
+- Added `tests/release-hygiene.test.js` guarding the public/agent surfaces against reintroduced beta language, the superseded `v0.3.2`, stale "when deployed" copy, and `www.` URLs, plus a package/spec 1.0.0 pin.
+- INTENT bumped 0.1.1 to 0.1.2 with a changelog entry for the v1.0 spec milestone and a note distinguishing the 1.0 stability promotion from recalibration.
+- Archived the historical pre-assessment PRD to `archive/PRD.md` (with an `archive/README.md`) and deleted the stale `handoffs/HANDOFF.md` snapshot; all of their open items were already tracked in ROADMAP.md, which is now the source of truth for remaining work. Updated PRD references in README, CONTRIBUTING, INTENT, llms.txt, and the assessment data-file provenance notes.
+
+Papers and media:
+
+- Added a Papers section at `docs/papers/` and a "Papers" nav link across all pages. The page presents the whitepaper *One Number You Can Defend* (design rationale for governance, risk, and compliance leaders) with a description, the five design choices, a PDF download, an embedded YouTube video summary (privacy-enhanced `youtube-nocookie`), and a self-hosted audio overview.
+- Published the whitepaper PDF at `/papers/ai-posture-whitepaper-v1.pdf` and the audio overview at `/papers/stop-averaging-your-ai-risks.m4a`. Linked the paper from the landing page, footer, `llms.txt`, and `sitemap.xml`.
+- Added an *Aggregated Intelligence* executive-brief companion entry that links out to its canonical home on PAICE.foundation rather than re-hosting it, keeping the site scoped to AI Posture and preserving the standard's neutrality.
+- Local whitepaper sources (`papers/`, legacy `whitepaper/`) are now git-ignored; only the published assets under `docs/papers/` are tracked.
+- Added `tests/papers.test.js` (paper assets exist, page wires them, nav link present on every page, companion link points to the canonical brief URL) and extended `site-metadata.test.js` to include the papers page in assistant-guide discovery.
+
 ## v0.4.1 hardening release - 2026-05-30
 
 Patch hardening release. No scoring, likelihood, prior, aggregation-rule, or spec changes. SPEC.md remains at v0.3.2.

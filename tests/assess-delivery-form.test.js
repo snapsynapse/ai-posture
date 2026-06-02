@@ -39,8 +39,8 @@ test('privacy policy lists delivery_requested as a permitted analytics event', (
   assert.match(PRIVACY, /<code>delivery_requested<\/code>/);
 });
 
-test('privacy and terms effective dates are bumped for the delivery release', () => {
-  assert.match(PRIVACY, /datetime="2026-05-30"/);
-  assert.match(TERMS, /datetime="2026-05-30"/);
+test('privacy and terms carry the v1.0 effective date and delivery disclosure', () => {
+  assert.match(PRIVACY, /datetime="2026-05-29"/);
+  assert.match(TERMS, /datetime="2026-05-29"/);
   assert.match(TERMS, /request email delivery of your JSON estimate artifact/);
 });

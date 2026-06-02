@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "note": "Per-vector level descriptors. Evidence rows are the content source for the evidence checklist shown in the output. See PRD Appendix B.",
+  "note": "Per-vector level descriptors. Evidence rows are the content source for the evidence checklist shown in the output. See archive/PRD.md Appendix B.",
   "handoff": {
     "People": { "name": "PAICE.work", "url": "https://paice.work/" },
     "Infrastructure": { "name": "Siteline", "url": "https://siteline.to/" },

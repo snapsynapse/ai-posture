@@ -30,8 +30,6 @@
       --accent: #4f46e5;
       --accent-hover: #4338ca;
       --accent-soft: #eef2ff;
-      --amber: #b45309;
-      --amber-soft: #fef3c7;
       --border: #e5e7eb;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
@@ -70,17 +68,6 @@
     .meta .sep { color: var(--border); }
     .version { font-family: var(--mono); font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--border); }
 
-    .beta-banner {
-      background: var(--amber-soft);
-      border: 1px solid #fcd34d;
-      border-left: 4px solid var(--amber);
-      padding: 1rem 1.25rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-    }
-    .beta-banner strong { color: var(--amber); }
-
     .note {
       background: var(--bg-alt);
       border: 1px solid var(--border);
@@ -118,6 +105,7 @@
     <div class="links">
       <a href="/assess/">Assess</a>
       <a href="/spec/">Spec</a>
+      <a href="/papers/">Papers</a>
     </div>
   </div>
 </nav>
@@ -126,16 +114,12 @@
   <div class="container">
     <h1>Privacy policy</h1>
     <p class="meta">
-      <span class="version">v0.1.0 draft</span>
+      <span class="version">v0.1.0</span>
       <span class="sep">&middot;</span>
-      Effective <time datetime="2026-05-30">May 30, 2026</time>
+      Effective <time datetime="2026-05-29">May 29, 2026</time>
       <span class="sep">&middot;</span>
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/docs/privacy/index.html">Revision history</a>
     </p>
-
-    <div class="beta-banner">
-      <strong>Beta notice.</strong> This policy is a working draft under legal review. Terms may change before general availability. If the policy materially changes, the effective date above is updated and the revision history link shows the diff.
-    </div>
 
     <h2>Who we are</h2>
     <p>aiposture.org is operated by PAICE.work PBC, a US public benefit corporation. The AI Posture framework and pre-assessment are stewarded by PAICE.work PBC under a planned transition to an independent steward (PAICE Foundation). Contact for privacy matters: <a href="mailto:privacy@paice.work">privacy@paice.work</a>.</p>
@@ -155,6 +139,7 @@
     <h3>Privacy-respecting analytics</h3>
     <p>We use <a href="https://posthog.com/">PostHog</a> in cookie-less mode. Only the following event types may be recorded:</p>
     <ul>
+      <li><code>$pageview</code> (records the page path and referrer, never an identity or cross-session link)</li>
       <li><code>assessment_started</code></li>
       <li><code>question_answered</code> (records the question identifier only, never your answer)</li>
       <li><code>assessment_completed</code> (records per-vector levels and the aggregate estimate, not individual answers)</li>
@@ -192,7 +177,7 @@
     <h2>How we use data</h2>
     <ul>
       <li>To run the pre-assessment in your browser (sessionStorage only).</li>
-      <li>To deliver artifacts you request (email, when deployed).</li>
+      <li>To deliver artifacts you request by email.</li>
       <li>To publish aggregate statistics (level distributions, constraining-vector frequencies, trajectory shapes) without attribution to any individual record.</li>
       <li>To improve the question bank and likelihood tables. Recalibration is described in the published specification.</li>
     </ul>

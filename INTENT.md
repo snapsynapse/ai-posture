@@ -1,7 +1,7 @@
 ---
 title: "AI Posture INTENT"
-version: "0.1.1"
-last_updated: 2026-05-25
+version: "0.1.2"
+last_updated: 2026-06-01
 status: working-hypothesis
 description: "Standards-level strategy for the AI Posture framework. Subscribes to portfolio-level working hypotheses. Defines stewardship principles, vector admission criteria, recalibration gates, contribution norms."
 tags: [intent, strategy, ai-posture, standards]
@@ -50,7 +50,7 @@ Likelihood tables and prior distributions in the pre-assessment are expert-elici
 - **Annually thereafter:** full review of likelihood tables against accumulated data
 - **On vector addition:** likelihood tables for any new vector must be elicited and published before that vector goes live in the pre-assessment
 
-Recalibration is documented in CHANGELOG.md. Major recalibrations bump the minor version (e.g., v0.2 to v0.3).
+Recalibration is documented in CHANGELOG.md. Major recalibrations bump the minor version (e.g., v0.2 to v0.3). The 1.0.0 promotion is a one-time stability declaration, not a recalibration: it locks the three-vector set as the v1.x baseline without changing scoring, likelihood, prior, or aggregation rules. Subsequent recalibrations continue to bump the minor version within the v1.x line.
 
 ## Contribution norms
 
@@ -78,7 +78,7 @@ Stewarded by PAICE.work PBC. Transition to an independent steward (PAICE Foundat
 
 Steward responsibilities:
 
-- Maintain SPEC.md and PRD.md
+- Maintain SPEC.md (the pre-assessment PRD is archived at archive/PRD.md as of v1.0.0)
 - Triage contributions against admission and recalibration criteria
 - Publish recalibration results transparently
 - Own the canonical URL (aiposture.org) and its infrastructure
@@ -103,11 +103,12 @@ Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment c
 
 - Portfolio INTENT: https://github.com/snapsynapse/paice-foundation/blob/main/INTENT.md
 - Spec: [SPEC.md](SPEC.md)
-- Pre-assessment PRD: [PRD.md](PRD.md)
+- Pre-assessment PRD (archived): [archive/PRD.md](archive/PRD.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## Changelog
 
+- 2026-06-01 v0.1.2 - Specification promoted to v1.0.0, locking the three-vector set (People, Infrastructure, Regulation) as the v1.x baseline. Stability declaration only; no scoring, likelihood, prior, or aggregation changes. Pre-assessment product, site, and agent surfaces aligned to v1.0.0. Legal copy finalized (counsel verbal approval 2026-05-29). Documented the 1.0 promotion as distinct from recalibration in the versioning policy above.
 - 2026-05-27 - Decision logged. W3C EARL 1.0 selected as the primary wire format for verified per-vector assessments. OSCAL Assessment Results 1.1.2 retained as a deferred projection target with explicit re-open triggers. Rationale, alternatives, and revision triggers in `docs/research/wire-format-earl.md`. No stewardship-principle changes; this is a positioning decision under the externally-verifiable and obligation-anchored principles already in force.
 - 2026-05-25 v0.1.1 - Adopted GuideCheck for assistant-facing repository maintenance instructions. Added canonical `assistant-guide.txt` publication path, Level 4 sidecar manifest, repository hash anchor, and repository mirror requirement.
 - **2026-04-20 v0.1.0** — Initial standards-level INTENT. Subscribes to portfolio working hypotheses. Formalizes stewardship principles, vector admission criteria, recalibration gates, contribution norms, and relationship to reference implementations.

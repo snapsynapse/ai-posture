@@ -30,7 +30,7 @@ The minimum-vector rule may be correct but under-explained. Some readers may exp
 
 The current v1 vector set may be sufficient for early adoption but incomplete over time. Candidate vectors should be admitted only when they meet the published admission criteria and can independently constrain the whole.
 
-The pre-assessment likelihood tables are expert-elicited. They are useful enough for a beta estimate, but not final. Recalibration after real completions and verified follow-up assessments is required before treating the estimate as strong signal.
+The pre-assessment likelihood tables are expert-elicited. They are useful enough for a preliminary estimate, but not final. Recalibration after real completions and verified follow-up assessments is required before treating the estimate as strong signal.
 
 The audience boundary needs validation. Boards, regulators, partners, customers, practitioners, and agents may need different explanations of the same score. The framework should keep one scoring model while testing which supporting artifacts each audience needs.
 

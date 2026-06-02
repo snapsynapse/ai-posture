@@ -1,12 +1,12 @@
 # AI Posture Roadmap
 
-Current roadmap for remaining pre-assessment work. Source of truth is [PRD.md](PRD.md), reconciled against [HANDOFF.md](HANDOFF.md) as of 2026-05-14.
+Current roadmap for remaining pre-assessment work, and the source of truth for what remains as of 2026-06-01. The original product requirements are archived at [archive/PRD.md](archive/PRD.md); the framework specification is [SPEC.md](SPEC.md).
 
 ## Current state
 
-The static site, canonical spec page, Bayesian adaptive pre-assessment, privacy page, terms page, OG image, result evidence checklist, verification handoff links, local JSON artifact, copyable summary, and browser print/save-PDF path are live.
+The static site, canonical spec page, Bayesian adaptive pre-assessment, privacy page, terms page, OG image, result evidence checklist, verification handoff links, local JSON artifact, copyable summary, and browser print/save-PDF path are live. The optional delivered-artifact flow is also live: landing-page newsletter capture with double opt-in, on-request JSON artifact delivery by email, and the result-screen email field, all backed by the Cloudflare Worker at `api.aiposture.org`. Analytics QA is complete and the legal pages match deployed behavior.
 
-The remaining roadmap is mostly about turning the client-side estimate into an optional delivered artifact flow, plus post-launch calibration work once real usage exists.
+The v1.0.0 release shipped 2026-06-01: the spec is promoted to v1.0.0 (three-vector set locked) and the pre-assessment product, site, and agent surfaces all carry v1.0.0. The remaining roadmap is a native PDF decision (Item 3, deferred and non-blocking) and post-launch calibration work once real usage exists.
 
 ## V1 remaining
 
@@ -99,40 +99,43 @@ Acceptance criteria met:
 
 ### 5. Legal copy finalization
 
-Status: beta draft, under legal review.
+Status: complete. Counsel gave verbal approval as-is on 2026-05-29; pages verified against deployed behavior 2026-06-01. More detailed revisions may follow but none are blocking.
 
 PRD reference: terms and privacy cover estimate status, no warranties, rights in user answers, sessionStorage, analytics, random-ID retention, email delivery, deletion, newsletter flow, aggregate use disclosure, no data sold.
 
+Done:
+
+- Beta-notice callouts removed from privacy and terms now that per-run storage and email delivery are live; version badges no longer carry a `draft` suffix; effective date set to 2026-05-29.
+- Reconciled both pages against deployed behavior (2026-06-01). Verified the worker matches the privacy claims: opaque `run_id` record, email nulled and `delivered_at` stamped after a successful send, partial record deleted on delivery failure, three-year retention, deletion via privacy@paice.work with the run ID, newsletter double opt-in with pending/confirmed states and per-IP rate limiting. Analytics event list matches the deployed events (see Item 6).
+
 Work remaining:
 
-- Review privacy policy after delivery backend is implemented.
-- Review terms after delivery backend is implemented.
-- Remove current status notice only when per-run storage and email delivery are live.
-- Update effective dates when material behavior changes.
+- None blocking. Future detailed revisions from counsel, if any, update the effective date and are tracked in commit history.
 
 Acceptance criteria:
 
-- Public legal pages exactly match deployed data behavior.
+- Public legal pages exactly match deployed data behavior. (Met 2026-06-01, pending counsel review.)
 - Repository commit history remains authoritative for changes.
 
 ## V1 operational follow-up
 
 ### 6. Analytics QA
 
-Status: partially implemented.
+Status: shipped 2026-06-01.
 
-Live events include `assessment_started`, `question_answered`, `assessment_completed`, `handoff_clicked`, and `pdf_requested`.
+Live events: `$pageview`, `assessment_started`, `question_answered`, `assessment_completed`, `handoff_clicked`, `delivery_requested`, `pdf_requested`, and `email_captured`.
 
-Work remaining:
+Delivered:
 
-- Add `email_captured` when newsletter or artifact email capture ships.
-- Confirm PostHog remains memory-only with no autocapture, recording, heatmaps, rage-click detection, or person profiles.
-- Verify event payloads never include answer text, email address, name, organization, or direct identifier.
+- `email_captured` fires on landing-page newsletter submit (no props; address never sent). Artifact delivery uses the separate `delivery_requested` event (no props; address never sent).
+- PostHog confirmed memory-only: `persistence: 'memory'`, `person_profiles: 'never'`, `disable_session_recording: true`, `autocapture: false`, `capture_heatmaps: false`, `rageclick: false`.
+- Audited every event payload: no answer text, email address, name, organization, or direct identifier. `question_answered` carries the question id only; `assessment_completed` carries derived per-vector levels and the aggregate, never raw answers; `handoff_clicked` carries the destination URL, not identity.
+- Reconciled the privacy policy's closed event list against deployed code. `$pageview` (on via `capture_pageview: true`) was undisclosed; added it to the privacy event list with a no-identity, no-cross-session note.
 
-Acceptance criteria:
+Acceptance criteria met:
 
-- Analytics payloads match privacy policy.
-- Completion, abandonment, handoff, and artifact-request metrics are usable without session stitching.
+- Analytics payloads match the privacy policy event list exactly (8 events).
+- Completion, abandonment, handoff, and artifact-request metrics are derivable from `assessment_started` vs `assessment_completed`, `handoff_clicked`, and `delivery_requested` without session stitching.
 
 ### 7. Design basis and open questions note
 

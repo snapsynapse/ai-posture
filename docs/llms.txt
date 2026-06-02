@@ -25,17 +25,19 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 
 ## Key files
 
-- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v0.3.2)
-- [PRD.md](https://github.com/snapsynapse/ai-posture/blob/main/PRD.md): Pre-assessment product requirements (v0.1.2)
+- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v1.0.0)
+- [archive/PRD.md](https://github.com/snapsynapse/ai-posture/blob/main/archive/PRD.md): Pre-assessment product requirements (v0.1.2, archived historical reference)
 - [CHANGELOG.md](https://github.com/snapsynapse/ai-posture/blob/main/CHANGELOG.md): Spec change log
 - [Landing page](https://aiposture.org/): Canonical homepage
 - [Self-assessment](https://aiposture.org/assess/): Bayesian adaptive pre-assessment
+- [Papers](https://aiposture.org/papers/): whitepaper index with description, audio overview, and video summary
+- [Whitepaper: One Number You Can Defend](https://aiposture.org/papers/ai-posture-whitepaper-v1.pdf): design rationale for governance, risk, and compliance leaders (PDF, June 2026)
 - [Assistant Guide](https://aiposture.org/.well-known/assistant-guide.txt): bounded assistant maintenance instructions
 - [Assistant Guide Manifest](https://aiposture.org/.well-known/assistant-guide-manifest.json): GuideCheck Level 4 sidecar manifest
 - [Framework Profile](https://aiposture.org/.well-known/ai-posture-framework.json): machine-readable framework terms, vectors, levels, and key agent resources
 - [Estimate Result Schema](https://aiposture.org/assess/schema/estimate-result.schema.json): JSON Schema for downloadable pre-assessment estimate artifacts
 - [Privacy policy](https://aiposture.org/privacy/): Data handling, retention, cookie-less analytics posture
-- [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), beta notice, warranty disclaimers
+- [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), warranty disclaimers
 
 ## Positioning and validation
 

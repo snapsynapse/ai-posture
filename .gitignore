@@ -18,6 +18,12 @@ venv/
 HANDOFF.md
 handoffs/
 
+# Local whitepaper source/scratch (editable .docx + working copies of media).
+# Published assets are tracked under docs/papers/ instead. Leading slash anchors
+# these to the repo root so they do NOT also match docs/papers/.
+/papers/
+/whitepaper/
+
 # worker
 worker/.dev.vars
 worker/.wrangler/

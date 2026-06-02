@@ -7,7 +7,7 @@ AI Posture is an open specification and beta pre-assessment. Contributions are w
 Read these first:
 
 - [SPEC.md](SPEC.md): normative framework definition.
-- [PRD.md](PRD.md): pre-assessment behavior and output contract.
+- [archive/PRD.md](archive/PRD.md): pre-assessment behavior and output contract (archived; historical reference).
 - [INTENT.md](INTENT.md): standards-level strategy and contribution norms.
 - [docs/research/README.md](docs/research/README.md): non-normative positioning and validation notes.
 

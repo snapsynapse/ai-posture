@@ -1,9 +1,11 @@
 # AI Posture Pre-Assessment PRD
 
+Archived 2026-06-01. Historical product requirements for the v1.0.0 pre-assessment. The product it specifies is built and live; this document is kept for provenance, not as a live source of truth. Remaining and future work is tracked in [ROADMAP.md](../ROADMAP.md). The framework is [SPEC.md](../SPEC.md). The runtime data files under `docs/assess/data/` are authoritative for the likelihood and rubric tables that Appendices A and B originally specified.
+
 Version: v0.1.2
-Status: Draft
+Status: Archived (was Draft)
 Last modified: 2026-05-27
-Related spec: SPEC.md (v0.3.2)
+Related spec: SPEC.md (v1.0.0)
 Canonical URL: https://aiposture.org/assess/
 
 ## Purpose

@@ -7,6 +7,7 @@ const ROOT = path.join(__dirname, '..');
 const SPEC = fs.readFileSync(path.join(ROOT, 'SPEC.md'), 'utf8');
 const HOME = fs.readFileSync(path.join(ROOT, 'docs/index.html'), 'utf8');
 const SPEC_PAGE = fs.readFileSync(path.join(ROOT, 'docs/spec/index.html'), 'utf8');
+const PAPERS = fs.readFileSync(path.join(ROOT, 'docs/papers/index.html'), 'utf8');
 const ASSESS = fs.readFileSync(path.join(ROOT, 'docs/assess/index.html'), 'utf8');
 const PRIVACY = fs.readFileSync(path.join(ROOT, 'docs/privacy/index.html'), 'utf8');
 const TERMS = fs.readFileSync(path.join(ROOT, 'docs/terms/index.html'), 'utf8');
@@ -83,7 +84,7 @@ test('sitemap lastmod tracks changed public assessment and legal surfaces', () =
 test('public metadata discovers the assistant guide', () => {
   const assistantGuideLink = '<link rel="assistant-guide" href="https://aiposture.org/.well-known/assistant-guide.txt">';
 
-  for (const html of [HOME, SPEC_PAGE, ASSESS, PRIVACY, TERMS, NOT_FOUND]) {
+  for (const html of [HOME, SPEC_PAGE, PAPERS, ASSESS, PRIVACY, TERMS, NOT_FOUND]) {
     assert.equal(html.includes(assistantGuideLink), true);
   }
 

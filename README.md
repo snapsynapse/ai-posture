@@ -2,11 +2,11 @@
 
 The Aggregated Intelligence Posture framework. One governance score for human-AI collaboration across three vectors, bounded by the weakest.
 
-Status: beta. The spec, landing page, pre-assessment, and supporting legal pages are live for public review. Terms may change before general availability.
+Status: stable (v1.0.0). The specification is at v1.0.0 with the three-vector set locked. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
-- Pre-assessment PRD: [PRD.md](PRD.md)
+- Pre-assessment PRD (archived): [archive/PRD.md](archive/PRD.md)
 - Self-assessment: https://aiposture.org/assess/
 - Assistant guide: https://aiposture.org/.well-known/assistant-guide.txt
 - Framework profile: https://aiposture.org/.well-known/ai-posture-framework.json
@@ -35,7 +35,7 @@ https://aiposture.org/
 ## Repo layout
 
 - `SPEC.md` — normative specification (YAML frontmatter + Markdown body)
-- `PRD.md` — pre-assessment product requirements (question bank, likelihood tables, rubric tables, runtime flow)
+- `archive/PRD.md` — archived pre-assessment product requirements (question bank, likelihood tables, rubric tables, runtime flow); historical, superseded at v1.0.0
 - `CONTRIBUTING.md` - contribution boundaries and verification guidance
 - `CHANGELOG.md` — spec and PRD change log
 - `scripts/build-spec.js` — generates `docs/spec/index.html` from `SPEC.md`
@@ -46,10 +46,11 @@ https://aiposture.org/
 - `docs/assess/` — client-side Bayesian adaptive self-assessment
 - `docs/assess/schema/` - JSON Schema for local assessment artifacts
 - `docs/.well-known/ai-posture-framework.json` - machine-readable framework profile
+- `docs/papers/` — papers section: the whitepaper landing page, the published whitepaper PDF, and its audio overview
 - `docs/research/` - non-normative design basis, validation backlog, stress tests, and positioning crosswalk
 - `.github/ISSUE_TEMPLATE/` - structured intake for spec changes, vector proposals, validation findings, and terminology feedback
 - `tests/` — regression, engine, and data-contract tests for the assessment flow
-- `docs/privacy/`, `docs/terms/` — supporting legal pages (beta drafts)
+- `docs/privacy/`, `docs/terms/` — supporting legal pages
 
 ## Build
 

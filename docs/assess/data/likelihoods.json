@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "note": "P(answer | level) per question. Rows sum to 1.00. Expert-elicited for v1. See PRD Appendix A.",
+  "note": "P(answer | level) per question. Rows sum to 1.00. Expert-elicited for v1. See archive/PRD.md Appendix A.",
   "levels": ["Ignoring", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"],
   "questions": {
     "I1": {
