@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <title>AI Posture &mdash; The Aggregated Intelligence Posture framework</title>
+  <title>AI Posture &mdash; Open, vendor-neutral AI maturity score</title>
   <meta name="description" content="AI Posture is a unified governance score for human-AI collaboration. One score across People, Infrastructure, and Regulation, bounded by the weakest.">
   <meta name="keywords" content="ai posture, aggregated intelligence posture, aip, ai governance, ai maturity model, paice, human-ai collaboration, ai readiness">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -23,7 +23,7 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Posture">
   <meta property="og:title" content="AI Posture">
-  <meta property="og:description" content="The Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta property="og:description" content="The open, vendor-neutral AI maturity score. Three vectors &mdash; People, Infrastructure, Regulation. Bounded by your weakest, not flattered by your average.">
   <meta property="og:url" content="https://aiposture.org/">
   <meta property="og:locale" content="en_US">
   <meta property="article:published_time" content="2026-04-19T00:00:00Z">
@@ -41,7 +41,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Posture">
-  <meta name="twitter:description" content="The Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta name="twitter:description" content="The open, vendor-neutral AI maturity score. Three vectors &mdash; People, Infrastructure, Regulation. Bounded by your weakest, not flattered by your average.">
   <meta name="twitter:image" content="https://aiposture.org/imgs/og.png">
 
   <script type="application/ld+json">
@@ -49,8 +49,8 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "AI Posture",
-    "alternativeHeadline": "The Aggregated Intelligence Posture framework",
-    "description": "AI Posture is a unified governance score for human-AI collaboration, combining three vectors (People, Infrastructure, Regulation) on a five-level maturity model. An organization's AI Posture is bounded by its weakest vector.",
+    "alternativeHeadline": "The open, vendor-neutral AI maturity score",
+    "description": "AI Posture is an open, vendor-neutral measurement standard for AI maturity. Three independent vectors (People, Infrastructure, Regulation) on a five-level model. Aggregate is bounded by the weakest vector, not flattered by the average.",
     "inLanguage": "en",
     "url": "https://aiposture.org/",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/" },
@@ -79,7 +79,7 @@
     "@type": "DefinedTerm",
     "name": "Aggregated Intelligence Posture",
     "alternateName": ["AI Posture", "Aggregated Intelligence Posture"],
-    "description": "A unified governance score for human-AI collaboration, computed across three vectors (People, Infrastructure, Regulation) on a five-level maturity model (Perceiving, Assessing, Integrating, Calibrating, Engineering). An organization's AI Posture is bounded by its lowest vector.",
+    "description": "An open, vendor-neutral measurement standard for AI maturity. Three independent vectors (People, Infrastructure, Regulation) on a five-level model (Perceiving, Assessing, Integrating, Calibrating, Engineering). Aggregate posture is bounded by the lowest vector, not averaged.",
     "url": "https://aiposture.org/",
     "sameAs": [
       "https://github.com/snapsynapse/ai-posture"
@@ -430,8 +430,8 @@
 <main id="main-content">
 <section class="hero">
   <div class="container">
-    <h1>Where your org stands. And how.</h1>
-    <p class="subtitle">Aggregated Intelligence Posture framework. One score across People, Infrastructure, and Regulation. Maturity models have matured.</p>
+    <h1>The open, vendor-neutral AI maturity score.</h1>
+    <p class="subtitle">Most maturity scores are produced by the vendor whose tools they score. Aggregated Intelligence Posture measures People, Infrastructure, and Regulation as independent vectors &mdash; bounded by your weakest, not flattered by your average. Self-estimate now, evidence-grade later.</p>
     <p class="byline">
       Published <time datetime="2026-04-19">April 19, 2026</time>
       <span class="sep">&middot;</span>
@@ -441,11 +441,9 @@
       <span class="sep">&middot;</span>
       <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC&nbsp;BY&nbsp;4.0</a>
     </p>
-    <p class="hook">AI governance isn&rsquo;t just one problem. How your people collaborate with AI, how agent-ready your infrastructure is, how prepared you are for AI-specific regulations, these all matter. Your org is only as strong as the weakest link.</p>
-
     <div class="cta-row">
       <a href="/assess/" class="btn btn-primary">Estimate your AI Posture &rarr;</a>
-      <a href="#framework" class="btn btn-secondary">Read the framework</a>
+      <a href="#framework" class="btn btn-secondary">See the three vectors</a>
     </div>
   </div>
 </section>
@@ -530,6 +528,25 @@ Next review: 2026-10-20
   </div>
 </section>
 
+<section id="maintenance">
+  <div class="container">
+    <h2>Keeping your assertion current</h2>
+    <p>AI Posture assertions decay. Regulations change, evidence ages, scope shifts. The reporting format above shows a <em>Next review</em> date for a reason &mdash; an assertion without a maintenance cycle behind it is a snapshot, not a posture.</p>
+    <p><strong>Posture Maintenance</strong> is the protocol for keeping an assertion fresh: decay tracking, regulation drift alerts in your declared scope, quarterly re-stamp cycle, and an append-only maintenance log that becomes the audit trail. The protocol itself will be published as an open spec addendum so any provider can deliver against it.</p>
+    <p>You can self-maintain, or work with a provider. <a href="https://paice.work/">PAICE.work</a> will offer Self-Serve and Managed tiers as the first compliant implementation &mdash; in development now. <a href="/papers/">Read the rationale</a> for why maintenance is structural, not a service add-on.</p>
+  </div>
+</section>
+
+<section id="governance" class="alt">
+  <div class="container" style="text-align: center;">
+    <h2>For governance leaders</h2>
+    <p style="max-width: 640px; margin: 0 auto 2rem;">If you sit in risk, compliance, or audit, the whitepaper <em>One Number You Can Defend</em> sets out the design rationale: why minimum-of-vectors is more defensible than averaged maturity scores, how AI Posture composes with NIST AI RMF and ISO/IEC 42001, and what an evidence-grade assertion looks like in front of a board or regulator.</p>
+    <div class="cta-row">
+      <a href="/papers/" class="btn btn-primary">Read <em>One Number You Can Defend</em> &rarr;</a>
+    </div>
+  </div>
+</section>
+
 <section id="spec">
   <div class="container" style="text-align: center;">
     <h2>Read the spec</h2>
@@ -539,14 +556,14 @@ Next review: 2026-10-20
       <a href="/assess/" class="btn btn-secondary">Estimate your posture</a>
     </div>
 
-    <p style="max-width: 620px; margin: 2rem auto 0; color: var(--text-muted);">Reading from a governance seat? The whitepaper <a href="/papers/"><em>One Number You Can Defend</em></a> sets out the design rationale for risk and compliance leaders.</p>
-
     <aside class="canonical-note" role="note" style="text-align: left;">
       <strong>Canonical reference.</strong> This page is the authoritative definition of the
       Aggregated Intelligence Posture framework. Any cross-posts or references should cite
       <a href="https://aiposture.org/">aiposture.org</a> as canonical.
       Last substantive revision: <time datetime="2026-05-27">2026-05-27</time>.
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/SPEC.md" target="_blank" rel="noopener">Revision history &rarr;</a>
+      <br><br>
+      AI Posture sits at the top of the PAICE portfolio &mdash; see <a href="https://paice.foundation/">paice.foundation</a> for sister specs.
     </aside>
   </div>
 </section>
