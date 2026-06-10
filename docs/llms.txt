@@ -46,6 +46,8 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 - [Validation backlog](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/validation-backlog.md): testable assumptions and data-model implications
 - [Weakest-link stress tests](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/weakest-link-stress-tests.md): edge cases for minimum-vector aggregation and shared level semantics
 - [Adjacent-framework crosswalk](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/adjacent-framework-crosswalk.md): relationship to governance, risk, compliance, maturity, and behavior-change models
+- [Wire format for verified assessments](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/wire-format-earl.md): W3C EARL 1.0 as primary wire format, OSCAL retained as deferred projection target
+- [Evidence-grade definition and tiers](https://github.com/snapsynapse/ai-posture/blob/main/docs/research/evidence-grade-definition.md): what evidence-grade means, the three assertion tiers (estimate, self-attested, externally verified), and promotion criteria
 
 ## Links
 
