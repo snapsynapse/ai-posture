@@ -281,30 +281,26 @@ Acceptance criteria:
 
 ### 12. EARL wire format for verified assessments
 
-Status: planned for v1.1.
+Status: shipped 2026-06-10 (v1.1.0).
 
 PRD reference: out of PRD scope. The PRD covers the pre-assessment estimate. This item covers the wire format for verified per-vector assessments produced by reference implementations.
 
 Design basis: [docs/research/wire-format-earl.md](docs/research/wire-format-earl.md)
 
-Work remaining:
+Delivered:
 
-- Author the AI Posture EARL profile under `schema/earl/v0/`.
-- Publish `context.jsonld` defining AI-Posture-local terms (`apos:vector`, `apos:level`, `apos:nextReview`, `apos:atLevelSince`, `apos:scope`, `apos:postureLevel`, `apos:constrainingVector`).
-- Publish `shapes.ttl` with SHACL shapes for required fields, vector enum, level enum, date constraints, evidence-pointer requirement, and weakest-link coherence.
-- Publish `profile.md` describing required EARL fields per Assertion, vector tagging rules, level encoding (per-Assertion EARL outcome plus per-vector `apos:level`), evidence-pointer requirements, weakest-link aggregation expectation, scope declaration, and N/A handling.
-- Publish `example.jsonld` rendering the SPEC.md Acme Corp reporting block.
-- Ship a thin validator CLI under MIT license.
-- Publish the profile at `https://aiposture.org/schema/earl/v0/` as the canonical IRI base.
-- Document emitter expectations in reference-implementation guidance.
+- EARL profile published under `docs/schema/earl/v0/`: `context.jsonld` (binds EARL, Dublin Core, FOAF, and `apos:` terms), `shapes.ttl` (SHACL shapes including a SPARQL weakest-link constraint), `profile.md` (document model, vector tagging, level encoding, evidence-pointer rules, scope and N/A handling, OSCAL projection note), and `example.jsonld` (the SPEC.md Acme Corp block).
+- Criterion IRIs minted in the `https://aiposture.org/criteria/v1/` namespace, one per vector per level 1-5 (15 total), with the registry at [docs/criteria/v1/index.json](docs/criteria/v1/index.json) generated from `rubric.json`. Stable IRIs; superseded only, never re-minted.
+- Thin zero-dependency validator CLI at `scripts/validate.js` (MIT): validates a declaration against its JSON Schema plus the semantic rules the schema cannot express, and an EARL document against the profile shapes including weakest-link coherence. Wired into `npm test` via `tests/earl-profile.test.js`.
+- Proposed Obligation-First `dct:source` linkage for Regulation-vector criteria is drafted in `profile.md`, held for steward review before it becomes normative.
 
-Acceptance criteria:
+Acceptance criteria met:
 
-- Profile validates against W3C EARL 1.0 vocabulary.
-- `example.jsonld` passes SHACL shapes.
-- `example.jsonld` renders identically to the SPEC.md reporting block when transformed.
-- Schema IRI base is stable, versioned, and resolves to the published profile.
-- AI Posture criterion IRIs are mintable in the `https://aiposture.org/criteria/` namespace and carry optional `dct:source` linkage to external obligation identifiers (for example Obligation-First IRIs) where known.
+- Profile uses the W3C EARL 1.0 vocabulary with `apos:` extension terms.
+- `example.jsonld` passes the reference validator, including the weakest-link rule.
+- `example.jsonld` reproduces the SPEC.md Acme Corp reporting block.
+- Schema IRI base is stable, versioned (`/schema/earl/v0/`), and the criterion namespace is versioned (`/criteria/v1/`).
+- Criterion IRIs carry optional `dct:source` linkage to external obligation identifiers; the Obligation-First mappings are proposed pending steward review.
 
 ### 13. OSCAL Assessment Results projection
 

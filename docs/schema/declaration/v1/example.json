@@ -1,0 +1,24 @@
+{
+  "type": "AI Posture Declaration",
+  "spec_version": "v1.1.0",
+  "generated_at": "2026-04-20T00:00:00Z",
+  "next_review": "2026-10-20",
+  "subject": {
+    "name": "Acme Corp",
+    "domain": "https://acme.example/",
+    "scope": "organizational"
+  },
+  "assertion_basis": "self-assertion",
+  "aggregate": { "level": 2, "level_name": "Assessing" },
+  "constraining_vectors": ["Regulation"],
+  "vectors": {
+    "People": { "in_scope": true, "level": 4, "level_name": "Calibrating", "at_level_since": "2025-09-01" },
+    "Infrastructure": { "in_scope": true, "level": 3, "level_name": "Integrating", "at_level_since": "2026-02-14" },
+    "Regulation": { "in_scope": true, "level": 2, "level_name": "Assessing", "at_level_since": "2026-04-20" }
+  },
+  "evidence": {
+    "People": ["https://acme.example/evidence/people-cohort-report.pdf"],
+    "Infrastructure": ["https://acme.example/.well-known/llms.txt"],
+    "Regulation": ["https://acme.example/evidence/obligation-register.pdf"]
+  }
+}

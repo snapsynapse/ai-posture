@@ -1,0 +1,196 @@
+{
+  "$comment": "AI Posture criterion IRI registry. Stable IRIs: never re-mint, only supersede. Source: docs/assess/data/rubric.json. One criterion per vector per maturity level 1-5. Level 0 (N/A) is a falsifiable scope boundary, not a test criterion.",
+  "namespace": "https://aiposture.org/criteria/v1",
+  "version": "v1",
+  "spec_version": "v1.1.0",
+  "generated_from": "https://github.com/snapsynapse/ai-posture/blob/main/docs/assess/data/rubric.json",
+  "license": "CC BY 4.0",
+  "criteria": [
+    {
+      "iri": "https://aiposture.org/criteria/v1/people/1",
+      "vector": "People",
+      "level": 1,
+      "level_name": "Perceiving",
+      "assertion": "Our people use AI. We have not measured how.",
+      "evidence": [
+        "Written acknowledgment of AI use in policy, dated."
+      ],
+      "test": "Produce the dated written acknowledgment."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/people/2",
+      "vector": "People",
+      "level": 2,
+      "level_name": "Assessing",
+      "assertion": "We have looked at how our people collaborate with AI.",
+      "evidence": [
+        "Baseline behavioral assessment of human-AI collaboration, dated."
+      ],
+      "test": "Produce the assessment report, dated."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/people/3",
+      "vector": "People",
+      "level": 3,
+      "level_name": "Integrating",
+      "assertion": "What we saw changed what we do.",
+      "evidence": [
+        "At least one policy or practice change traceable to baseline assessment data."
+      ],
+      "test": "Show the change and the source finding."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/people/4",
+      "vector": "People",
+      "level": 4,
+      "level_name": "Calibrating",
+      "assertion": "We measure continuously. Data drives governance.",
+      "evidence": [
+        "Cohort-level behavioral data on defined cadence.",
+        "Privacy-preserving aggregation verified."
+      ],
+      "test": "Produce cohort report, cadence document, anonymization validation."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/people/5",
+      "vector": "People",
+      "level": 5,
+      "level_name": "Engineering",
+      "assertion": "Human-AI collaboration is an engineered capability, continuously maintained.",
+      "evidence": [
+        "Continuous behavioral assessment.",
+        "Verifiable attestation mechanism.",
+        "Declared framework-review cadence with review artifact from prior cycle."
+      ],
+      "test": "Show continuous assessment, attestation mechanism, declared cadence, and most recent review artifact."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/infrastructure/1",
+      "vector": "Infrastructure",
+      "level": 1,
+      "level_name": "Perceiving",
+      "assertion": "Agents may interact with our systems. We have not measured readiness.",
+      "evidence": [
+        "Acknowledgment that agents may interact with org systems."
+      ],
+      "test": "Produce the acknowledgment."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/infrastructure/2",
+      "vector": "Infrastructure",
+      "level": 2,
+      "level_name": "Assessing",
+      "assertion": "We have scanned our infrastructure for agent readiness.",
+      "evidence": [
+        "Agent-readiness scan complete.",
+        "Inventory of external surfaces.",
+        "Partner integrations mapped."
+      ],
+      "test": "Produce scan report, surface inventory, partner map."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/infrastructure/3",
+      "vector": "Infrastructure",
+      "level": 3,
+      "level_name": "Integrating",
+      "assertion": "We have acted on what the scan showed.",
+      "evidence": [
+        "Remediations made from scan findings.",
+        "Machine-readable declarations deployed (llms.txt, structured data, agent-legible identifiers).",
+        "Follow-up scan confirms change."
+      ],
+      "test": "Show scan, remediation log, follow-up scan delta."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/infrastructure/4",
+      "vector": "Infrastructure",
+      "level": 4,
+      "level_name": "Calibrating",
+      "assertion": "We scan continuously. Drift is tracked.",
+      "evidence": [
+        "Scans on defined cadence.",
+        "Drift log.",
+        "Outer-surface claims verified against internal reality on a cycle."
+      ],
+      "test": "Produce cadence record, drift log, claim-reality reconciliation."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/infrastructure/5",
+      "vector": "Infrastructure",
+      "level": 5,
+      "level_name": "Engineering",
+      "assertion": "Agent-readiness is engineered into how systems are built and shipped.",
+      "evidence": [
+        "Agent-readiness scored automatically at release.",
+        "Standards contributed to, or internally extended protocols in use.",
+        "Declared framework-review cadence with review artifact from prior cycle."
+      ],
+      "test": "Show release-gate evidence, standards contribution or internal extension, declared cadence, and most recent review artifact."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/regulation/1",
+      "vector": "Regulation",
+      "level": 1,
+      "level_name": "Perceiving",
+      "assertion": "We are exposed to AI regulation. We have not mapped it.",
+      "evidence": [
+        "Exposure acknowledged.",
+        "Some jurisdictions named."
+      ],
+      "test": "Produce the acknowledgment."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/regulation/2",
+      "vector": "Regulation",
+      "level": 2,
+      "level_name": "Assessing",
+      "assertion": "We have mapped our obligations across jurisdictions.",
+      "evidence": [
+        "Obligation register.",
+        "Jurisdictional coverage across operations, sales, employment footprint.",
+        "Gaps identified."
+      ],
+      "test": "Produce register with jurisdictional coverage and named gaps."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/regulation/3",
+      "vector": "Regulation",
+      "level": 3,
+      "level_name": "Integrating",
+      "assertion": "Obligations are translated into controls.",
+      "evidence": [
+        "Obligations mapped to controls.",
+        "At least primary jurisdiction fully controlled.",
+        "Statute-to-control traceability maintained."
+      ],
+      "test": "Show the statute-to-control trace for at least one jurisdiction."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/regulation/4",
+      "vector": "Regulation",
+      "level": 4,
+      "level_name": "Calibrating",
+      "assertion": "Controls cover all in-scope jurisdictions. Regulatory change is monitored.",
+      "evidence": [
+        "Controls across all in-scope jurisdictions.",
+        "Active regulatory-change monitoring.",
+        "Documented interpretations with counterparties where applicable."
+      ],
+      "test": "Produce coverage map, monitoring cadence, interpretation records."
+    },
+    {
+      "iri": "https://aiposture.org/criteria/v1/regulation/5",
+      "vector": "Regulation",
+      "level": 5,
+      "level_name": "Engineering",
+      "assertion": "Compliance is continuous. New jurisdictions onboard rapidly.",
+      "evidence": [
+        "Obligations met as measured coverage ratio, refreshed continuously.",
+        "Proactive interpretation recordkeeping.",
+        "New jurisdiction ingested in days.",
+        "Declared framework-review cadence with review artifact from prior cycle."
+      ],
+      "test": "Show coverage refresh cadence, interpretation registry, jurisdiction-intake workflow, declared review cadence, and most recent review artifact."
+    }
+  ]
+}

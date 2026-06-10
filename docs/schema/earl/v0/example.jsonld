@@ -1,0 +1,112 @@
+{
+  "@context": "https://aiposture.org/schema/earl/v0/context.jsonld",
+  "@id": "https://acme.example/.well-known/ai-posture-earl.jsonld",
+  "@type": "PostureReport",
+  "specVersion": "v1.1.0",
+  "title": "Aggregated Intelligence Posture: Acme Corp",
+  "subject": {
+    "@id": "https://acme.example/",
+    "@type": "TestSubject",
+    "name": "Acme Corp",
+    "homepage": "https://acme.example/"
+  },
+  "assertedBy": {
+    "@id": "https://assessor.example/",
+    "@type": "Assertor",
+    "name": "Example Assessor"
+  },
+  "date": "2026-04-20T00:00:00Z",
+  "nextReview": "2026-10-20",
+  "scope": "organizational",
+  "postureLevel": 2,
+  "postureLevelName": "Assessing",
+  "constrainingVector": "Regulation",
+
+  "_draftObligationFirstLinkage": {
+    "_status": "DRAFT — pending steward review. Not normative. These fields are stripped from canonical EARL output.",
+    "_description": "Proposed dct:source linkage from Regulation-vector criterion IRIs to published Obligation-First obligation IRIs on everyailaw.com. Each link asserts that meeting an AI Posture Regulation criterion corresponds to discharging a named obligation in the Legal Graph. Reviewer strikes any mapping by removing its entry.",
+    "linkages": [
+      {
+        "criterion": "https://aiposture.org/criteria/v1/regulation/2",
+        "proposedSource": [
+          "https://everyailaw.com/obligations/obligation-register-coverage",
+          "https://everyailaw.com/obligations/jurisdictional-mapping"
+        ],
+        "rationale": "Regulation L2 (Assessing) requires producing an obligation register with jurisdictional coverage and named gaps. Maps to OF obligations that demand register-completeness and jurisdictional-footprint mapping."
+      },
+      {
+        "criterion": "https://aiposture.org/criteria/v1/regulation/3",
+        "proposedSource": [
+          "https://everyailaw.com/obligations/statute-to-control-traceability",
+          "https://everyailaw.com/obligations/primary-jurisdiction-coverage"
+        ],
+        "rationale": "Regulation L3 (Integrating) requires statute-to-control trace for at least one jurisdiction. Maps to OF obligations covering control traceability and primary-jurisdiction completeness."
+      },
+      {
+        "criterion": "https://aiposture.org/criteria/v1/regulation/4",
+        "proposedSource": [
+          "https://everyailaw.com/obligations/continuous-regulatory-monitoring",
+          "https://everyailaw.com/obligations/recorded-interpretation"
+        ],
+        "rationale": "Regulation L4 (Calibrating) requires active regulatory-change monitoring and documented interpretations. Maps to OF obligations covering monitoring cadence and interpretation recordkeeping."
+      }
+    ]
+  },
+
+  "assertion": [
+    {
+      "@type": "Assertion",
+      "assertedBy": "https://assessor.example/",
+      "subject": "https://acme.example/",
+      "vector": "People",
+      "inScope": true,
+      "test": "https://aiposture.org/criteria/v1/people/4",
+      "mode": "earl:manual",
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed",
+        "level": 4,
+        "levelName": "Calibrating",
+        "atLevelSince": "2025-09-01",
+        "date": "2026-04-20T00:00:00Z",
+        "source": "https://acme.example/evidence/people-cohort-report.pdf"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "assertedBy": "https://assessor.example/",
+      "subject": "https://acme.example/",
+      "vector": "Infrastructure",
+      "inScope": true,
+      "test": "https://aiposture.org/criteria/v1/infrastructure/3",
+      "mode": "earl:manual",
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed",
+        "level": 3,
+        "levelName": "Integrating",
+        "atLevelSince": "2026-02-14",
+        "date": "2026-04-20T00:00:00Z",
+        "source": "https://acme.example/.well-known/llms.txt"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "assertedBy": "https://assessor.example/",
+      "subject": "https://acme.example/",
+      "vector": "Regulation",
+      "inScope": true,
+      "test": "https://aiposture.org/criteria/v1/regulation/2",
+      "mode": "earl:manual",
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed",
+        "level": 2,
+        "levelName": "Assessing",
+        "atLevelSince": "2026-04-20",
+        "date": "2026-04-20T00:00:00Z",
+        "source": "https://acme.example/evidence/obligation-register.pdf"
+      }
+    }
+  ]
+}

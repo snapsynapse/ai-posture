@@ -103,6 +103,12 @@
     "assistant_guide": "https://aiposture.org/.well-known/assistant-guide.txt",
     "assistant_guide_manifest": "https://aiposture.org/.well-known/assistant-guide-manifest.json",
     "estimate_result_schema": "https://aiposture.org/assess/schema/estimate-result.schema.json",
+    "declaration_schema": "https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json",
+    "declaration_example": "https://aiposture.org/schema/declaration/v1/example.json",
+    "declaration_viewer": "https://aiposture.org/check/",
+    "earl_profile": "https://aiposture.org/schema/earl/v0/profile.md",
+    "earl_context": "https://aiposture.org/schema/earl/v0/context.jsonld",
+    "criterion_registry": "https://aiposture.org/criteria/v1/index.json",
     "papers": "https://aiposture.org/papers/"
   }
 }

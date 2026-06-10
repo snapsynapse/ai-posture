@@ -1,0 +1,114 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix earl: <http://www.w3.org/ns/earl#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix apos: <https://aiposture.org/ns#> .
+
+# SHACL shapes for the AI Posture EARL v0 profile.
+# These constrain a verified AI Posture assessment expressed in EARL 1.0 with
+# AI-Posture-local (apos:) extension terms. The weakest-link coherence rule is
+# expressed as a SPARQL constraint; the reference validator (scripts/validate.js)
+# also enforces it directly.
+
+apos:PostureReportShape
+  a sh:NodeShape ;
+  sh:targetClass apos:PostureReport ;
+  sh:property [
+    sh:path apos:specVersion ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$" ;
+  ] ;
+  sh:property [
+    sh:path earl:subject ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path apos:nextReview ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
+  ] ;
+  sh:property [
+    sh:path apos:postureLevel ;
+    sh:maxCount 1 ; sh:datatype xsd:integer ;
+    sh:minInclusive 1 ; sh:maxInclusive 5 ;
+  ] ;
+  sh:property [
+    sh:path apos:constrainingVector ;
+    sh:in ( "People" "Infrastructure" "Regulation" ) ;
+  ] ;
+  sh:property [
+    sh:path apos:assertion ;
+    sh:minCount 1 ;
+    sh:node apos:AssertionShape ;
+  ] ;
+  # Weakest-link coherence: postureLevel must equal the minimum level over
+  # in-scope assertions.
+  sh:sparql [
+    sh:message "postureLevel must equal the minimum apos:level over in-scope assertions (weakest-link rule)." ;
+    sh:prefixes apos: ;
+    sh:select """
+      PREFIX apos: <https://aiposture.org/ns#>
+      PREFIX earl: <http://www.w3.org/ns/earl#>
+      SELECT $this WHERE {
+        $this apos:postureLevel ?declared .
+        {
+          SELECT (MIN(?lvl) AS ?computed) WHERE {
+            $this apos:assertion ?a .
+            ?a apos:inScope true .
+            ?a earl:result ?r .
+            ?r apos:level ?lvl .
+          }
+        }
+        FILTER (?declared != ?computed)
+      }
+    """ ;
+  ] .
+
+apos:AssertionShape
+  a sh:NodeShape ;
+  sh:targetClass earl:Assertion ;
+  sh:property [
+    sh:path earl:assertedBy ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path earl:subject ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path apos:vector ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:in ( "People" "Infrastructure" "Regulation" ) ;
+  ] ;
+  sh:property [
+    sh:path earl:test ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path earl:result ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node apos:ResultShape ;
+  ] .
+
+apos:ResultShape
+  a sh:NodeShape ;
+  sh:property [
+    sh:path earl:outcome ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:in ( earl:passed earl:failed earl:cantTell earl:inapplicable earl:untested ) ;
+  ] ;
+  sh:property [
+    sh:path apos:level ;
+    sh:maxCount 1 ; sh:datatype xsd:integer ;
+    sh:minInclusive 1 ; sh:maxInclusive 5 ;
+  ] ;
+  sh:property [
+    sh:path dct:date ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ;
+  ] ;
+  # Evidence pointer: a passed assertion must resolve to an inspectable artifact.
+  sh:property [
+    sh:path dct:source ;
+    sh:minCount 1 ; sh:nodeKind sh:IRI ;
+    sh:message "A passed AI Posture assertion must carry at least one dct:source evidence pointer." ;
+  ] .

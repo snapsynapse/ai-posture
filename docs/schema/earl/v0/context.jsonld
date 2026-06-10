@@ -1,0 +1,45 @@
+{
+  "@context": {
+    "earl": "http://www.w3.org/ns/earl#",
+    "dct": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "apos": "https://aiposture.org/ns#",
+
+    "PostureReport": "apos:PostureReport",
+    "Assertion": "earl:Assertion",
+    "Assertor": "earl:Assertor",
+    "TestSubject": "earl:TestSubject",
+    "TestCriterion": "earl:TestCriterion",
+    "TestResult": "earl:TestResult",
+
+    "assertedBy": { "@id": "earl:assertedBy", "@type": "@id" },
+    "subject": { "@id": "earl:subject", "@type": "@id" },
+    "test": { "@id": "earl:test", "@type": "@id" },
+    "result": { "@id": "earl:result" },
+    "outcome": { "@id": "earl:outcome", "@type": "@id" },
+    "mode": { "@id": "earl:mode", "@type": "@id" },
+    "pointer": { "@id": "earl:pointer" },
+
+    "date": { "@id": "dct:date", "@type": "xsd:dateTime" },
+    "source": { "@id": "dct:source", "@type": "@id" },
+    "title": "dct:title",
+    "name": "foaf:name",
+    "homepage": { "@id": "foaf:homepage", "@type": "@id" },
+
+    "specVersion": "apos:specVersion",
+    "scope": "apos:scope",
+    "nextReview": { "@id": "apos:nextReview", "@type": "xsd:date" },
+    "postureLevel": { "@id": "apos:postureLevel", "@type": "xsd:integer" },
+    "postureLevelName": "apos:postureLevelName",
+    "constrainingVector": "apos:constrainingVector",
+
+    "vector": "apos:vector",
+    "level": { "@id": "apos:level", "@type": "xsd:integer" },
+    "levelName": "apos:levelName",
+    "atLevelSince": { "@id": "apos:atLevelSince", "@type": "xsd:date" },
+    "inScope": { "@id": "apos:inScope", "@type": "xsd:boolean" },
+
+    "assertion": { "@id": "apos:assertion", "@type": "@id", "@container": "@set" }
+  }
+}

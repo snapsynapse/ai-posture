@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>AI Posture alongside ISO/IEC 42001 and NIST AI RMF</title>
+  <meta name="description" content="How AI Posture relates to AI governance frameworks, risk frameworks, compliance programs, and maturity models. It is the machine-readable output of those programs, not a replacement for them.">
+  <meta name="keywords" content="ai posture, iso 42001, nist ai rmf, ai governance crosswalk, ai maturity">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://aiposture.org/crosswalk/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="/favicon.svg" color="#4f46e5">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="assistant-guide" href="https://aiposture.org/.well-known/assistant-guide.txt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Posture">
+  <meta property="og:title" content="AI Posture alongside ISO/IEC 42001 and NIST AI RMF">
+  <meta property="og:description" content="AI Posture is the public, machine-readable output of your governance program, not a replacement for it. Complementary, not competing.">
+  <meta property="og:url" content="https://aiposture.org/crosswalk/">
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Posture alongside ISO/IEC 42001 and NIST AI RMF">
+  <meta name="twitter:description" content="The public, machine-readable output of your governance program. Complementary, not competing.">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png?v=2">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "AI Posture alongside ISO/IEC 42001 and NIST AI RMF",
+    "description": "How AI Posture relates to AI governance frameworks, risk frameworks, compliance programs, and capability maturity models. AI Posture measures externally inspectable output behavior and is orthogonal to program frameworks.",
+    "inLanguage": "en",
+    "url": "https://aiposture.org/crosswalk/",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/crosswalk/" },
+    "author": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
+    "publisher": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff; --bg-alt: #f8f9fa; --text: #1a1d24; --text-muted: #5a6170;
+      --accent: #4f46e5; --accent-hover: #4338ca; --accent-soft: #eef2ff;
+      --border: #e5e7eb;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --max-width: 860px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); }
+    a:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--accent); color: #fff; padding: 0.5rem 1rem; z-index: 100; }
+    .skip-link:focus { left: 0; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+    nav { border-bottom: 1px solid var(--border); padding: 1rem 0; background: var(--bg); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 0.55rem; }
+    nav .logo svg { color: var(--accent); flex: 0 0 auto; }
+    nav .links { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    nav .links a { color: var(--text-muted); text-decoration: none; }
+    nav .links a:hover { color: var(--text); }
+    main { padding: 2.5rem 0 4rem; }
+    .eyebrow { font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 999px; display: inline-block; margin-bottom: 1rem; font-weight: 600; }
+    h1 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; line-height: 1.15; }
+    .lede { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    h2 { font-size: 1.3rem; font-weight: 700; margin: 2.25rem 0 0.75rem; letter-spacing: -0.01em; }
+    p { margin-bottom: 1rem; }
+    ul { margin: 0 0 1rem 1.25rem; }
+    li { margin-bottom: 0.4rem; }
+    .table-wrap { overflow-x: auto; margin: 1.25rem 0 1.75rem; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.7rem 0.95rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg-alt); }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 600; white-space: nowrap; }
+    .note-box { padding: 1rem 1.25rem; background: var(--bg-alt); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; font-size: 0.92rem; color: var(--text-muted); margin: 1.5rem 0; }
+    .note-box strong { color: var(--text); }
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 0; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+    footer a { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="AI Posture home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="20" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="20" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      </svg>
+      <span>AI Posture</span>
+    </a>
+    <div class="links">
+      <a href="/assess/">Assess</a>
+      <a href="/spec/">Spec</a>
+      <a href="/papers/">Papers</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="container">
+    <span class="eyebrow">Positioning</span>
+    <h1>AI Posture alongside ISO/IEC 42001 and NIST AI RMF</h1>
+    <p class="lede">AI Posture does not replace your governance program. It is the public, machine-readable output of one. Run NIST AI RMF or ISO/IEC 42001 to govern your inputs; publish your AI Posture as the externally comparable summary of what those programs have actually produced.</p>
+
+    <p>The specification states this as a first principle: AI Posture is orthogonal to NIST AI RMF, ISO/IEC 42001, EU AI Act conformance programs, and similar regimes. Those frameworks measure program design, governance structure, and remediation discipline. AI Posture measures externally inspectable output behavior, across three vectors, bounded by the weakest. The two are complementary. Where a framework is required, it remains required; AI Posture does not substitute for it.</p>
+
+    <h2>What sits where</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Family</th><th>Measures</th><th>How AI Posture relates</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Governance management systems</td>
+            <td>The governance program: policies, roles, procedures, management reviews, internal controls.</td>
+            <td>The program can organize the work and produce the evidence. AI Posture reports whether the work has produced defensible behavior. The program is not itself the posture.</td>
+          </tr>
+          <tr>
+            <td>Risk frameworks</td>
+            <td>Risks, harms, controls, likelihood, severity, treatment plans.</td>
+            <td>AI Posture is progressive maturity, not exposure scoring. New risk can reveal a bounded scope or an unmet obligation, but exposure alone does not erase mature behavior already evidenced.</td>
+          </tr>
+          <tr>
+            <td>Compliance and legal conformance</td>
+            <td>Obligations in a statute, regulation, contract, or jurisdiction.</td>
+            <td>Regulation is one vector of three. A strong Regulation vector does not prove mature People or Infrastructure behavior. AI Posture prevents compliance maturity from being mistaken for whole-organization readiness.</td>
+          </tr>
+          <tr>
+            <td>Capability maturity models</td>
+            <td>Process maturity across staged levels.</td>
+            <td>AI Posture applies one shared level shape across multiple actor classes and aggregates by the minimum in-scope vector. It is a cross-vector constraint, not a process average.</td>
+          </tr>
+          <tr>
+            <td>Behavior-change and adoption models</td>
+            <td>Human adoption, training, norms, incentives, behavior over time.</td>
+            <td>People is one vector. AI Posture rejects sentiment alone as maturity evidence and requires behavior that can be inspected while preserving privacy.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Why a separate measurement at all</h2>
+    <p>A governance program is run privately and reported in prose. A board, a regulator, a partner, or an agent then has to take that prose on trust. AI Posture is the artifact those readers can act on without reading the full internal program: a score, a declared scope, per-vector levels, a next-review date, and evidence paths, all machine-readable. It says what is asserted, what is estimated, what is verified, and when it was stamped.</p>
+
+    <div class="note-box">
+      <strong>The constraint that does the work.</strong> AI Posture is the minimum of its in-scope vectors, never the average. An organization with a mature compliance program and an unmeasured workforce is bounded by the workforce. That is the deficiency a governance review needs to find, and the one an averaged vendor score hides.
+    </div>
+
+    <h2>Guardrails</h2>
+    <ul>
+      <li>AI Posture does not replace any named framework, and claims none of their conformance.</li>
+      <li>It is not a certification, audit, legal advice, or compliance guarantee.</li>
+      <li>Reference implementations are not required to hold or publish a posture.</li>
+      <li>Vector levels are never averaged into a more flattering score.</li>
+    </ul>
+
+    <p>The full design rationale is in the <a href="/spec/">specification</a> and the non-normative <a href="https://github.com/snapsynapse/ai-posture/blob/main/docs/research/adjacent-framework-crosswalk.md">adjacent-framework crosswalk</a> research note. To publish your own posture, see the <a href="/spec/#declaration-format">declaration format</a> and the <a href="/check/">declaration viewer</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p><a href="/">AI Posture</a> &middot; <a href="/spec/">Spec</a> &middot; <a href="/check/">Check a declaration</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a></p>
+    <p style="margin-top: 0.3rem; font-size: 0.8rem;">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+  </div>
+</footer>
+
+</body>
+</html>

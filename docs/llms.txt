@@ -37,6 +37,10 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 - [Framework Profile](https://aiposture.org/.well-known/ai-posture-framework.json): machine-readable framework terms, vectors, levels, and key agent resources
 - [Estimate Result Schema](https://aiposture.org/assess/schema/estimate-result.schema.json): JSON Schema for downloadable pre-assessment estimate artifacts
 - [Declaration Schema](https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json): JSON Schema for /.well-known/ai-posture.json declarations (v1.1.0+)
+- [Declaration Example](https://aiposture.org/schema/declaration/v1/example.json): a worked self-assertion declaration
+- [Declaration Viewer](https://aiposture.org/check/): fetch, validate, and render any public declaration by URL
+- [Criterion Registry](https://aiposture.org/criteria/v1/index.json): stable criterion IRIs, one per vector per level 1-5, for EARL test references
+- [EARL Profile](https://aiposture.org/schema/earl/v0/profile.md): W3C EARL 1.0 wire format for verified per-vector assessments (context, shapes, example)
 - [Privacy policy](https://aiposture.org/privacy/): Data handling, retention, cookie-less analytics posture
 - [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), warranty disclaimers
 

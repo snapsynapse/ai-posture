@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Check a declaration &mdash; AI Posture</title>
+  <meta name="description" content="Fetch, validate, and render any public AI Posture declaration by URL. No account, no cookies, no storage. The declaration stays on its own domain.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://aiposture.org/check/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="/favicon.svg" color="#4f46e5">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="assistant-guide" href="https://aiposture.org/.well-known/assistant-guide.txt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Posture">
+  <meta property="og:title" content="Check an AI Posture declaration">
+  <meta property="og:description" content="Fetch, validate, and render any public AI Posture declaration by URL. The declaration stays on its own domain.">
+  <meta property="og:url" content="https://aiposture.org/check/">
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png?v=2">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff; --bg-alt: #f8f9fa; --text: #1a1d24; --text-muted: #5a6170;
+      --accent: #4f46e5; --accent-hover: #4338ca; --accent-soft: #eef2ff;
+      --border: #e5e7eb; --ok: #15803d; --ok-soft: #f0fdf4; --warn: #b45309; --warn-soft: #fffbeb; --err: #b91c1c; --err-soft: #fef2f2;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --max-width: 760px;
+    }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); }
+    a:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--accent); color: #fff; padding: 0.5rem 1rem; z-index: 100; }
+    .skip-link:focus { left: 0; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+    nav { border-bottom: 1px solid var(--border); padding: 1rem 0; background: var(--bg); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 0.55rem; }
+    nav .links { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    nav .links a { color: var(--text-muted); text-decoration: none; }
+    nav .links a:hover { color: var(--text); }
+    main { padding: 2.5rem 0 4rem; }
+    .eyebrow { font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 999px; display: inline-block; margin-bottom: 1rem; font-weight: 600; }
+    h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .lede { color: var(--text-muted); margin-bottom: 1.75rem; }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.35rem; }
+    .row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+    input[type=url], textarea { width: 100%; font-family: var(--mono); font-size: 0.85rem; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--bg); }
+    textarea { min-height: 9rem; resize: vertical; }
+    button { font-family: var(--font); font-weight: 600; font-size: 0.88rem; padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; white-space: nowrap; }
+    button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    button.ghost { background: transparent; color: var(--accent); }
+    button.ghost:hover { background: var(--accent-soft); }
+    .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+    details { margin-top: 0.75rem; }
+    summary { cursor: pointer; font-size: 0.85rem; color: var(--text-muted); }
+    .verdict { padding: 0.85rem 1.1rem; border-radius: 8px; font-size: 0.9rem; margin: 1.5rem 0 1rem; border: 1px solid var(--border); }
+    .verdict.ok { background: var(--ok-soft); border-color: #bbf7d0; color: var(--ok); }
+    .verdict.warn { background: var(--warn-soft); border-color: #fde68a; color: var(--warn); }
+    .verdict.err { background: var(--err-soft); border-color: #fecaca; color: var(--err); }
+    .verdict ul { margin: 0.4rem 0 0 1.1rem; }
+    .card { border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
+    .card h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.15rem; }
+    .card .scope { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .badge { font-family: var(--mono); font-size: 0.7rem; padding: 0.12rem 0.5rem; border-radius: 999px; border: 1px solid var(--border); background: var(--accent-soft); color: var(--accent); }
+    .badge.stale { background: var(--warn-soft); color: var(--warn); border-color: #fde68a; }
+    .vrow { display: grid; grid-template-columns: 8.5rem 1fr 7rem; gap: 0.6rem; align-items: center; padding: 0.55rem 0; border-top: 1px solid var(--border); }
+    .vrow .vname { font-weight: 600; }
+    .vrow .vlevel { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); text-align: right; }
+    .vrow.na .vlevel { color: var(--text-muted); }
+    .bar { height: 8px; border-radius: 999px; background: var(--bg-alt); overflow: hidden; }
+    .bar > span { display: block; height: 100%; background: var(--accent); }
+    .vrow.constraining .vname::after { content: " \2190 constrains"; font-weight: 400; font-size: 0.72rem; color: var(--warn); }
+    .ev { margin-top: 1rem; font-size: 0.82rem; }
+    .ev a { display: inline-block; margin-right: 0.6rem; word-break: break-all; }
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 0; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+    footer a { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="AI Posture home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="20" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="20" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      </svg>
+      <span>AI Posture</span>
+    </a>
+    <div class="links">
+      <a href="/assess/">Assess</a>
+      <a href="/spec/">Spec</a>
+      <a href="/crosswalk/">Crosswalk</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="container">
+    <span class="eyebrow">Declaration viewer</span>
+    <h1>Check a declaration</h1>
+    <p class="lede">Fetch, validate, and render any public AI Posture declaration. Enter the URL of a <code>/.well-known/ai-posture.json</code> file, or paste the JSON directly. Nothing is stored: no account, no cookies, no server. The declaration stays on its own domain.</p>
+
+    <label for="url">Declaration URL</label>
+    <div class="row">
+      <input type="url" id="url" placeholder="https://example.org/.well-known/ai-posture.json" autocomplete="off" spellcheck="false">
+      <button id="fetchBtn" type="button">Check</button>
+    </div>
+    <p class="hint">Tip: a domain may not send CORS headers for its declaration. If the fetch is blocked, paste the JSON below. <button class="ghost" id="exampleBtn" type="button" style="padding:0.1rem 0.4rem;font-size:0.8rem;">Load the worked example</button></p>
+
+    <details id="pasteWrap">
+      <summary>Paste declaration JSON instead</summary>
+      <div style="margin-top:0.6rem;">
+        <textarea id="paste" placeholder='{ "type": "AI Posture Declaration", ... }' spellcheck="false"></textarea>
+        <div class="row" style="margin-top:0.5rem;"><button id="validateBtn" type="button">Validate pasted JSON</button></div>
+      </div>
+    </details>
+
+    <div id="out" aria-live="polite"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p><a href="/">AI Posture</a> &middot; <a href="/spec/#declaration-format">Declaration format</a> &middot; <a href="/schema/declaration/v1/ai-posture-declaration.schema.json">Schema</a> &middot; <a href="/crosswalk/">Crosswalk</a> &middot; <a href="/privacy/">Privacy</a></p>
+    <p style="margin-top: 0.3rem; font-size: 0.8rem;">A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var LEVEL_NAMES = ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"];
+  var VECTORS = ["People", "Infrastructure", "Regulation"];
+  var $ = function (id) { return document.getElementById(id); };
+  var out = $("out");
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+  function isDate(s) { return typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s)); }
+  function isDateTime(s) { return typeof s === "string" && /T/.test(s) && !isNaN(Date.parse(s)); }
+
+  // Validation mirrors scripts/validate.js (declaration mode): the subset of the
+  // published JSON Schema plus the semantic rules the schema cannot express.
+  function validate(d) {
+    var errors = [], warnings = [];
+    if (!d || typeof d !== "object") { return { errors: ["not a JSON object"], warnings: [] }; }
+    if (d.type !== "AI Posture Declaration") errors.push('type must be "AI Posture Declaration"');
+    if (typeof d.spec_version !== "string" || !/^v\d+\.\d+(\.\d+)?$/.test(d.spec_version)) errors.push("spec_version must look like v1.1.0");
+    if (!isDateTime(d.generated_at)) errors.push("generated_at must be an ISO date-time");
+    if (!isDate(d.next_review)) errors.push("next_review must be an ISO date");
+    if (!d.subject || !d.subject.name || !d.subject.domain) errors.push("subject must have name and domain");
+    if (["self-estimate", "self-assertion", "verified"].indexOf(d.assertion_basis) < 0) errors.push("assertion_basis must be self-estimate, self-assertion, or verified");
+    if (d.assertion_basis === "verified") warnings.push('assertion_basis "verified" is reserved and must not be used until a verification process is specified');
+    if (!d.vectors) { errors.push("missing vectors"); return { errors: errors, warnings: warnings }; }
+
+    var inScope = VECTORS.filter(function (v) { return d.vectors[v] && d.vectors[v].in_scope; });
+    VECTORS.forEach(function (v) {
+      var e = d.vectors[v];
+      if (!e) { errors.push("vectors." + v + " is required"); return; }
+      if (e.in_scope === false && (e.level !== null || e.level_name !== "N/A")) errors.push("vectors." + v + ": in_scope false must have level null and level_name N/A");
+      if (e.in_scope === true && (e.level == null || e.level_name === "N/A")) errors.push("vectors." + v + ": in_scope true must have a level 1-5");
+      if (e.level != null && e.level_name && LEVEL_NAMES[e.level] !== e.level_name) errors.push("vectors." + v + ": level " + e.level + " does not match level_name " + e.level_name);
+    });
+    if (inScope.length === 0) {
+      if (d.aggregate && d.aggregate.level !== null) errors.push("aggregate.level must be null when all vectors are N/A");
+    } else {
+      var levels = inScope.map(function (v) { return d.vectors[v].level; });
+      var min = Math.min.apply(null, levels);
+      if (!d.aggregate || d.aggregate.level !== min) errors.push("aggregate.level must equal the minimum in-scope vector level " + min);
+      var constraining = inScope.filter(function (v) { return d.vectors[v].level === min; }).sort();
+      var declared = (d.constraining_vectors || []).slice().sort();
+      if (JSON.stringify(constraining) !== JSON.stringify(declared)) errors.push("constraining_vectors must equal in-scope vectors at the minimum: " + constraining.join(", "));
+    }
+    if (isDate(d.next_review) && Date.parse(d.next_review) < Date.now()) warnings.push("declaration is stale: next_review " + d.next_review + " is in the past");
+    return { errors: errors, warnings: warnings };
+  }
+
+  function verdict(res) {
+    if (res.errors.length) {
+      return '<div class="verdict err"><strong>Invalid declaration.</strong><ul>' + res.errors.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul></div>";
+    }
+    var w = res.warnings.length ? '<div class="verdict warn"><strong>Valid, with notes.</strong><ul>' + res.warnings.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul></div>" : "";
+    return '<div class="verdict ok"><strong>Valid declaration.</strong> Conforms to the AI Posture v1 declaration schema and the constraint rule.</div>' + w;
+  }
+
+  function render(d, sourceUrl) {
+    var res = validate(d);
+    var html = verdict(res);
+    if (res.errors.length) { out.innerHTML = html; return; }
+
+    var stale = isDate(d.next_review) && Date.parse(d.next_review) < Date.now();
+    var agg = d.aggregate || {};
+    var constraining = d.constraining_vectors || [];
+    html += '<div class="card">';
+    html += "<h2>" + esc((d.subject && d.subject.name) || "Declaration") + "</h2>";
+    html += '<div class="scope">' + esc((d.subject && d.subject.domain) || "") + ((d.subject && d.subject.scope) ? " &middot; " + esc(d.subject.scope) : "") + "</div>";
+    html += '<div class="meta">';
+    html += "<span>Aggregate: <strong>" + esc(agg.level_name || "N/A") + "</strong></span>";
+    html += '<span class="badge">' + esc(d.assertion_basis || "") + "</span>";
+    html += "<span>Stamped " + esc((d.generated_at || "").slice(0, 10)) + "</span>";
+    html += '<span class="badge' + (stale ? " stale" : "") + '">' + (stale ? "Stale &middot; review due " : "Fresh &middot; next review ") + esc(d.next_review || "") + "</span>";
+    html += "<span>Spec " + esc(d.spec_version || "") + "</span>";
+    html += "</div>";
+
+    VECTORS.forEach(function (v) {
+      var e = d.vectors[v] || {};
+      var na = !e.in_scope;
+      var lvl = na ? 0 : (e.level || 0);
+      var pct = na ? 0 : Math.round((lvl / 5) * 100);
+      var isC = constraining.indexOf(v) >= 0;
+      html += '<div class="vrow' + (na ? " na" : "") + (isC ? " constraining" : "") + '">';
+      html += '<div class="vname">' + esc(v) + "</div>";
+      html += '<div class="bar"><span style="width:' + pct + '%"></span></div>';
+      html += '<div class="vlevel">' + esc(na ? "N/A" : e.level_name) + (e.at_level_since ? "" : "") + "</div>";
+      html += "</div>";
+    });
+
+    if (d.evidence) {
+      var evHtml = "";
+      VECTORS.forEach(function (v) {
+        var arr = d.evidence[v] || [];
+        arr.forEach(function (u) { evHtml += '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer nofollow">' + esc(v) + " evidence</a>"; });
+      });
+      if (evHtml) html += '<div class="ev"><strong>Evidence pointers</strong> (self-provided, not verified): <br>' + evHtml + "</div>";
+    }
+    if (sourceUrl) html += '<p class="hint" style="margin-top:1rem;">Source: <a href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer nofollow">' + esc(sourceUrl) + "</a></p>";
+    html += "</div>";
+    out.innerHTML = html;
+  }
+
+  function parseAndRender(text, sourceUrl) {
+    var data;
+    try { data = JSON.parse(text); } catch (e) {
+      out.innerHTML = '<div class="verdict err"><strong>Could not parse JSON.</strong> ' + esc(e.message) + "</div>";
+      return;
+    }
+    render(data, sourceUrl);
+  }
+
+  function fetchUrl(url) {
+    out.innerHTML = '<div class="verdict">Fetching ' + esc(url) + " &hellip;</div>";
+    fetch(url, { headers: { accept: "application/json" } })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(function (t) { parseAndRender(t, url); })
+      .catch(function (e) {
+        out.innerHTML = '<div class="verdict warn"><strong>Could not fetch that URL.</strong> ' + esc(e.message) +
+          ". The domain may not send CORS headers, or the file may not exist. Paste the JSON below to validate it instead.</div>";
+        $("pasteWrap").open = true;
+      });
+  }
+
+  $("fetchBtn").addEventListener("click", function () { var u = $("url").value.trim(); if (u) fetchUrl(u); });
+  $("url").addEventListener("keydown", function (e) { if (e.key === "Enter") { var u = $("url").value.trim(); if (u) fetchUrl(u); } });
+  $("validateBtn").addEventListener("click", function () { var t = $("paste").value.trim(); if (t) parseAndRender(t, null); });
+  $("exampleBtn").addEventListener("click", function () { $("url").value = "/schema/declaration/v1/example.json"; fetchUrl("/schema/declaration/v1/example.json"); });
+
+  // ?url= permalink: a declaration at its own well-known path IS its permalink.
+  var q = new URLSearchParams(window.location.search).get("url");
+  if (q) { $("url").value = q; fetchUrl(q); }
+})();
+</script>
+
+</body>
+</html>

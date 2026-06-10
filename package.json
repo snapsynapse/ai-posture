@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-spec.js",
+    "build": "node scripts/build-spec.js && node scripts/build-criteria.js",
     "test": "node --test"
   }
 }
