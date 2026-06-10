@@ -1,18 +1,19 @@
 # AI Posture Worker
 
-Cloudflare Worker backend for AI Posture. Handles newsletter capture (double opt-in) via Resend, and is the planned host for the future assessment-artifact delivery endpoint.
+Cloudflare Worker backend for AI Posture. Handles newsletter capture (double opt-in) via Resend and assessment-artifact delivery, live at `api.aiposture.org`.
 
 ## Endpoints
 
 - `POST /api/newsletter` — accept `{ email, source? }`, store pending row, send Resend confirm mail.
 - `GET /api/newsletter/confirm?t=<token>` — confirm subscription, return success page.
+- `POST /api/deliver` — accept assessment result payload + email, store run, send JSON artifact via Resend. Email column is nulled after successful send; partial record deleted on failure.
 - `GET /healthz` — liveness.
 
 ## Data
 
-D1 database `ai_posture`, single table `newsletter`. Schema: [schema.sql](schema.sql).
+D1 database `ai_posture`, three tables: `newsletter`, `rate_limit`, `assessments`. Schema: [schema.sql](schema.sql).
 
-Privacy posture: emails are stored only for newsletter delivery. Unsubscribe path TBD (Resend-managed list link). No PII beyond email + timestamps + token.
+Privacy posture: emails are stored only for newsletter delivery and artifact delivery (dissociated after send). Unsubscribe path TBD (Resend-managed list link). No PII beyond email + timestamps + token.
 
 ## Local dev
 
@@ -40,7 +41,7 @@ wrangler secret put RESEND_API_KEY
 npm run deploy
 ```
 
-After the first deploy, attach the custom domain `api.aiposture.org` (DNS → CNAME → workers.dev hostname is created automatically by the `[[routes]] custom_domain = true` block; uncomment in wrangler.toml).
+The custom domain `api.aiposture.org` is attached via the `[[routes]] custom_domain = true` block in wrangler.toml (active in production; Cloudflare manages the DNS record automatically).
 
 ## Secrets
 

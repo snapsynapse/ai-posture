@@ -76,7 +76,7 @@ test('homepage repo-updated date is wired to GitHub pushed_at with static fallba
 });
 
 test('sitemap lastmod tracks changed public assessment and legal surfaces', () => {
-  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-05-30');
+  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-06-01');
   assert.equal(sitemapLastmod('https://aiposture.org/privacy/'), effectiveDate(PRIVACY));
   assert.equal(sitemapLastmod('https://aiposture.org/terms/'), effectiveDate(TERMS));
 });

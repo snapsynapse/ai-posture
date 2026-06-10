@@ -12,6 +12,7 @@ const ROOT = path.join(__dirname, '..');
 // the beta-notice removal itself.
 const SURFACES = [
   'README.md',
+  'CONTRIBUTING.md',
   'docs/index.html',
   'docs/spec/index.html',
   'docs/assess/index.html',
