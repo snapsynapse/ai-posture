@@ -25,7 +25,7 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 
 ## Key files
 
-- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v1.0.0)
+- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v1.1.0)
 - [archive/PRD.md](https://github.com/snapsynapse/ai-posture/blob/main/archive/PRD.md): Pre-assessment product requirements (v0.1.2, archived historical reference)
 - [CHANGELOG.md](https://github.com/snapsynapse/ai-posture/blob/main/CHANGELOG.md): Spec change log
 - [Landing page](https://aiposture.org/): Canonical homepage
@@ -36,6 +36,7 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 - [Assistant Guide Manifest](https://aiposture.org/.well-known/assistant-guide-manifest.json): GuideCheck Level 4 sidecar manifest
 - [Framework Profile](https://aiposture.org/.well-known/ai-posture-framework.json): machine-readable framework terms, vectors, levels, and key agent resources
 - [Estimate Result Schema](https://aiposture.org/assess/schema/estimate-result.schema.json): JSON Schema for downloadable pre-assessment estimate artifacts
+- [Declaration Schema](https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json): JSON Schema for /.well-known/ai-posture.json declarations (v1.1.0+)
 - [Privacy policy](https://aiposture.org/privacy/): Data handling, retention, cookie-less analytics posture
 - [Terms of service](https://aiposture.org/terms/): License terms (CC BY 4.0 spec, MIT code), warranty disclaimers
 

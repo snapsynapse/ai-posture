@@ -288,14 +288,14 @@ function renderPage(fm, title, sections) {
   <meta property="article:tag" content="ai-governance">
   <meta property="article:tag" content="specification">
 
-  <meta property="og:image" content="https://aiposture.org/imgs/og.png">
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png?v=2">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Posture Specification ${esc(version)}">
   <meta name="twitter:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
-  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png?v=2">
 
   <script type="application/ld+json">
   {
@@ -412,6 +412,7 @@ function renderPage(fm, title, sections) {
     <div class="links">
       <a href="/assess/">Assess</a>
       <a href="/spec/" aria-current="page">Spec</a>
+      <a href="/papers/">Papers</a>
     </div>
   </div>
 </nav>

@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json",
+  "title": "AI Posture Declaration",
+  "description": "A machine-readable AI Posture assertion published at /.well-known/ai-posture.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "spec_version",
+    "generated_at",
+    "next_review",
+    "subject",
+    "assertion_basis",
+    "aggregate",
+    "constraining_vectors",
+    "vectors"
+  ],
+  "properties": {
+    "type": { "const": "AI Posture Declaration" },
+    "spec_version": {
+      "type": "string",
+      "pattern": "^v\\d+\\.\\d+(\\.\\d+)?$",
+      "description": "Version of the AI Posture specification under which this declaration was produced."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 date-time at which the declaration was produced."
+    },
+    "next_review": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 date by which the declaring organization intends to reissue or revise this declaration. Declarations past this date are stale."
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "domain"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the declaring organization."
+        },
+        "domain": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical domain URI of the declaring organization."
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional scope label when the assertion covers less than the full organization."
+        }
+      }
+    },
+    "assertion_basis": {
+      "type": "string",
+      "enum": ["self-estimate", "self-assertion", "verified"],
+      "description": "How the declaration was produced. self-estimate: derived from the pre-assessment. self-assertion: organization applied the rubric directly. verified: reserved, MUST NOT be used until a verification process is specified."
+    },
+    "aggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "level_name"],
+      "properties": {
+        "level": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Aggregate AI Posture level (minimum of in-scope vectors). Null when all vectors are N/A."
+        },
+        "level_name": {
+          "type": "string",
+          "enum": ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"]
+        }
+      }
+    },
+    "constraining_vectors": {
+      "type": "array",
+      "items": { "enum": ["Infrastructure", "Regulation", "People"] },
+      "uniqueItems": true,
+      "description": "Vector or vectors at the minimum level. Empty when all vectors are N/A."
+    },
+    "vectors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Infrastructure", "Regulation", "People"],
+      "properties": {
+        "Infrastructure": { "$ref": "#/$defs/vector_declaration" },
+        "Regulation":     { "$ref": "#/$defs/vector_declaration" },
+        "People":         { "$ref": "#/$defs/vector_declaration" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional per-vector arrays of artifact URIs supporting the level claims. Does not confer verification.",
+      "properties": {
+        "Infrastructure": { "$ref": "#/$defs/evidence_list" },
+        "Regulation":     { "$ref": "#/$defs/evidence_list" },
+        "People":         { "$ref": "#/$defs/evidence_list" }
+      }
+    }
+  },
+  "$defs": {
+    "vector_declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["in_scope", "level", "level_name", "at_level_since"],
+      "properties": {
+        "in_scope": {
+          "type": "boolean",
+          "description": "Whether this vector is in scope for the declaring organization."
+        },
+        "level": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Vector maturity level. Null when in_scope is false."
+        },
+        "level_name": {
+          "type": "string",
+          "enum": ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"]
+        },
+        "at_level_since": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "ISO 8601 date when the organization reached this level. Null for vectors newly scored in this declaration. Duration at level is a trust signal, not a gate."
+        },
+        "posterior": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "number", "minimum": 0, "maximum": 1 },
+          "description": "Optional probability distribution over levels 0-5, present when assertion_basis is self-estimate."
+        }
+      }
+    },
+    "evidence_list": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "Array of URIs pointing to artifacts supporting the vector's level claim."
+    }
+  }
+}

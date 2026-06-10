@@ -237,6 +237,29 @@ Acceptance criteria:
 - The document does not imply certification, audit, legal advice, or conformance.
 - Public claims stay tied to inspectable behavior and artifact evidence.
 
+### 10.5. Declaration format
+
+Status: complete (v1.1.0, 2026-06-10).
+
+Adds a normative machine-readable declaration artifact at `/.well-known/ai-posture.json`. Turns the estimate-result artifact into a publishable well-known declaration. Organizations self-assert their AI Posture at their own domain without a centralized registry.
+
+Spec fit: strong. The new "Declaration format" section in SPEC.md is additive; no existing normative text changes.
+
+Artifacts:
+
+- SPEC.md: "Declaration format" section (normative).
+- `docs/schema/declaration/v1/ai-posture-declaration.schema.json`: JSON Schema.
+- `docs/.well-known/ai-posture-framework.json`: `declaration` block added.
+
+Completed:
+
+- Defined `/.well-known/ai-posture.json` as the normative well-known path.
+- Specified required fields: `type`, `spec_version`, `generated_at`, `next_review`, `subject` (name + domain), `assertion_basis` (self-estimate / self-assertion / verified), `aggregate`, `constraining_vectors`, `vectors` (with `at_level_since`).
+- Specified optional fields: `evidence` (per-vector URI arrays), per-vector `posterior`.
+- `verified` reserved; no verification process in v1.1.
+- Published JSON Schema at `https://aiposture.org/schema/declaration/v1/`.
+- Stale-declaration semantics: past `next_review` = weaker signal, not invalid.
+
 ### 11. Copy and semantic validation
 
 Status: open for v1.1.

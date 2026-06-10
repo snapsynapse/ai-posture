@@ -1,8 +1,8 @@
 ---
-version: v1.0.0
+version: v1.1.0
 status: Published
 published: 2026-04-19
-last_modified: 2026-06-01
+last_modified: 2026-06-10
 license: CC BY 4.0
 ---
 
@@ -108,6 +108,33 @@ Next review: 2026-10-20
 ```
 
 Additional vectors, if in scope, are listed in the same block. Vectors marked N/A are listed explicitly to make scope legible.
+
+## Declaration format
+
+An organization may publish a machine-readable AI Posture declaration at the well-known path /.well-known/ai-posture.json on its canonical domain. A declaration at this path makes the organization's AI Posture assertion directly discoverable by human and machine readers without a separate retrieval step.
+
+The declaration is a JSON object. The following fields are required.
+
+- **type**: the string "AI Posture Declaration".
+- **spec_version**: the version of this specification under which the declaration was produced (for example, "v1.1.0").
+- **generated_at**: ISO 8601 date-time at which the declaration was produced.
+- **next_review**: ISO 8601 date by which the declaring organization intends to reissue or revise the declaration.
+- **subject**: an object identifying the declaring entity. Required sub-fields: name (organization name) and domain (canonical domain URI). An optional scope string narrows the assertion below organizational level.
+- **assertion_basis**: one of three values. self-estimate means the declaration is derived from the pre-assessment at https://aiposture.org/assess/. self-assertion means the organization applied the rubric directly. verified is reserved for a future verification process and MUST NOT be used until that process is specified.
+- **aggregate**: an object with level (integer 1–5 or null when all vectors are N/A) and level_name.
+- **constraining_vectors**: an array naming the vector or vectors at the minimum level. Empty when all vectors are N/A.
+- **vectors**: an object with one entry per vector. Each entry carries in_scope (boolean), level, level_name, and at_level_since (ISO 8601 date or null for vectors scored for the first time in this declaration).
+
+The following fields are optional.
+
+- **evidence**: an object with one entry per vector. Each entry is an array of URIs pointing to artifacts that support the vector's level claim. Evidence URIs SHOULD be publicly resolvable. The evidence field does not confer verification; it provides pointers for independent inspection.
+- Per-vector **posterior** arrays as produced by the pre-assessment, when assertion_basis is self-estimate.
+
+All existing spec semantics apply to declarations. The constraint rule governs the aggregate. N/A is a falsifiable scope boundary. A contradicted N/A declaration invalidates the entire assertion. At-level-since dates are trust signals, not gates.
+
+A declaration whose current date is past its next_review date is stale. Consumers SHOULD weight a stale declaration as a weaker signal than a current one. A stale declaration is not invalid; it remains interpretable as a historical record.
+
+The JSON Schema for this format is published at https://aiposture.org/schema/declaration/v1/.
 
 ## Measurement
 

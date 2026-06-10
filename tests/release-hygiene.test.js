@@ -55,9 +55,9 @@ test('public surfaces use bare canonical domains, not www', () => {
   }
 });
 
-test('package and spec are both at the 1.0.0 line', () => {
+test('package and spec are both at the 1.1.0 line', () => {
   const pkg = JSON.parse(read('package.json'));
-  assert.equal(pkg.version, '1.0.0');
+  assert.equal(pkg.version, '1.1.0');
   const spec = read('SPEC.md');
-  assert.match(spec, /^version: v1\.0\.0$/m, 'SPEC.md frontmatter must declare v1.0.0');
+  assert.match(spec, /^version: v1\.1\.0$/m, 'SPEC.md frontmatter must declare v1.1.0');
 });

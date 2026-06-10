@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <title>Specification &mdash; Aggregated Intelligence Posture v1.0.0</title>
+  <title>Specification &mdash; Aggregated Intelligence Posture v1.1.0</title>
   <meta name="description" content="The normative specification for the Aggregated Intelligence Posture framework. Covers the vector set, five-level maturity model, constraint rule, decay, and relationship to NIST AI RMF, ISO/IEC 42001, and the EU AI Act.">
   <meta name="keywords" content="aggregated intelligence posture, ai posture spec, ai governance maturity model, paice">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -20,26 +20,26 @@
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Posture">
-  <meta property="og:title" content="AI Posture Specification v1.0.0">
+  <meta property="og:title" content="AI Posture Specification v1.1.0">
   <meta property="og:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
   <meta property="og:url" content="https://aiposture.org/spec/">
   <meta property="og:locale" content="en_US">
   <meta property="article:published_time" content="2026-04-19T00:00:00Z">
-  <meta property="article:modified_time" content="2026-05-27T00:00:00Z">
+  <meta property="article:modified_time" content="2026-06-10T00:00:00Z">
   <meta property="article:section" content="Open Patterns">
   <meta property="article:tag" content="ai-posture">
   <meta property="article:tag" content="aggregated-intelligence-posture">
   <meta property="article:tag" content="ai-governance">
   <meta property="article:tag" content="specification">
 
-  <meta property="og:image" content="https://aiposture.org/imgs/og.png">
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png?v=2">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Posture Specification v1.0.0">
+  <meta name="twitter:title" content="AI Posture Specification v1.1.0">
   <meta name="twitter:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
-  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png">
+  <meta name="twitter:image" content="https://aiposture.org/imgs/og.png?v=2">
 
   <script type="application/ld+json">
   {
@@ -51,8 +51,8 @@
     "url": "https://aiposture.org/spec/",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aiposture.org/spec/" },
     "datePublished": "2026-04-19",
-    "dateModified": "2026-05-27",
-    "version": "1.0.0",
+    "dateModified": "2026-06-10",
+    "version": "1.1.0",
     "author": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
     "publisher": { "@type": "Organization", "name": "PAICE.work PBC", "url": "https://paice.work/" },
     "license": "https://creativecommons.org/licenses/by/4.0/"
@@ -177,6 +177,7 @@
           <li><a href="#decay-and-freshness">Decay &amp; freshness</a></li>
           <li><a href="#relationship-to-adjacent-frameworks">Adjacent frameworks</a></li>
           <li><a href="#reporting-format">Reporting format</a></li>
+          <li><a href="#declaration-format">Declaration format</a></li>
           <li><a href="#measurement">Measurement</a></li>
           <li><a href="#governance">Governance</a></li>
           <li><a href="#license">License</a></li>
@@ -188,13 +189,13 @@
           <div class="doc-eyebrow">Specification</div>
           <h1 id="spec-title">Aggregated Intelligence Posture</h1>
           <div class="doc-meta">
-            <span class="version">v1.0.0</span>
+            <span class="version">v1.1.0</span>
             <span class="sep">&middot;</span>
             <span>Published</span>
             <span class="sep">&middot;</span>
             <time datetime="2026-04-19">2026-04-19</time>
             <span class="sep">&middot;</span>
-            Updated <time datetime="2026-05-27">2026-05-27</time>
+            Updated <time datetime="2026-06-10">2026-06-10</time>
             <span class="sep">&middot;</span>
             <a href="https://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">CC&nbsp;BY&nbsp;4.0</a>
             <span class="sep">&middot;</span>
@@ -302,6 +303,32 @@ Next review: 2026-10-20
 
         </section>
 
+        <section id="declaration-format">
+          <h2>Declaration format</h2>
+          <p>An organization may publish a machine-readable AI Posture declaration at the well-known path /.well-known/ai-posture.json on its canonical domain. A declaration at this path makes the organization's AI Posture assertion directly discoverable by human and machine readers without a separate retrieval step.</p>
+<p>The declaration is a JSON object. The following fields are required.</p>
+<ul>
+  <li><strong>type</strong>: the string &quot;AI Posture Declaration&quot;.</li>
+  <li><strong>spec_version</strong>: the version of this specification under which the declaration was produced (for example, &quot;v1.1.0&quot;).</li>
+  <li><strong>generated_at</strong>: ISO 8601 date-time at which the declaration was produced.</li>
+  <li><strong>next_review</strong>: ISO 8601 date by which the declaring organization intends to reissue or revise the declaration.</li>
+  <li><strong>subject</strong>: an object identifying the declaring entity. Required sub-fields: name (organization name) and domain (canonical domain URI). An optional scope string narrows the assertion below organizational level.</li>
+  <li><strong>assertion_basis</strong>: one of three values. self-estimate means the declaration is derived from the pre-assessment at https://aiposture.org/assess/. self-assertion means the organization applied the rubric directly. verified is reserved for a future verification process and MUST NOT be used until that process is specified.</li>
+  <li><strong>aggregate</strong>: an object with level (integer 1–5 or null when all vectors are N/A) and level_name.</li>
+  <li><strong>constraining_vectors</strong>: an array naming the vector or vectors at the minimum level. Empty when all vectors are N/A.</li>
+  <li><strong>vectors</strong>: an object with one entry per vector. Each entry carries in_scope (boolean), level, level_name, and at_level_since (ISO 8601 date or null for vectors scored for the first time in this declaration).</li>
+</ul>
+<p>The following fields are optional.</p>
+<ul>
+  <li><strong>evidence</strong>: an object with one entry per vector. Each entry is an array of URIs pointing to artifacts that support the vector's level claim. Evidence URIs SHOULD be publicly resolvable. The evidence field does not confer verification; it provides pointers for independent inspection.</li>
+  <li>Per-vector <strong>posterior</strong> arrays as produced by the pre-assessment, when assertion_basis is self-estimate.</li>
+</ul>
+<p>All existing spec semantics apply to declarations. The constraint rule governs the aggregate. N/A is a falsifiable scope boundary. A contradicted N/A declaration invalidates the entire assertion. At-level-since dates are trust signals, not gates.</p>
+<p>A declaration whose current date is past its next_review date is stale. Consumers SHOULD weight a stale declaration as a weaker signal than a current one. A stale declaration is not invalid; it remains interpretable as a historical record.</p>
+<p>The JSON Schema for this format is published at https://aiposture.org/schema/declaration/v1/.</p>
+
+        </section>
+
         <section id="measurement">
           <h2>Measurement</h2>
           <p>Each vector has its own assessment methodology. AI Posture does not define those methodologies. It defines how their outputs aggregate into a single board-reportable level.</p>
@@ -326,7 +353,7 @@ Next review: 2026-10-20
           <p>Specification: CC BY 4.0. Reference implementations: MIT.</p>
 
           <div class="note-box">
-            <strong>Canonical reference.</strong> This page is the authoritative definition of the Aggregated Intelligence Posture framework. Any cross-posts or references should cite <a href="https://aiposture.org/">aiposture.org</a> as canonical. Last substantive revision: <time datetime="2026-05-27">2026-05-27</time>.
+            <strong>Canonical reference.</strong> This page is the authoritative definition of the Aggregated Intelligence Posture framework. Any cross-posts or references should cite <a href="https://aiposture.org/">aiposture.org</a> as canonical. Last substantive revision: <time datetime="2026-06-10">2026-06-10</time>.
           </div>
         </section>
       </article>
