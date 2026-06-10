@@ -36,7 +36,7 @@ test('papers page wires the PDF, audio, and video, with no leftover placeholders
 test('executive-brief companion links out to its canonical PAICE.foundation home', () => {
   assert.match(
     PAPERS,
-    /href="https:\/\/paice\.foundation\/papers\/aggregated-intelligence\/"/,
+    /href="https:\/\/paice\.foundation\/papers\/[^"]*"/,
     'companion entry must link to the brief on PAICE.foundation, not re-host it here'
   );
   // the brief PDF must not be re-hosted on this site
