@@ -97,12 +97,15 @@ test('public metadata discovers the assistant guide', () => {
 test('public metadata discovers machine-readable framework surfaces', () => {
   const frameworkUrl = 'https://aiposture.org/.well-known/ai-posture-framework.json';
   const schemaUrl = 'https://aiposture.org/assess/schema/estimate-result.schema.json';
+  const declarationSchemaUrl = 'https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json';
 
   assert.equal(LLMS.includes(frameworkUrl), true);
   assert.equal(LLMS.includes(schemaUrl), true);
+  assert.equal(LLMS.includes(declarationSchemaUrl), true);
   assert.equal(SITEMAP.includes(frameworkUrl), true);
   assert.equal(SITEMAP.includes(schemaUrl), true);
   assert.equal(FRAMEWORK_PROFILE.agent_resources.estimate_result_schema, schemaUrl);
+  assert.equal(FRAMEWORK_PROFILE.agent_resources.declaration_schema, declarationSchemaUrl);
   assert.equal(ESTIMATE_SCHEMA.$id, schemaUrl);
 });
 
@@ -121,6 +124,20 @@ test('framework profile follows current spec terminology and version', () => {
     FRAMEWORK_PROFILE.levels.map(level => level.name),
     ['N/A', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering']
   );
+});
+
+test('framework profile marks verified declaration basis as reserved', () => {
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.declaration.assertion_basis_values,
+    ['self-estimate', 'self-assertion', 'verified']
+  );
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.declaration.currently_accepted_assertion_basis_values,
+    ['self-estimate', 'self-assertion']
+  );
+  assert.deepEqual(FRAMEWORK_PROFILE.declaration.reserved_assertion_basis_values, ['verified']);
+  assert.match(FRAMEWORK_PROFILE.declaration.reserved_notice, /MUST NOT be used/);
+  assert.match(LLMS, /`verified` is reserved and invalid/);
 });
 
 test('estimate result schema matches runtime artifact contract', () => {

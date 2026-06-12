@@ -4,7 +4,7 @@ Status: published with AI Posture spec v1.1.0. Profile version v0 (pre-stabiliza
 
 Canonical IRI base: https://aiposture.org/schema/earl/v0/
 
-This profile defines how a verified AI Posture assessment is expressed in the W3C Evaluation and Report Language (EARL) 1.0, extended with AI-Posture-local terms in the `apos:` namespace (https://aiposture.org/ns#). It is the citable wire format for the `verified` assertion basis named in the declaration format. The decision to use EARL as the primary wire format, and the alternatives weighed, are recorded in the non-normative note [wire-format-earl.md](../../../research/wire-format-earl.md).
+This profile defines how a verified AI Posture assessment is expressed in the W3C Evaluation and Report Language (EARL) 1.0, extended with AI-Posture-local terms in the `apos:` namespace (https://aiposture.org/ns#). It is the citable wire format intended for the reserved `verified` assertion basis named in the declaration format. Declarations using `assertion_basis: "verified"` are invalid until AI Posture publishes a verification process. The decision to use EARL as the primary wire format, and the alternatives weighed, are recorded in the non-normative note [wire-format-earl.md](../../../research/wire-format-earl.md).
 
 The declaration format and this EARL profile express the same assertion in two registers. A `/.well-known/ai-posture.json` declaration is the organization's own published summary; an EARL document is the citable, accretive, multi-assertor evidence record that a third party (an assessor, an auditor, a partner) produces about that organization. One organization can have one declaration and many EARL assertions about it from different assertors over time.
 

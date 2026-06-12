@@ -5,6 +5,7 @@ const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 const SCHEMA_PATH = 'docs/schema/declaration/v1/ai-posture-declaration.schema.json';
+const { DECLARATION_SCHEMA } = require('../docs/check/validator.js');
 
 function read(rel) {
   return fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -32,6 +33,15 @@ test('declaration schema file exists and is valid JSON', () => {
   assert.equal(schema.$id, 'https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json');
   assert.equal(schema.title, 'AI Posture Declaration');
   assert.ok(schema.properties, 'schema must have properties');
+});
+
+test('shared declaration validator embeds the published schema contract', () => {
+  const schema = JSON.parse(read(SCHEMA_PATH));
+  assert.equal(DECLARATION_SCHEMA.$id, schema.$id);
+  assert.deepEqual(DECLARATION_SCHEMA.required, schema.required);
+  assert.deepEqual(DECLARATION_SCHEMA.properties.assertion_basis.enum, schema.properties.assertion_basis.enum);
+  assert.deepEqual(DECLARATION_SCHEMA.properties.constraining_vectors.items.enum, schema.properties.constraining_vectors.items.enum);
+  assert.equal(DECLARATION_SCHEMA.$defs.vector_declaration.required.includes('at_level_since'), true);
 });
 
 test('declaration schema has required fields declared', () => {

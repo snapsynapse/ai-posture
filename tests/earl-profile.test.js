@@ -30,6 +30,13 @@ test('declaration validator catches a broken weakest-link aggregate', () => {
   assert.ok(res.errors.some(e => /minimum in-scope vector level/.test(e)), res.errors.join('; '));
 });
 
+test('declaration validator catches aggregate level_name mismatch', () => {
+  const d = clone(read(DECL));
+  d.aggregate.level_name = 'Engineering';
+  const res = validateDeclaration(d);
+  assert.ok(res.errors.some(e => /aggregate\.level_name/.test(e)), res.errors.join('; '));
+});
+
 test('declaration validator catches level/level_name mismatch', () => {
   const d = clone(read(DECL));
   d.vectors.People.level_name = 'Engineering';   // level is 4 (Calibrating)
@@ -42,6 +49,40 @@ test('declaration validator enforces N/A coherence', () => {
   d.vectors.Regulation = { in_scope: false, level: 2, level_name: 'Assessing', at_level_since: null };
   const res = validateDeclaration(d);
   assert.ok(res.errors.some(e => /in_scope false must have level null/.test(e)), res.errors.join('; '));
+});
+
+test('declaration validator requires empty constraining_vectors when all vectors are N/A', () => {
+  const d = clone(read(DECL));
+  for (const vector of ['Infrastructure', 'Regulation', 'People']) {
+    d.vectors[vector] = { in_scope: false, level: null, level_name: 'N/A', at_level_since: null };
+  }
+  d.aggregate = { level: null, level_name: 'N/A' };
+  d.constraining_vectors = ['People'];
+  const res = validateDeclaration(d);
+  assert.ok(res.errors.some(e => /constraining_vectors must be empty/.test(e)), res.errors.join('; '));
+});
+
+test('declaration validator rejects reserved verified assertion_basis', () => {
+  const d = clone(read(DECL));
+  d.assertion_basis = 'verified';
+  const res = validateDeclaration(d);
+  assert.ok(res.errors.some(e => /verified/.test(e) && /reserved/.test(e)), res.errors.join('; '));
+});
+
+test('declaration validator rejects impossible calendar dates', () => {
+  const d = clone(read(DECL));
+  d.next_review = '2026-02-31';
+  const res = validateDeclaration(d);
+  assert.ok(res.errors.some(e => /not a valid date/.test(e)), res.errors.join('; '));
+});
+
+test('declaration validator enforces unique constraining_vectors from schema', () => {
+  const d = clone(read(DECL));
+  d.vectors.People.level = 2;
+  d.vectors.People.level_name = 'Assessing';
+  d.constraining_vectors = ['People', 'People', 'Regulation'];
+  const res = validateDeclaration(d);
+  assert.ok(res.errors.some(e => /items must be unique/.test(e)), res.errors.join('; '));
 });
 
 test('declaration validator rejects an unknown property (schema additionalProperties false)', () => {

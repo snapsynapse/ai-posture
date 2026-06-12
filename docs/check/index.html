@@ -115,6 +115,7 @@
     <span class="eyebrow">Declaration viewer</span>
     <h1>Check a declaration</h1>
     <p class="lede">Fetch, validate, and render any public AI Posture declaration. Enter the URL of a <code>/.well-known/ai-posture.json</code> file, or paste the JSON directly. Nothing is stored: no account, no cookies, no server. The declaration stays on its own domain.</p>
+    <p class="hint"><code>assertion_basis: "verified"</code> is reserved and rejected until AI Posture publishes a verification process.</p>
 
     <label for="url">Declaration URL</label>
     <div class="row">
@@ -142,53 +143,16 @@
   </div>
 </footer>
 
+<script src="/check/validator.js"></script>
 <script>
 (function () {
   "use strict";
-  var LEVEL_NAMES = ["N/A", "Perceiving", "Assessing", "Integrating", "Calibrating", "Engineering"];
-  var VECTORS = ["People", "Infrastructure", "Regulation"];
+  var validator = window.AIPostureDeclarationValidator;
+  var VECTORS = validator.VECTORS;
   var $ = function (id) { return document.getElementById(id); };
   var out = $("out");
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
-  function isDate(s) { return typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s)); }
-  function isDateTime(s) { return typeof s === "string" && /T/.test(s) && !isNaN(Date.parse(s)); }
-
-  // Validation mirrors scripts/validate.js (declaration mode): the subset of the
-  // published JSON Schema plus the semantic rules the schema cannot express.
-  function validate(d) {
-    var errors = [], warnings = [];
-    if (!d || typeof d !== "object") { return { errors: ["not a JSON object"], warnings: [] }; }
-    if (d.type !== "AI Posture Declaration") errors.push('type must be "AI Posture Declaration"');
-    if (typeof d.spec_version !== "string" || !/^v\d+\.\d+(\.\d+)?$/.test(d.spec_version)) errors.push("spec_version must look like v1.1.0");
-    if (!isDateTime(d.generated_at)) errors.push("generated_at must be an ISO date-time");
-    if (!isDate(d.next_review)) errors.push("next_review must be an ISO date");
-    if (!d.subject || !d.subject.name || !d.subject.domain) errors.push("subject must have name and domain");
-    if (["self-estimate", "self-assertion", "verified"].indexOf(d.assertion_basis) < 0) errors.push("assertion_basis must be self-estimate, self-assertion, or verified");
-    if (d.assertion_basis === "verified") warnings.push('assertion_basis "verified" is reserved and must not be used until a verification process is specified');
-    if (!d.vectors) { errors.push("missing vectors"); return { errors: errors, warnings: warnings }; }
-
-    var inScope = VECTORS.filter(function (v) { return d.vectors[v] && d.vectors[v].in_scope; });
-    VECTORS.forEach(function (v) {
-      var e = d.vectors[v];
-      if (!e) { errors.push("vectors." + v + " is required"); return; }
-      if (e.in_scope === false && (e.level !== null || e.level_name !== "N/A")) errors.push("vectors." + v + ": in_scope false must have level null and level_name N/A");
-      if (e.in_scope === true && (e.level == null || e.level_name === "N/A")) errors.push("vectors." + v + ": in_scope true must have a level 1-5");
-      if (e.level != null && e.level_name && LEVEL_NAMES[e.level] !== e.level_name) errors.push("vectors." + v + ": level " + e.level + " does not match level_name " + e.level_name);
-    });
-    if (inScope.length === 0) {
-      if (d.aggregate && d.aggregate.level !== null) errors.push("aggregate.level must be null when all vectors are N/A");
-    } else {
-      var levels = inScope.map(function (v) { return d.vectors[v].level; });
-      var min = Math.min.apply(null, levels);
-      if (!d.aggregate || d.aggregate.level !== min) errors.push("aggregate.level must equal the minimum in-scope vector level " + min);
-      var constraining = inScope.filter(function (v) { return d.vectors[v].level === min; }).sort();
-      var declared = (d.constraining_vectors || []).slice().sort();
-      if (JSON.stringify(constraining) !== JSON.stringify(declared)) errors.push("constraining_vectors must equal in-scope vectors at the minimum: " + constraining.join(", "));
-    }
-    if (isDate(d.next_review) && Date.parse(d.next_review) < Date.now()) warnings.push("declaration is stale: next_review " + d.next_review + " is in the past");
-    return { errors: errors, warnings: warnings };
-  }
 
   function verdict(res) {
     if (res.errors.length) {
@@ -199,11 +163,11 @@
   }
 
   function render(d, sourceUrl) {
-    var res = validate(d);
+    var res = validator.validateDeclaration(d);
     var html = verdict(res);
     if (res.errors.length) { out.innerHTML = html; return; }
 
-    var stale = isDate(d.next_review) && Date.parse(d.next_review) < Date.now();
+    var stale = validator.isDate(d.next_review) && Date.parse(d.next_review) < Date.now();
     var agg = d.aggregate || {};
     var constraining = d.constraining_vectors || [];
     html += '<div class="card">';

@@ -2,7 +2,7 @@
 
 The Aggregated Intelligence Posture framework. One governance score for human-AI collaboration across three vectors, bounded by the weakest.
 
-Status: stable (v1.0.0). The specification is at v1.0.0 with the three-vector set locked. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
+Status: stable (v1.1.0). The specification is at v1.1.0 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
@@ -11,6 +11,8 @@ Status: stable (v1.0.0). The specification is at v1.0.0 with the three-vector se
 - Assistant guide: https://aiposture.org/.well-known/assistant-guide.txt
 - Framework profile: https://aiposture.org/.well-known/ai-posture-framework.json
 - Estimate result schema: https://aiposture.org/assess/schema/estimate-result.schema.json
+- Declaration schema: https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json
+- Declaration viewer: https://aiposture.org/check/
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
 
@@ -64,6 +66,13 @@ To run the assessment test suite:
 
 ```
 npm test
+```
+
+To validate a declaration or EARL report:
+
+```
+node scripts/validate.js declaration path/to/ai-posture.json
+node scripts/validate.js earl path/to/report.jsonld
 ```
 
 The script (`scripts/build-spec.js`) reads the YAML frontmatter and Markdown sections from `SPEC.md` and writes a fully rendered HTML page. No dependencies beyond Node.js.

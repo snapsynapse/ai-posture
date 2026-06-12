@@ -260,8 +260,7 @@ function registryIndexPage(registry) {
       <p>These IRIs are stable. A criterion is never re-minted; a superseded criterion is replaced by a new IRI under a new namespace version, and the old IRI continues to resolve to its original meaning. The machine-readable registry is at <a href="/criteria/v1/index.json"><code>index.json</code></a>.</p>
     </section>
 
-    ${VECTORS.map(v => `
-    <section>
+    ${VECTORS.map(v => `<section>
       <h2><a href="/criteria/v1/${VEC_ROUTE[v]}/">${esc(v)}</a></h2>
       <table class="level-table">
         <thead><tr><th>Level</th><th>Name</th><th>Assertion</th></tr></thead>
@@ -269,7 +268,7 @@ function registryIndexPage(registry) {
           ${registry.criteria.filter(c => c.vector === v).map(c => `<tr><td class="lvl">L${c.level}</td><td><a href="/criteria/v1/${VEC_ROUTE[v]}/${c.level}/">${esc(c.level_name)}</a></td><td>${esc(c.assertion)}</td></tr>`).join('\n          ')}
         </tbody>
       </table>
-    </section>`).join('\n')}
+    </section>`).join('\n\n    ')}
 
     <section>
       <h2>Use in EARL</h2>
