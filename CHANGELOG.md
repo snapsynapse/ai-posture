@@ -10,6 +10,7 @@ Removes implicit steward-product routing from normative, machine-readable, and a
 - Removed the homepage's unshipped Posture Maintenance product and protocol promises while retaining current declaration freshness guidance.
 - Corrected the normative specification's dead `/implementations/` link to the criterion registry and clarified that implementations are non-normative.
 - Advanced the framework profile schema to 1.1.0, added per-vector criterion URLs, and set the compatibility `reference_implementation` fields to `null` so the profile designates no provider.
+- Added the Pages `.nojekyll` marker so the framework profile and assistant-guide artifacts under `/.well-known/` are served instead of being omitted from the deployed site.
 - Reconciled the evidence-grade research note with the shipped decentralized `/.well-known/ai-posture.json` publication mechanism and reserved `verified` status.
 - Prepared the specification, package, landing page, framework profile, LLM summary, generated spec page, and changed sitemap dates for v1.1.1.
 

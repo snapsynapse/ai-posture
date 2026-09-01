@@ -72,3 +72,10 @@ test('package and spec are both at the 1.1.1 line', () => {
   const spec = read('SPEC.md');
   assert.match(spec, /^version: v1\.1\.1$/m, 'SPEC.md frontmatter must declare v1.1.1');
 });
+
+test('GitHub Pages preserves the published well-known directory', () => {
+  assert.ok(
+    fs.existsSync(path.join(ROOT, 'docs/.nojekyll')),
+    'docs/.nojekyll is required or GitHub Pages omits /.well-known/ artifacts'
+  );
+});
