@@ -1,12 +1,12 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "name": "AI Posture",
   "formal_name": "Aggregated Intelligence Posture",
   "description": "A unified maturity assertion for human-AI collaboration across in-scope vectors, bounded by the weakest vector.",
   "canonical_url": "https://aiposture.org/",
   "repository_url": "https://github.com/snapsynapse/ai-posture",
   "spec": {
-    "version": "v1.1.0",
+    "version": "v1.1.1",
     "status": "Published",
     "url": "https://aiposture.org/spec/",
     "source_url": "https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md",
@@ -52,21 +52,24 @@
       "span": "Inside-out",
       "measures": "How effectively humans in the organization collaborate with AI.",
       "artifact_class": "Behavioral assessment with verifiable telemetry",
-      "reference_implementation": "https://paice.work/"
+      "criteria": "https://aiposture.org/criteria/v1/people/",
+      "reference_implementation": null
     },
     {
       "name": "Infrastructure",
       "span": "Bottom-up through outer surface",
       "measures": "How ready the organization's digital systems are for AI agent interaction.",
       "artifact_class": "Agent-readiness scans, machine-readable declarations, structured identifiers",
-      "reference_implementation": "https://siteline.to/"
+      "criteria": "https://aiposture.org/criteria/v1/infrastructure/",
+      "reference_implementation": null
     },
     {
       "name": "Regulation",
       "span": "Top-down",
       "measures": "How completely the organization has met its AI-specific obligations across binding jurisdictions.",
       "artifact_class": "Obligation register with verifiable coverage, recorded interpretations with authorities",
-      "reference_implementation": "https://everyailaw.com/"
+      "criteria": "https://aiposture.org/criteria/v1/regulation/",
+      "reference_implementation": null
     }
   ],
   "levels": [

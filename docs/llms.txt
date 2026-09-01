@@ -25,7 +25,7 @@ The spec is CC BY 4.0. Reference implementations are MIT. Stewardship and govern
 
 ## Key files
 
-- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v1.1.0)
+- [SPEC.md](https://github.com/snapsynapse/ai-posture/blob/main/SPEC.md): Normative specification (v1.1.1)
 - [archive/PRD.md](https://github.com/snapsynapse/ai-posture/blob/main/archive/PRD.md): Pre-assessment product requirements (v0.1.2, archived historical reference)
 - [CHANGELOG.md](https://github.com/snapsynapse/ai-posture/blob/main/CHANGELOG.md): Spec change log
 - [Landing page](https://aiposture.org/): Canonical homepage

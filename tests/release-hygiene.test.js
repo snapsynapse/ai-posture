@@ -55,9 +55,20 @@ test('public surfaces use bare canonical domains, not www', () => {
   }
 });
 
-test('package and spec are both at the 1.1.0 line', () => {
-  const pkg = JSON.parse(read('package.json'));
-  assert.equal(pkg.version, '1.1.0');
+test('canonical standard surfaces do not route to an unshipped provider offering', () => {
+  const home = read('docs/index.html');
   const spec = read('SPEC.md');
-  assert.match(spec, /^version: v1\.1\.0$/m, 'SPEC.md frontmatter must declare v1.1.0');
+  const readme = read('README.md');
+
+  assert.doesNotMatch(home, /Posture Maintenance|Self-Serve and Managed|first compliant implementation/);
+  assert.doesNotMatch(spec, /aiposture\.org\/implementations\//);
+  assert.match(readme, /Reference implementations \(non-normative\)/);
+  assert.match(spec, /Implementations are non-normative and are not required/);
+});
+
+test('package and spec are both at the 1.1.1 line', () => {
+  const pkg = JSON.parse(read('package.json'));
+  assert.equal(pkg.version, '1.1.1');
+  const spec = read('SPEC.md');
+  assert.match(spec, /^version: v1\.1\.1$/m, 'SPEC.md frontmatter must declare v1.1.1');
 });

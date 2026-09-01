@@ -57,9 +57,8 @@ test('every vector has rubric entries for all six levels', () => {
   });
 });
 
-test('rubric handoff URLs use https canonical forms', () => {
-  Object.values(RUBRIC.handoff).forEach(entry => {
-    assert.ok(entry.url.startsWith('https://'), 'handoff URL must use https: ' + entry.url);
-    assert.equal(entry.url.includes('https://www.'), false, 'handoff URL must not use www: ' + entry.url);
-  });
+test('rubric contains no provider-routing metadata', () => {
+  assert.equal(Object.hasOwn(RUBRIC, 'handoff'), false);
+  const serialized = JSON.stringify(RUBRIC);
+  assert.doesNotMatch(serialized, /paice\.work|siteline\.to|everyailaw\.com/);
 });

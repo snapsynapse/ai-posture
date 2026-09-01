@@ -297,17 +297,20 @@ test('all vectors confirmed N/A produce an undefined aggregate with no constrain
   assert.equal(root.textContent.includes('Infrastructure - N/A'), true);
 });
 
-test('result renders verification handoff links', () => {
+test('result routes to neutral criteria and evidence pages', () => {
   const { hooks, root } = loadRuntime();
   hooks.setState(completedState());
 
   hooks.renderResult();
 
-  assert.equal(root.textContent.includes('Paths to verification'), true);
-  assert.equal(root.textContent.includes('People reference implementation - https://paice.work/'), true);
-  assert.equal(root.textContent.includes('Infrastructure reference implementation - https://siteline.to/'), true);
-  assert.equal(root.textContent.includes('Regulation reference implementation - https://everyailaw.com/'), true);
-  assert.equal(root.textContent.includes('Find an assessor - https://paice.foundation/'), true);
+  assert.equal(root.textContent.includes('Criteria and evidence requirements'), true);
+  assert.equal(root.textContent.includes('People criteria and evidence - https://aiposture.org/criteria/v1/people/'), true);
+  assert.equal(root.textContent.includes('Infrastructure criteria and evidence - https://aiposture.org/criteria/v1/infrastructure/'), true);
+  assert.equal(root.textContent.includes('Regulation criteria and evidence - https://aiposture.org/criteria/v1/regulation/'), true);
+  assert.equal(root.textContent.includes('All published criteria - https://aiposture.org/criteria/v1/'), true);
+  assert.equal(root.textContent.includes('https://paice.work/'), false);
+  assert.equal(root.textContent.includes('https://siteline.to/'), false);
+  assert.equal(root.textContent.includes('https://everyailaw.com/'), false);
 });
 
 test('JSON artifact exposes aggregate, vector posteriors, and estimate notice', () => {

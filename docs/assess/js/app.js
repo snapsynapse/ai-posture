@@ -15,11 +15,11 @@
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
   var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
-  var HANDOFF_URLS = {
-    People: 'https://paice.work/',
-    Infrastructure: 'https://siteline.to/',
-    Regulation: 'https://everyailaw.com/',
-    Generic: 'https://paice.foundation/'
+  var CRITERIA_URLS = {
+    People: 'https://aiposture.org/criteria/v1/people/',
+    Infrastructure: 'https://aiposture.org/criteria/v1/infrastructure/',
+    Regulation: 'https://aiposture.org/criteria/v1/regulation/',
+    Generic: 'https://aiposture.org/criteria/v1/'
   };
 
   function track(event, props) {
@@ -686,13 +686,13 @@
       ]));
     });
 
-    // Handoff links
-    wrap.appendChild(el('h3', null, ['Paths to verification']));
+    // Neutral criteria and evidence paths
+    wrap.appendChild(el('h3', null, ['Criteria and evidence requirements']));
     wrap.appendChild(el('ul', { class: 'handoff' }, [
-      handoffItem('People', 'People reference implementation', HANDOFF_URLS.People),
-      handoffItem('Infrastructure', 'Infrastructure reference implementation', HANDOFF_URLS.Infrastructure),
-      handoffItem('Regulation', 'Regulation reference implementation', HANDOFF_URLS.Regulation),
-      handoffItem('Generic', 'Find an assessor', HANDOFF_URLS.Generic)
+      criteriaItem('People', 'People criteria and evidence', CRITERIA_URLS.People),
+      criteriaItem('Infrastructure', 'Infrastructure criteria and evidence', CRITERIA_URLS.Infrastructure),
+      criteriaItem('Regulation', 'Regulation criteria and evidence', CRITERIA_URLS.Regulation),
+      criteriaItem('Generic', 'All published criteria', CRITERIA_URLS.Generic)
     ]));
 
     // Plain-text report block (copyable)
@@ -732,7 +732,7 @@
     root.appendChild(wrap);
   }
 
-  function handoffItem(destination, label, url) {
+  function criteriaItem(destination, label, url) {
     return el('li', null, [
       el('a', {
         href: url,

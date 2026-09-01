@@ -1,8 +1,8 @@
 ---
-version: v1.1.0
+version: v1.1.1
 status: Published
 published: 2026-04-19
-last_modified: 2026-06-10
+last_modified: 2026-09-01
 license: CC BY 4.0
 ---
 
@@ -116,7 +116,7 @@ An organization may publish a machine-readable AI Posture declaration at the wel
 The declaration is a JSON object. The following fields are required.
 
 - **type**: the string "AI Posture Declaration".
-- **spec_version**: the version of this specification under which the declaration was produced (for example, "v1.1.0").
+- **spec_version**: the version of this specification under which the declaration was produced (for example, "v1.1.1").
 - **generated_at**: ISO 8601 date-time at which the declaration was produced.
 - **next_review**: ISO 8601 date by which the declaring organization intends to reissue or revise the declaration.
 - **subject**: an object identifying the declaring entity. Required sub-fields: name (organization name) and domain (canonical domain URI). An optional scope string narrows the assertion below organizational level.
@@ -142,7 +142,7 @@ Each vector has its own assessment methodology. AI Posture does not define those
 
 A self-assessment at https://aiposture.org/assess/ provides a fast approximation. It is a starting point, not a substitute for per-vector measurement.
 
-Reference implementations for each vector are listed in the companion document at https://aiposture.org/implementations/.
+The criterion registry at https://aiposture.org/criteria/v1/ publishes the level assertions, evidence expectations, and tests for each vector. Implementations are non-normative and are not required by this specification.
 
 ## Governance
 

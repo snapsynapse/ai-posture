@@ -2,7 +2,7 @@
 
 The Aggregated Intelligence Posture framework. One governance score for human-AI collaboration across three vectors, bounded by the weakest.
 
-Status: stable (v1.1.0). The specification is at v1.1.0 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
+Status: stable (v1.1.1). The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
@@ -30,9 +30,13 @@ https://aiposture.org/
 
 ## Three vectors
 
-- People — [PAICE.work](https://paice.work/)
-- Infrastructure — [Siteline](https://siteline.to/)
-- Regulation — [EveryAILaw](https://everyailaw.com/)
+- People: behavioral assessment with verifiable telemetry
+- Infrastructure: agent-readiness scans, machine-readable declarations, and structured identifiers
+- Regulation: obligation registers with verifiable coverage and recorded interpretations with authorities
+
+## Reference implementations (non-normative)
+
+[PAICE.work](https://paice.work/), [Siteline](https://siteline.to/), and [EveryAILaw](https://everyailaw.com/) are steward-produced examples for the People, Infrastructure, and Regulation vectors respectively. They are not required or preferred by the specification. The artifact class and published criteria are the requirements; any conforming implementation is valid.
 
 ## Repo layout
 

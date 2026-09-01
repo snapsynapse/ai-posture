@@ -76,7 +76,7 @@ test('homepage repo-updated date is wired to GitHub pushed_at with static fallba
 });
 
 test('sitemap lastmod tracks changed public assessment and legal surfaces', () => {
-  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-06-01');
+  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-09-01');
   assert.equal(sitemapLastmod('https://aiposture.org/privacy/'), effectiveDate(PRIVACY));
   assert.equal(sitemapLastmod('https://aiposture.org/terms/'), effectiveDate(TERMS));
 });
@@ -112,6 +112,7 @@ test('public metadata discovers machine-readable framework surfaces', () => {
 test('framework profile follows current spec terminology and version', () => {
   const fm = frontmatter(SPEC);
 
+  assert.equal(FRAMEWORK_PROFILE.schema_version, '1.1.0');
   assert.equal(FRAMEWORK_PROFILE.spec.version, fm.version);
   assert.equal(FRAMEWORK_PROFILE.spec.status, fm.status);
   assert.equal(FRAMEWORK_PROFILE.canonical_url, 'https://aiposture.org/');
@@ -119,6 +120,18 @@ test('framework profile follows current spec terminology and version', () => {
   assert.deepEqual(
     FRAMEWORK_PROFILE.vectors.map(vector => vector.name),
     ['People', 'Infrastructure', 'Regulation']
+  );
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.vectors.map(vector => vector.criteria),
+    [
+      'https://aiposture.org/criteria/v1/people/',
+      'https://aiposture.org/criteria/v1/infrastructure/',
+      'https://aiposture.org/criteria/v1/regulation/'
+    ]
+  );
+  assert.deepEqual(
+    FRAMEWORK_PROFILE.vectors.map(vector => vector.reference_implementation),
+    [null, null, null]
   );
   assert.deepEqual(
     FRAMEWORK_PROFILE.levels.map(level => level.name),

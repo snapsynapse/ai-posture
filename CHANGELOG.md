@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.1.1 release - 2026-09-01
+
+Removes implicit steward-product routing from normative, machine-readable, and assessment-result surfaces. No scoring rule, likelihood, prior, aggregation rule, declaration shape, or criterion meaning changes.
+
+- Replaced the assessment result's per-vector product links with the published neutral criterion and evidence pages under `/criteria/v1/`.
+- Removed duplicate provider-routing metadata from the assessment rubric and added regression coverage that prevents it from returning.
+- Reframed the README vectors by artifact class and retained the steward-produced implementations only in a clearly non-normative repository note.
+- Removed the homepage's unshipped Posture Maintenance product and protocol promises while retaining current declaration freshness guidance.
+- Corrected the normative specification's dead `/implementations/` link to the criterion registry and clarified that implementations are non-normative.
+- Advanced the framework profile schema to 1.1.0, added per-vector criterion URLs, and set the compatibility `reference_implementation` fields to `null` so the profile designates no provider.
+- Reconciled the evidence-grade research note with the shipped decentralized `/.well-known/ai-posture.json` publication mechanism and reserved `verified` status.
+- Prepared the specification, package, landing page, framework profile, LLM summary, generated spec page, and changed sitemap dates for v1.1.1.
+
 ## v1.1.0 release - 2026-06-10
 
 Introduces the declaration format: a machine-readable AI Posture assertion at `/.well-known/ai-posture.json`. No scoring rule, likelihood, prior, or aggregation-rule changes.

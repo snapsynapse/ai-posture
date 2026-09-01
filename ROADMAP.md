@@ -260,6 +260,62 @@ Completed:
 - Published JSON Schema at `https://aiposture.org/schema/declaration/v1/`.
 - Stale-declaration semantics: past `next_review` = weaker signal, not invalid.
 
+### 10.6. Provider-neutral criteria routing
+
+Status: complete in v1.1.1 (2026-09-01).
+
+Corrects implicit steward-product routing without changing the vector model or removing non-normative implementation examples from repository documentation.
+
+Delivered:
+
+- Assessment results route to published per-vector criterion and evidence pages instead of PAICE.work, Siteline, or EveryAILaw.
+- Rubric data and the machine-readable framework profile no longer designate a provider per vector.
+- README vectors lead with artifact classes and label the steward-produced products as non-normative examples.
+- The homepage retains declaration freshness guidance but makes no promise about an unshipped maintenance protocol or commercial offering.
+- The specification points to the criterion registry instead of a nonexistent implementations page.
+
+Release gate:
+
+- Full test suite and generated-output checks pass.
+- The reviewed patch is committed, pushed, and verified on the deployed site under separately authorized release steps.
+
+### 10.7. Declaration dogfood and decentralized adoption
+
+Status: open.
+
+The declaration format is shipped, but the framework steward has not yet published a real declaration at `https://aiposture.org/.well-known/ai-posture.json`. Adoption should begin with inspectable, decentralized declarations rather than a centralized registry.
+
+Work remaining:
+
+- Obtain explicit owner approval for the People, Infrastructure, and Regulation levels asserted by aiposture.org.
+- Publish the first self-reviewed declaration at the normative well-known path and validate it against the v1 schema and semantic checks.
+- Open small, independently reviewable declaration tasks for suitable portfolio sites only after the steward declaration is live.
+- File the cross-repository Siteline detection proposal as informational discovery: detect declarations, do not alter a site's score, and do not centralize assertion custody.
+- Base any launch or distribution copy on current, verified adoption evidence. Do not reuse the unverified June 2026 novelty claim.
+
+Acceptance criteria:
+
+- The live declaration is owner-approved, valid, and time-bounded with `generated_at` and `next_review`.
+- Adoption remains domain-owned and does not require registration with AI Posture or a steward-operated service.
+- Public adoption claims name evidence that can be independently inspected.
+
+### 10.8. Maintenance protocol re-open gate
+
+Status: deferred.
+
+The declaration format already provides freshness semantics through `generated_at` and `next_review`. A separate maintenance protocol or commercial maintenance offering is not promised in the current product surface.
+
+Re-open triggers:
+
+- At least three to five real manual declaration-maintenance cycles reveal a repeated workflow that the declaration format cannot express cleanly.
+- An external implementer presents a concrete interoperability need that requires a protocol beyond the existing declaration and evidence fields.
+
+Work when triggered:
+
+- Document observed maintenance failures before proposing new normative requirements.
+- Keep any protocol provider-neutral and separable from a steward-operated commercial service.
+- Version normative changes through SPEC.md and CHANGELOG.md.
+
 ### 11. Copy and semantic validation
 
 Status: open for v1.1.
