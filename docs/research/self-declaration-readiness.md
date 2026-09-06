@@ -28,6 +28,6 @@ The candidate 1/3/1 profile is retained as the owner-reviewed self-assertion. Th
 
 The source build and 113 repository tests passed during preparation. The declaration passed schema and semantic validation. Homepage/JSON parity, local evidence destinations and fragments, and the existing viewer with a mocked response were checked. These are local checks, separate from browser visual/accessibility verification and live delivery.
 
-Permitted-browser visual/accessibility verification remains pending a shared Comet tab. The owner explicitly authorized commit and publication for v1.1.2. After publication, verify the live declaration, evidence, homepage, and viewer before marking ROADMAP 10.7 complete. Regulatory review continues after release.
+Permitted-browser visual/accessibility verification remains pending a shared Comet tab. The owner explicitly authorized commit and publication for v1.1.2. The live declaration, evidence, homepage, and viewer matched release commit bce193e; see [release evidence](releases/v1.1.2.json). Regulatory review continues after release.
 
 CAISI outreach, Siteline implementation, comparisons, portfolio-wide declarations, and maintenance protocols remain outside this tranche.

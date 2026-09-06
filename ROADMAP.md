@@ -281,7 +281,7 @@ Release gate:
 
 ### 10.7. Declaration dogfood and decentralized adoption
 
-Status: owner-approved declaration included in v1.1.2; verify deployment against the release commit.
+Status: published in v1.1.2 at bce193e; both deployment workflows passed and 12 live site/agent files matched the release. See [release evidence](docs/research/releases/v1.1.2.json).
 
 **Next action:** continue regulatory monitoring and review the declaration on December 5, 2026. Browser visual/accessibility verification remains an open follow-up. People 1, Infrastructure 3, Regulation 1 wording, and the 2026-12-05 review date are owner approved. The [review record](docs/research/self-declaration-readiness.md) preserves the approved acknowledgment and validation limits. Regulatory screening continues as an ongoing practice, not a one-time completed map.
 

@@ -1,0 +1,85 @@
+{
+  "release": "v1.1.2",
+  "commit": "bce193e0bd9e81101278892feeb87cab87d9e2f3",
+  "url": "https://github.com/snapsynapse/ai-posture/releases/tag/v1.1.2",
+  "published_at": "2026-09-06T02:48:35Z",
+  "authority": "Owner explicitly authorized staging, commit, push, tag, and release.",
+  "local_tests": 116,
+  "deployment_runs": [
+    34007380684,
+    34007380414
+  ],
+  "deployment_conclusion": "success",
+  "live_routes": [
+    {
+      "url": "https://aiposture.org/",
+      "matches_release": true,
+      "sha256": "3198fec4eae2d0dccacfebc03ed417129febb3e857b13dddf11cf715afdbdb0b"
+    },
+    {
+      "url": "https://aiposture.org/declaration/",
+      "matches_release": true,
+      "sha256": "92b41039cfcf8df5019a9498485b34645ab7e64387230f5a0fdd67fb34dc7c97"
+    },
+    {
+      "url": "https://aiposture.org/declaration/route-checks.json",
+      "matches_release": true,
+      "sha256": "a02e3d84a5b7cb4041112e7b25ef99a7dfe955e1e39be500003476718eccb1e0"
+    },
+    {
+      "url": "https://aiposture.org/.well-known/ai-posture.json",
+      "matches_release": true,
+      "sha256": "073aaf3a2be49c1a36cc07e568669b87d8d39c22f9aee8412d26925cd1e0bb75"
+    },
+    {
+      "url": "https://aiposture.org/.well-known/ai-posture-framework.json",
+      "matches_release": true,
+      "sha256": "afaf050544cebca840a09b8159a2e50c6882cea72fd78b3fa08f7bb9696c43df"
+    },
+    {
+      "url": "https://aiposture.org/.well-known/assistant-guide.txt",
+      "matches_release": true,
+      "sha256": "c0b4693cd6ee72d08b763d7bdbb0e5d86795b48ce2a91c3af3240931100225d1"
+    },
+    {
+      "url": "https://aiposture.org/.well-known/assistant-guide-manifest.json",
+      "matches_release": true,
+      "sha256": "b9b0c99f6a4f8346a1ae31b929334683cca2244918a5dc9c3af41af4532b29a8"
+    },
+    {
+      "url": "https://aiposture.org/llms.txt",
+      "matches_release": true,
+      "sha256": "958206ca26b256dd29bf5ddf344463db4c99bfff59d29e0d5a49a547e6f00364"
+    },
+    {
+      "url": "https://aiposture.org/sitemap.xml",
+      "matches_release": true,
+      "sha256": "4d6cb5bfd74206821d73811e6a34a904bd829ce9f4166b7336e072fdde7a29a0"
+    },
+    {
+      "url": "https://aiposture.org/robots.txt",
+      "matches_release": false,
+      "sha256": "4fa05657a774510a4ea11f4216ed3eba8da5930c800e0f00a8ddfaa49156a0b3"
+    },
+    {
+      "url": "https://aiposture.org/check/",
+      "matches_release": true,
+      "sha256": "50c6df07344e10800d951812a58599e4ad65bea939ea165f5d12e03812eb4caf"
+    },
+    {
+      "url": "https://aiposture.org/spec/",
+      "matches_release": true,
+      "sha256": "d59668378c784dc46cf9a88f4fa22f61e652091679febd4a600eceda135e628e"
+    },
+    {
+      "url": "https://aiposture.org/assess/",
+      "matches_release": true,
+      "sha256": "945227dec97e36de4d181ebaff10fef364a5f98769abbb7866d1f55c98fdb7de"
+    }
+  ],
+  "missing_route_status": 404,
+  "limitations": [
+    "Browser visual/accessibility review remains unverified; requires shared Comet tab.",
+    "Cloudflare injects managed robots.txt directives that conflict with repository crawler allowances; infrastructure follow-up required."
+  ]
+}
