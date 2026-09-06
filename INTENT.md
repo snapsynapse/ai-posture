@@ -1,7 +1,7 @@
 ---
 title: "AI Posture INTENT"
-version: "0.1.2"
-last_updated: 2026-06-01
+version: "0.1.3"
+last_updated: 2026-09-05
 status: working-hypothesis
 description: "Standards-level strategy for the AI Posture framework. Subscribes to portfolio-level working hypotheses. Defines stewardship principles, vector admission criteria, recalibration gates, contribution norms."
 tags: [intent, strategy, ai-posture, standards]
@@ -89,15 +89,19 @@ Non-responsibilities:
 - Not a compliance guarantor
 - Not a scoring judge; organizations self-assess and self-assert. The framework defines the evidence standard, not the grader.
 
+## Steward declaration practice
+
+The aiposture.org project publishes a self-asserted declaration with linked evidence and a dated review cycle. Its scope is the informational specification site and pre-assessment, not PAICE.work PBC as a whole. Regulatory applicability is an ongoing practice supported by EveryAILaw.com and the PAICE Legal Graph, beginning with Delaware and the US federal baseline and expanding with relevant jurisdictional connections. It is not a claim of exhaustive worldwide coverage or a permanently settled obligation map. The first owner-approved declaration is People 1, Infrastructure 3, Regulation 1, with the next declaration review on 2026-12-05. This practice does not change normative scoring or requirements.
+
 ## Status
 
 Subscribes to: Measurement Authority, Calibration Compounding (both from the portfolio INTENT).
 
 Current tier: working hypothesis.
 
-Last review: 2026-05-25.
+Last strategic review recorded: 2026-05-25.
 
-Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment completions, whichever comes first.
+The previously scheduled strategic review was 2026-07-31 or after the first 100 pre-assessment completions. Its completion is not established here; the December declaration review is a separate checkpoint.
 
 ## Related docs
 
@@ -107,6 +111,8 @@ Next scheduled review: 2026-07-31 (Q3 start) or after first 100 pre-assessment c
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## Changelog
+
+- 2026-09-05 v0.1.3 - Recorded the approved project-scoped declaration and ongoing regulatory review practice. Specification remains v1.1.1.
 
 - 2026-06-01 v0.1.2 - Specification promoted to v1.0.0, locking the three-vector set (People, Infrastructure, Regulation) as the v1.x baseline. Stability declaration only; no scoring, likelihood, prior, or aggregation changes. Pre-assessment product, site, and agent surfaces aligned to v1.0.0. Legal copy finalized (counsel verbal approval 2026-05-29). Documented the 1.0 promotion as distinct from recalibration in the versioning policy above.
 - 2026-05-27 - Decision logged. W3C EARL 1.0 selected as the primary wire format for verified per-vector assessments. OSCAL Assessment Results 1.1.2 retained as a deferred projection target with explicit re-open triggers. Rationale, alternatives, and revision triggers in `docs/research/wire-format-earl.md`. No stewardship-principle changes; this is a positioning decision under the externally-verifiable and obligation-anchored principles already in force.

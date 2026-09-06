@@ -10,6 +10,9 @@ These notes are non-normative. They support positioning, validation, and contrib
 - [Adjacent-framework crosswalk](adjacent-framework-crosswalk.md): how AI Posture relates to governance, risk, compliance, maturity, and behavior-change models without claiming replacement.
 - [Wire format for verified AI Posture assessments](wire-format-earl.md): why W3C EARL 1.0 is the primary wire format for verified per-vector assessments and why OSCAL Assessment Results is retained as a deferred projection target.
 - [Evidence-grade assertions: working definition and tiers](evidence-grade-definition.md): what "evidence-grade" means on public surfaces, the three assertion tiers, and what promotes an assertion between tiers.
+- [Steward declaration evidence review](self-declaration-readiness.md): owner-approved levels, ongoing regulatory review, and dated infrastructure evidence for the steward's first declaration.
+
+- [Delaware applicability review](delaware-applicability-review.md): EveryAILaw findings, official-source checks, and the remaining project-footprint question.
 
 ## Boundaries
 

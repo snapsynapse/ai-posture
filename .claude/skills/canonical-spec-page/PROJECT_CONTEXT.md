@@ -1,4 +1,4 @@
-# PROJECT_CONTEXT.md — canonical-spec-page
+# PROJECT_CONTEXT.md - canonical-spec-page
 
 ```yaml
 # Identity
@@ -7,10 +7,10 @@ canonical_url: https://aiposture.org/
 repo_slug: snapsynapse/ai-posture
 
 # Hero
-tagline: The Aggregated Intelligence Posture framework — where your org stands, and how to move.
+tagline: The Aggregated Intelligence Posture framework - where your org stands, and how to move.
 hero_h1: Where your org stands. And how.
 hero_subtitle: >
-  One score across three vectors — People, Infrastructure, Regulation —
+  One score across three vectors - People, Infrastructure, Regulation —
   bounded by the weakest. The canonical definition of the
   Aggregated Intelligence Posture framework.
 hero_hook: >
@@ -31,18 +31,19 @@ keywords:
   - ai readiness
 
 # Authorship
-# Individual author intentionally omitted — attribution is to PAICE.work PBC.
+# Individual author intentionally omitted - attribution is to PAICE.work PBC.
 publisher_name: PAICE.work PBC
 publisher_url: https://paice.work/
-# twitter_handle intentionally omitted — no social handle on meta tags.
+# twitter_handle intentionally omitted - no social handle on meta tags.
 
 # Dates
 date_published: "2026-04-19"
-date_modified: "2026-04-20"
+date_modified: "2026-09-05"
 
 # Versioning
-version: v0.2.0
+version: v1.1.1
 canonical_file: SPEC.md
+site_release_candidate: v1.1.2
 
 # Theme
 theme_accent: "#4f46e5"
@@ -77,11 +78,17 @@ secondary_demo:
 
 # Supporting pages
 supporting_pages:
+  - path: /declaration/
+    label: Steward declaration evidence
   - path: /privacy/
     label: Privacy policy
   - path: /terms/
     label: Terms of service
 
 # OG image
-og_image_source: null   # deferred per owner 2026-04-20
+og_image_source: docs/imgs/og.png
 ```
+
+## Declaration maintenance
+
+Follow the root PROJECT_CONTEXT.md for current delivery state. The canonical steward declaration is docs/.well-known/ai-posture.json; keep the homepage summary and docs/declaration/index.html aligned with it. The approved project scope is the informational site and pre-assessment, with People 1, Infrastructure 3, Regulation 1 and next review 2026-12-05. Describe regulatory applicability as ongoing review through EveryAILaw.com and the PAICE Legal Graph, not an unfinished or permanently complete obligation map. Publication requires separate live verification.

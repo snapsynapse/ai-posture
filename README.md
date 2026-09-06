@@ -2,7 +2,7 @@
 
 The Aggregated Intelligence Posture framework. One governance score for human-AI collaboration across three vectors, bounded by the weakest.
 
-Status: stable (v1.1.1). The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
+Specification: stable (v1.1.1). Site/documentation release: v1.1.2. The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
@@ -15,6 +15,16 @@ Status: stable (v1.1.1). The specification is at v1.1.1 with the three-vector se
 - Declaration viewer: https://aiposture.org/check/
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
+
+## Steward declaration
+
+The owner-reviewed aiposture.org project declaration self-asserts People 1, Infrastructure 3, and Regulation 1. Aggregate: Perceiving (1). Next review: December 5, 2026. Scope is the informational site and pre-assessment, not the entire PAICE.work PBC portfolio.
+
+- [Declaration JSON](docs/.well-known/ai-posture.json)
+- [Evidence and ongoing regulatory review](docs/declaration/index.html)
+- [Validation and delivery record](docs/research/self-declaration-readiness.md)
+
+PAICE.work PBC uses EveryAILaw within the PAICE Legal Graph to follow legislative change and reassess applicability. The declaration is time-stamped; it does not assert exhaustive worldwide coverage, certification, or independent verification. See the [v1.1.2 release](https://github.com/snapsynapse/ai-posture/releases/tag/v1.1.2) for publication details.
 
 ## Who this is for
 

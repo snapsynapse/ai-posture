@@ -16,9 +16,18 @@
     "well_known_path": "/.well-known/ai-posture.json",
     "spec_section": "https://aiposture.org/spec/#declaration-format",
     "schema": "https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json",
-    "assertion_basis_values": ["self-estimate", "self-assertion", "verified"],
-    "currently_accepted_assertion_basis_values": ["self-estimate", "self-assertion"],
-    "reserved_assertion_basis_values": ["verified"],
+    "assertion_basis_values": [
+      "self-estimate",
+      "self-assertion",
+      "verified"
+    ],
+    "currently_accepted_assertion_basis_values": [
+      "self-estimate",
+      "self-assertion"
+    ],
+    "reserved_assertion_basis_values": [
+      "verified"
+    ],
     "reserved_notice": "verified is a reserved vocabulary value and MUST NOT be used until AI Posture publishes a verification process."
   },
   "pre_assessment": {
@@ -115,6 +124,8 @@
     "earl_profile": "https://aiposture.org/schema/earl/v0/profile.md",
     "earl_context": "https://aiposture.org/schema/earl/v0/context.jsonld",
     "criterion_registry": "https://aiposture.org/criteria/v1/index.json",
-    "papers": "https://aiposture.org/papers/"
+    "papers": "https://aiposture.org/papers/",
+    "steward_declaration": "https://aiposture.org/.well-known/ai-posture.json",
+    "steward_evidence": "https://aiposture.org/declaration/"
   }
 }

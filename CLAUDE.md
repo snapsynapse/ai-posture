@@ -13,12 +13,12 @@ People, Infrastructure, Regulation — bounded by the weakest ("minimum-vector" 
 Canonical site: https://aiposture.org/
 Repo: https://github.com/snapsynapse/ai-posture (steward: PAICE.work PBC)
 
-## Status (as of 2026-07-12)
+## Status
 
-- Spec is stable at v1.1.0 (three-vector set locked, declaration format published).
-- Working tree is clean; `main` is up to date with `origin/main`.
-- Last commit: "Harden declaration validation surfaces" (2026-06-11).
-- Active/maintained, not stale — commits through mid-June 2026, docs current.
+The published specification is v1.1.1. Check `SPEC.md` and `CHANGELOG.md` for
+version and release history; inspect Git for current checkout and remote state.
+`ROADMAP.md` tracks remaining work. The steward declaration is owner approved; delivery and outreach remain separate
+from local preparation. Site release v1.1.2 retains specification v1.1.1.
 
 ## Tech stack
 
@@ -104,3 +104,7 @@ npm test                         # node --test
   the last recorded review.
 - Governance transition to an independent steward (PAICE Foundation) is planned but
   not yet timed.
+
+## Steward declaration updates
+
+Keep `docs/.well-known/ai-posture.json`, the homepage summary, `docs/declaration/`, and discovery links aligned. The approved profile is 1/3/1, next review 2026-12-05. Regulation describes ongoing applicability review through EveryAILaw and the PAICE Legal Graph; do not imply a permanently complete legal map. Public evidence of activity does not itself raise a vector level. Record approval and delivery separately in `docs/research/self-declaration-readiness.md`.

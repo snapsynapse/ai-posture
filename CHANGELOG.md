@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.2 release - 2026-09-05
+
+- Published the owner-approved steward self-declaration, evidence page, homepage presentation, and discovery links. Profile: People 1, Infrastructure 3, Regulation 1; next review December 5, 2026. Regulatory wording reflects ongoing review through EveryAILaw and the PAICE Legal Graph. No specification, rubric, or scoring changes.
+- Corrected stale repository context and consolidated the declaration review into the roadmap and project evidence.
+- Added steward declaration/evidence discovery to the framework profile.
+- Updated assistant guide to 1.0.1, repaired its archived PRD path, and refreshed both mirrors, manifest, and hash anchor. The manifest anchors the guide to the v1.1.2 release.
+- Site/package release version is 1.1.2; normative specification, declaration schema, criteria, and scoring remain at their existing versions.
+
 ## v1.1.1 release - 2026-09-01
 
 Removes implicit steward-product routing from normative, machine-readable, and assessment-result surfaces. No scoring rule, likelihood, prior, aggregation rule, declaration shape, or criterion meaning changes.

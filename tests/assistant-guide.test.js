@@ -55,7 +55,7 @@ test('assistant guide manifest pins the published guide bytes', () => {
   const guideHash = sha256(guide);
 
   assert.equal(manifest['guide-path'], '/.well-known/assistant-guide.txt');
-  assert.equal(manifest['guide-version'], '1.0.0');
+  assert.equal(manifest['guide-version'], '1.0.1');
   assert.equal(manifest['guide-sha256'], guideHash);
   assert.equal(manifest['guide-bytes'], guide.length);
   assert.equal(manifest.profile, 'human-verifiable-assistant-guide');

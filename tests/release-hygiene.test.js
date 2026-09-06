@@ -66,9 +66,9 @@ test('canonical standard surfaces do not route to an unshipped provider offering
   assert.match(spec, /Implementations are non-normative and are not required/);
 });
 
-test('package and spec are both at the 1.1.1 line', () => {
+test('site release 1.1.2 retains normative specification 1.1.1', () => {
   const pkg = JSON.parse(read('package.json'));
-  assert.equal(pkg.version, '1.1.1');
+  assert.equal(pkg.version, '1.1.2');
   const spec = read('SPEC.md');
   assert.match(spec, /^version: v1\.1\.1$/m, 'SPEC.md frontmatter must declare v1.1.1');
 });

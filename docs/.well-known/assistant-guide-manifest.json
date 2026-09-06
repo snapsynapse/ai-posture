@@ -1,20 +1,20 @@
 {
   "guide-path": "/.well-known/assistant-guide.txt",
-  "guide-version": "1.0.0",
-  "guide-sha256": "0e53ec62f8651da26707abb1601f5431912879a592cdd61b1959cb3fe794c2a8",
-  "guide-bytes": 6335,
-  "immutable-release-url": "https://github.com/snapsynapse/ai-posture/releases/tag/assistant-guide-v1.0.0",
+  "guide-version": "1.0.1",
+  "guide-sha256": "c0b4693cd6ee72d08b763d7bdbb0e5d86795b48ce2a91c3af3240931100225d1",
+  "guide-bytes": 6907,
+  "immutable-release-url": "https://github.com/snapsynapse/ai-posture/releases/tag/v1.1.2",
   "profile": "human-verifiable-assistant-guide",
   "profile-version": "0.3.0",
   "canonical-url": "https://aiposture.org/.well-known/assistant-guide.txt",
   "repository-url": "https://github.com/snapsynapse/ai-posture",
-  "released-at": "2026-05-25T00:00:00Z",
+  "released-at": "2026-09-06T02:46:58.146638+00:00",
   "changelog-url": "https://github.com/snapsynapse/ai-posture/blob/main/CHANGELOG.md",
   "anchors": [
     {
       "type": "public-repository-file",
       "url": "https://github.com/snapsynapse/ai-posture/blob/main/assistant-guide.sha256",
-      "guide-sha256": "0e53ec62f8651da26707abb1601f5431912879a592cdd61b1959cb3fe794c2a8"
+      "guide-sha256": "c0b4693cd6ee72d08b763d7bdbb0e5d86795b48ce2a91c3af3240931100225d1"
     }
   ]
 }

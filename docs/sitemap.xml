@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aiposture.org/</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -44,19 +44,19 @@
   </url>
   <url>
     <loc>https://aiposture.org/.well-known/assistant-guide.txt</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://aiposture.org/.well-known/assistant-guide-manifest.json</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://aiposture.org/.well-known/ai-posture-framework.json</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -107,5 +107,17 @@
     <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://aiposture.org/.well-known/ai-posture.json</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aiposture.org/declaration/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

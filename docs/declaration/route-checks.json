@@ -1,0 +1,166 @@
+{
+  "checked_at": "2026-09-05T23:41:15.132884+00:00",
+  "method": "curl public GET; initial urllib requests returned 403 for every route, including a route curl could fetch; preserved below as transport discrepancy, not site outage evidence.",
+  "scope": "Public GET route and source-byte checks only; no functional, security, accessibility, or backend audit.",
+  "initial_urllib": {
+    "checked_at": "2026-09-05T23:40:55.634879+00:00",
+    "scope": "Public GET route and source-byte checks only; no functional, security, accessibility, or backend audit.",
+    "routes": [
+      {
+        "path": "/",
+        "status": 403
+      },
+      {
+        "path": "/assess/",
+        "status": 403
+      },
+      {
+        "path": "/check/",
+        "status": 403
+      },
+      {
+        "path": "/llms.txt",
+        "status": 403
+      },
+      {
+        "path": "/.well-known/ai-posture-framework.json",
+        "status": 403
+      },
+      {
+        "path": "/.well-known/assistant-guide.txt",
+        "status": 403
+      },
+      {
+        "path": "/.well-known/assistant-guide-manifest.json",
+        "status": 403
+      },
+      {
+        "path": "/sitemap.xml",
+        "status": 403
+      },
+      {
+        "path": "/schema/declaration/v1/ai-posture-declaration.schema.json",
+        "status": 403
+      },
+      {
+        "path": "/criteria/v1/infrastructure/",
+        "status": 403
+      },
+      {
+        "path": "/privacy/",
+        "status": 403
+      },
+      {
+        "path": "/.well-known/ai-posture.json",
+        "status": 403
+      }
+    ]
+  },
+  "routes": [
+    {
+      "path": "/",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "2238f0038097d531cfdba6f2012f59b49e495f78cfdf4f3ab1eb0ffbe81bb0a6",
+      "matches_source": true
+    },
+    {
+      "path": "/assess/",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "945227dec97e36de4d181ebaff10fef364a5f98769abbb7866d1f55c98fdb7de",
+      "matches_source": true
+    },
+    {
+      "path": "/check/",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "50c6df07344e10800d951812a58599e4ad65bea939ea165f5d12e03812eb4caf",
+      "matches_source": true
+    },
+    {
+      "path": "/llms.txt",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "7406d8bc03ddb48a1c7e1a249be557bb3264f084fcf7c21ab50c755ecc9f8914",
+      "matches_source": true
+    },
+    {
+      "path": "/.well-known/ai-posture-framework.json",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "1eedcb85a1d1cb776da9f40168d0b390b20f33fe0f6540b348331250abf56288",
+      "matches_source": true
+    },
+    {
+      "path": "/.well-known/assistant-guide.txt",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "0e53ec62f8651da26707abb1601f5431912879a592cdd61b1959cb3fe794c2a8",
+      "matches_source": true
+    },
+    {
+      "path": "/.well-known/assistant-guide-manifest.json",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "a5e4971d5b93f30427c575ec17edfabfb045b20b05eab5241a148915747e5474",
+      "matches_source": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "83d9169088144cb5c7418192f660a4dd3ce490c8f8e5ec81f46de7fd5a760a1f",
+      "matches_source": true
+    },
+    {
+      "path": "/schema/declaration/v1/ai-posture-declaration.schema.json",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "48ee2747541d511c5a0fcbc3fcb1b26f0a518ed68b272e376d8871c7aefb77c9",
+      "matches_source": true
+    },
+    {
+      "path": "/criteria/v1/infrastructure/",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "05867a6cf293f64fca6b880952197dc172fe846712bb9c4556d2f334a8cdb2f4",
+      "matches_source": true
+    },
+    {
+      "path": "/privacy/",
+      "status": "200",
+      "exit_code": 0,
+      "sha256": "9b8db03f10c234fac11fd78e56d3d0153d4e7ec4c9aa2b5102bb631a249336ea",
+      "matches_source": false
+    },
+    {
+      "path": "/.well-known/ai-posture.json",
+      "status": "404",
+      "exit_code": 0,
+      "sha256": "792d9f6c891ee50719edc275bdb3112f9b4f14e735a1ca2179b7b131d3e5c9fa",
+      "matches_source": false
+    }
+  ],
+  "source_commit": "c0e6a2fd1e3de61f54ce0d6f8ef940cde7e784bc",
+  "api_checks": {
+    "checked_at": "2026-09-05T23:57:49Z",
+    "healthz": {
+      "url": "https://api.aiposture.org/healthz",
+      "method": "GET",
+      "status": 200,
+      "body": {
+        "ok": true
+      }
+    },
+    "delivery_preflight": {
+      "url": "https://api.aiposture.org/api/deliver",
+      "method": "OPTIONS",
+      "status": 204,
+      "origin": "https://aiposture.org",
+      "allow_origin": "https://aiposture.org",
+      "allow_methods": "GET, POST, OPTIONS"
+    },
+    "limits": "Liveness and preflight only. No newsletter signup, token confirmation, storage query, delivery, or email sent."
+  }
+}

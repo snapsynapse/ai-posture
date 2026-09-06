@@ -51,8 +51,12 @@ separated from normative spec language.
 
 ## Current status
 
-Spec stable at v1.1.0 (three-vector set locked; declaration format published).
-Landing page, pre-assessment, legal pages, and agent-facing surfaces are live.
-Repo working tree is clean and in sync with `origin/main` as of 2026-07-12; last
-commit 2026-06-11. See `CLAUDE.md` at repo root for engineering/agent conventions
-and `INTENT.md` for stewardship strategy and recalibration gates.
+Specification v1.1.1 includes provider-neutral criteria routing and the declaration
+format. See `SPEC.md` and `CHANGELOG.md` for current version and release history.
+See `ROADMAP.md` for remaining work, including delivery of the owner-approved steward declaration.
+Check Git and live routes for current checkout and deployment state. `CLAUDE.md`
+contains engineering conventions; `INTENT.md` contains stewardship strategy.
+
+## Steward declaration maintenance
+
+The project profile is People 1 / Infrastructure 3 / Regulation 1, aggregate Perceiving, next review 2026-12-05. The evidence page describes ongoing regulatory review through EveryAILaw and the PAICE Legal Graph. Update JSON, homepage, evidence, and discovery together; owner approval and live publication are distinct. Site release v1.1.2 leaves specification v1.1.1 unchanged.

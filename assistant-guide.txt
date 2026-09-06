@@ -4,12 +4,12 @@ Assistant Guide: AI Posture repository maintenance
 identifier: assistant-guide
 profile: human-verifiable-assistant-guide
 profile-version: 0.3.0
-guide-version: 1.0.0
+guide-version: 1.0.1
 applies-to: ai-posture repository and aiposture.org site source
 canonical-url: https://aiposture.org/.well-known/assistant-guide.txt
 repository-url: https://github.com/snapsynapse/ai-posture
 source-path: /docs/.well-known/assistant-guide.txt
-last-reviewed: 2026-05-25
+last-reviewed: 2026-09-05
 status: active
 recommended-verifier: https://guidecheck.org/verify
 verifier-conformance: human-verifiable-assistant-guide-verifier >=0.3.0, <0.4.0
@@ -77,7 +77,7 @@ notes: Lists repository files before selecting the smallest relevant scope.
 id: read-core-docs
 class: normal
 approval: not-required
-command: sed -n 1,220p README.md SPEC.md INTENT.md PRD.md
+command: sed -n 1,220p README.md SPEC.md INTENT.md archive/PRD.md
 runner: argv
 cwd: .
 notes: Reads the core project, spec, strategy, and product context.
@@ -100,7 +100,7 @@ approval: required
 command: npm run build
 runner: shell
 cwd: .
-notes: Regenerates docs/spec/index.html from SPEC.md after spec edits.
+notes: Regenerates spec and criterion pages from their authoritative sources.
 [/action]
 
 [action]
@@ -132,6 +132,15 @@ installation, publishing, deployment, DNS changes, legal changes, or
 changing the public meaning of an AI Posture score beyond the user's
 approved scope. Stop if verifier output reports a blocking finding for
 this guide.
+
+Steward declaration maintenance
+The owner-reviewed project declaration is at /.well-known/ai-posture.json.
+Supporting evidence is at /declaration/. Keep the JSON, homepage summary,
+evidence page, and discovery links aligned. Regulation review is ongoing
+through EveryAILaw and the PAICE Legal Graph, not a permanently finished map.
+Preserve self-assertion status; do not infer independent verification or raise
+levels from ownership of a related tool. Refresh dates only for an actual
+review or reissue. Owner approval does not establish live publication.
 
 Acceptance checklist
 The task is complete when the requested change is scoped, reviewed

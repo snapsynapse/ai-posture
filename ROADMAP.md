@@ -281,13 +281,24 @@ Release gate:
 
 ### 10.7. Declaration dogfood and decentralized adoption
 
-Status: open.
+Status: owner-approved declaration included in v1.1.2; verify deployment against the release commit.
+
+**Next action:** continue regulatory monitoring and review the declaration on December 5, 2026. Browser visual/accessibility verification remains an open follow-up. People 1, Infrastructure 3, Regulation 1 wording, and the 2026-12-05 review date are owner approved. The [review record](docs/research/self-declaration-readiness.md) preserves the approved acknowledgment and validation limits. Regulatory screening continues as an ongoing practice, not a one-time completed map.
+
+Prepared locally:
+
+- Owner-approved JSON at `docs/.well-known/ai-posture.json`, matching homepage, and linked evidence at `docs/declaration/`.
+- Inventory, remediation history, route/source comparisons, and API liveness/preflight evidence. Production storage and email delivery were not exercised.
+- Sitemap and llms.txt discovery links, successful build, 113 passing tests, declaration validation, human/machine parity, local link checks, and a mocked-response viewer check.
+- Browser visual/accessibility checks remain pending a shared Comet tab. Automated source checks do not establish accessibility conformance.
+
+Declaration wording and profile are owner approved. The owner authorized staging, commit, push, tag, and release for v1.1.2. CAISI outreach, Siteline implementation, named comparisons, portfolio-wide declarations, and maintenance protocols are deferred from this tranche.
 
 The declaration format is shipped, but the framework steward has not yet published a real declaration at `https://aiposture.org/.well-known/ai-posture.json`. Adoption should begin with inspectable, decentralized declarations rather than a centralized registry.
 
 Work remaining:
 
-- Obtain explicit owner approval for the People, Infrastructure, and Regulation levels asserted by aiposture.org.
+- Owner approval obtained for the declaration profile and regulatory acknowledgment.
 - Publish the first self-reviewed declaration at the normative well-known path and validate it against the v1 schema and semantic checks.
 - Open small, independently reviewable declaration tasks for suitable portfolio sites only after the steward declaration is live.
 - File the cross-repository Siteline detection proposal as informational discovery: detect declarations, do not alter a site's score, and do not centralize assertion custody.

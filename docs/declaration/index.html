@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Steward declaration evidence | AI Posture</title>
+  <meta name="description" content="AI Posture declaration for aiposture.org: scope, supporting evidence, infrastructure checks, and ongoing regulatory review.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://aiposture.org/declaration/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <link rel="alternate" type="text/plain" href="https://aiposture.org/llms.txt" title="LLM-readable summary">
+  <link rel="assistant-guide" href="https://aiposture.org/.well-known/assistant-guide.txt">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Steward declaration evidence | AI Posture">
+  <meta property="og:description" content="Project declaration, supporting evidence, and ongoing regulatory review.">
+  <meta property="og:url" content="https://aiposture.org/declaration/">
+  <meta property="og:image" content="https://aiposture.org/imgs/og.png">
+  <meta property="og:image:alt" content="AI Posture: People, Infrastructure, Regulation">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f8f9fa;
+      --surface2: #f1f3f5;
+      --text: #1a1d24;
+      --text-muted: #5a6170;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-soft: #eef2ff;
+      --border: #e5e7eb;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --code-bg: #0f1117;
+      --code-text: #e1e4ed;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --max-width: 960px;
+      --radius: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      z-index: 100;
+    }
+    .skip-link:focus { left: 0; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    nav .logo svg { color: var(--accent); flex: 0 0 auto; }
+    nav .logo:hover svg { color: var(--accent-hover); }
+    nav .links { display: flex; align-items: center; gap: 1.5rem; font-size: 0.9rem; }
+    nav .links a { color: var(--text-muted); }
+    nav .links a:hover { color: var(--text); text-decoration: none; }
+
+    .gh-star {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-alt);
+      color: var(--text) !important;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: border-color 0.1s ease, transform 0.05s ease;
+    }
+    .gh-star:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .gh-star svg { flex: 0 0 auto; color: #b45309; }
+    .gh-star span { white-space: nowrap; }
+
+    .byline {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0.75rem 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.9rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .byline .sep { color: var(--border); }
+    .byline a { color: var(--text); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }
+    .byline a:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
+    .byline .version {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .canonical-note {
+      margin-top: 2.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .canonical-note strong { color: var(--text); }
+    .canonical-note a { text-decoration: underline; text-underline-offset: 2px; }
+
+    section { padding: 4rem 0; }
+    section.alt { background: var(--bg-alt); }
+
+    h1 { font-size: 2.75rem; line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
+    h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .hero { padding: 5rem 0 3rem; text-align: center; }
+    .hero h1 { margin-bottom: 1rem; }
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+    }
+    .hero .hook {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      text-align: left;
+    }
+    .pillar {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    .pillar h3 { color: var(--accent); font-size: 1rem; }
+    .pillar p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .pillar a { font-size: 0.85rem; font-weight: 600; }
+
+    .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-hover); text-decoration: none; color: #fff; border-color: var(--accent-hover); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .btn-secondary:hover { background: var(--accent); color: #fff; text-decoration: none; }
+    .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .btn-primary:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+    /* Assessment card */
+    .assessment-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.25rem 2.25rem 2rem;
+      margin: 0 auto;
+      max-width: 760px;
+      text-align: left;
+    }
+    .assessment-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    .assessment-card h2 { font-size: 1.55rem; margin-bottom: 0.5rem; }
+    .assessment-lead { font-size: 1.05rem; color: var(--text); margin-bottom: 1.25rem; }
+    .assessment-features { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .assessment-features li {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      padding: 0.55rem 0 0.55rem 1.5rem;
+      position: relative;
+      border-top: 1px solid var(--border);
+    }
+    .assessment-features li:first-child { border-top: none; padding-top: 0; }
+    .assessment-features li:first-child::before { top: 0.1rem; }
+    .assessment-features li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .assessment-features strong { color: var(--text); font-weight: 700; }
+
+    /* Levels table */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+    th, td {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    th { font-weight: 600; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td.level { font-family: var(--mono); color: var(--accent); width: 9em; font-weight: 700; white-space: nowrap; }
+    td.num { font-family: var(--mono); text-align: right; width: 3em; color: var(--text-muted); }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      border: 1px solid var(--border);
+    }
+    pre code { color: var(--code-text); background: transparent; padding: 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-meta p { margin-bottom: 0.25rem; }
+    .footer-meta a { text-decoration: underline; text-underline-offset: 2px; }
+    .footer-links a { text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); color: var(--text); }
+    .footer-links a:hover { text-decoration-color: var(--accent); }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .hero { padding: 3rem 0 2rem; }
+      .pillars { grid-template-columns: 1fr; }
+      .assessment-card { padding: 1.5rem; }
+      nav .links { display: none; }
+      nav .links.mobile-compact { display: flex; gap: 0.75rem; }
+      .footer-grid { flex-direction: column; }
+    }
+    @media (max-width: 520px) {
+      nav .links.mobile-compact a:not(.gh-star) { display: none; }
+      nav .container { gap: 0.5rem; }
+    }
+
+  .evidence li { margin: 0.5rem 0 0.5rem 1.5rem; }
+  .evidence a { text-decoration: underline; overflow-wrap: anywhere; }
+  .evidence h2 { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="AI Posture home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="20" cy="13" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="20" r="7" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      </svg>
+      <span>AI Posture</span>
+    </a>
+    <div class="links mobile-compact">
+      <a href="/assess/">Assess</a>
+      <a href="/spec/">Spec</a>
+      <a href="/papers/">Papers</a>
+    </div>
+  </div>
+</nav>
+<main id="main-content" class="evidence">
+<section><div class="container">
+  <p><strong>Owner-reviewed self-assertion.</strong></p>
+  <h1>Our declaration and its evidence.</h1>
+  <p>Prepared September 5, 2026. Scope: the aiposture.org informational site and pre-assessment, including its documented service interfaces. This does not cover PAICE.work PBC org-wide.</p>
+  <p>Profile: People 1, Infrastructure 3, Regulation 1. Aggregate: Perceiving (1), constrained by People and Regulation. Basis: self-assertion. Next review: December 5, 2026.</p>
+  <p><a href="/.well-known/ai-posture.json">Read the declaration JSON</a> · <a href="/check/?url=/.well-known/ai-posture.json">Validate and view it</a> · <a href="/criteria/v1/">Inspect the rubric</a></p>
+  <aside class="canonical-note" role="note">A validator checks structure and coherence. It does not establish that the organization merits a level. This is a time-stamped self-assertion, not independent verification. First-scoring dates are null. The declaration JSON carries its generation timestamp and next-review date.</aside>
+  <h2 id="people">People: Perceiving (1), owner confirmed</h2>
+  <p><strong>Owner acknowledgment, confirmed September 5, 2026:</strong> PAICE.work PBC acknowledges that AI assistants are used in the development and maintenance of the aiposture.org informational site and pre-assessment.</p>
+  <p>Status: owner confirmed the project scope and acknowledgment on September 5, 2026. No dated project behavioral baseline was located in the reviewed repository sources; no higher People level is asserted. Repository AI guidance establishes workflow intent, not measured collaboration outcomes.</p>
+  <h2 id="infrastructure">Infrastructure: Integrating (3), owner accepted</h2>
+  <p>Owner accepted this report and its limitations on September 5, 2026. The self-review combines a public-surface inventory, source/service mapping, a documented remediation, current follow-up checks, and local regression tests. Its recommendation is limited by the observations below.</p>
+  <h3>Surface and integration inventory</h3>
+  <ul>
+    <li>GitHub Pages serves the informational pages, assessment runtime, declaration viewer, schemas, criteria, sitemap, llms.txt, and well-known guide/profile files.</li>
+    <li>The assessment runs in the browser using versioned question, likelihood, and rubric data. Local runtime tests exercise completion, revisions, N/A handling, artifact shape, and neutral criteria routing.</li>
+    <li>The API at api.aiposture.org is configured as a Cloudflare Worker. It handles newsletter signup, confirmation, and artifact delivery. Cloudflare D1 stores the documented records; Resend sends email.</li>
+    <li>PostHog analytics is configured by the site source. The homepage also reads GitHub repository metadata for its update date. These are external dependencies, not additional posture-vector implementations.</li>
+  </ul>
+  <p>Inventory sources: <a href="https://github.com/snapsynapse/ai-posture/blob/c0e6a2fd1e3de61f54ce0d6f8ef940cde7e784bc/worker/wrangler.toml">Worker configuration</a>, <a href="https://github.com/snapsynapse/ai-posture/blob/c0e6a2fd1e3de61f54ce0d6f8ef940cde7e784bc/worker/src/index.js">API routing</a>, <a href="/privacy/">privacy</a>, and <a href="/terms/">terms</a>. Source configuration is not proof that every production service behaves as described.</p>
+  <h3>Remediation and follow-up</h3>
+  <ol>
+    <li><strong>Reconstructed baseline:</strong> the d2007dd checkout lacked docs/.nojekyll. The release record identifies omitted well-known files as the deployment issue. Original pre-fix HTTP output is not included in this report.</li>
+    <li><strong>Remediation:</strong> <a href="https://github.com/snapsynapse/ai-posture/commit/c0e6a2fd1e3de61f54ce0d6f8ef940cde7e784bc">c0e6a2f</a> added the Pages preservation marker and a regression test.</li>
+    <li><strong>Follow-up, September 5:</strong> ten public routes returned HTTP 200 and matched checkout c0e6a2f byte for byte, including the framework profile, assistant guide, and guide manifest. The privacy page returned 200 with email-obfuscation markup differences. The then-unpublished steward declaration returned 404.</li>
+    <li><strong>API follow-up:</strong> GET /healthz returned 200 with ok=true; OPTIONS /api/deliver returned 204 with the expected canonical-site CORS origin. Neither request submits data or sends email.</li>
+    <li><strong>Local verification:</strong> the existing 113-test suite passed during preparation. This is local test evidence, separate from live service verification.</li>
+  </ol>
+  <p><a href="/declaration/route-checks.json">Inspect timestamped route checks and source hashes</a>. The early Python requests returned 403 while curl succeeded; that transport discrepancy is preserved in the record and is not treated as an outage.</p>
+  <p><strong>Limits:</strong> no production storage query, newsletter signup, confirmation, email delivery, security audit, or independent assessment was performed. No defined scan cadence or recurring drift-review record establishes Calibrating (4). The owner accepted the documented scope and limitations on September 5, 2026.</p>
+  <h2 id="regulation">Regulation: Perceiving (1)</h2>
+  <p><strong>Owner-confirmed facts:</strong> PAICE.work PBC is based in Delaware. Its work is globally accessible and does not currently target particular geographic markets.</p>
+  <p><strong>Owner-approved acknowledgment:</strong> PAICE.work PBC treats regulatory applicability as an ongoing, evidence-based practice. We created <a href="https://everyailaw.com/">EveryAILaw.com</a> within the <a href="https://paice.foundation/">PAICE Legal Graph</a> to help ourselves and others identify relevant obligations and follow legislative change. We review developments frequently and reassess their relevance as laws, our activities, and jurisdictional connections evolve. For aiposture.org, our review starts with Delaware and the US federal baseline and considers additional jurisdictions where relevant connections arise. This declaration records our current posture as of its stated date; it does not claim exhaustive worldwide coverage or a permanently settled set of obligations.</p>
+  <p>This acknowledgment reflects the ongoing review practice described by the owner. The project self-asserts Regulation 1; maintaining EveryAILaw does not by itself establish a higher project level or independent verification.</p>
+  <p>The bounded review identified no applicable Delaware-specific ongoing AI-governance duty for the described activities. That dated finding contributes to an ongoing applicability review and will be revisited as legislation and project activities change. Globally accessible does not mean every jurisdiction applies; lack of geographic targeting also does not exclude every external jurisdiction.</p>
+  <p><a href="/research/delaware-applicability-review.md">Read the applicability findings and scope method</a>.</p>
+  <h2>Review and reissue</h2>
+  <p>The next scheduled review is December 5, 2026. We revisit relevance as legislation, project activities, or jurisdictional connections change. The specification, rubric, and scoring rules are unchanged by this declaration.</p>
+</div></section>
+</main>
+<footer>
+  <div class="container" style="text-align: center;">
+    <p>A <a href="https://paice.foundation/" target="_blank" rel="noopener">PAICE Foundation</a> project &middot; <a href="/papers/">Papers</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a> &middot; <a href="/llms.txt">llms.txt</a> &middot; <a href="/.well-known/assistant-guide.txt">assistant-guide.txt</a> &middot; CC BY 4.0 (spec) &middot; MIT (code)</p>
+  </div>
+</footer>
+</body>
+</html>

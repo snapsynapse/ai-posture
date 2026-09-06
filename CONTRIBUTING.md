@@ -1,6 +1,6 @@
 # Contributing
 
-AI Posture is an open specification and pre-assessment, stable at v1.0.0. Contributions are welcome when they preserve the framework boundaries in SPEC.md and the strategy in INTENT.md.
+AI Posture is an open specification and pre-assessment, with its current version recorded in SPEC.md. Contributions are welcome when they preserve the framework boundaries in SPEC.md and the strategy in INTENT.md.
 
 ## Before proposing a change
 
