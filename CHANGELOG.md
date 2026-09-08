@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased - 2026-09-08
+
+- Added byte-identical root mirrors for the owner-approved AI Posture declaration and assistant-guide manifest, with regression checks enforcing parity with the served `.well-known/` artifacts. No served identity, profile, scoring, or normative specification changes.
+
 ## v1.1.2 release - 2026-09-05
 
 - Published the owner-approved steward self-declaration, evidence page, homepage presentation, and discovery links. Profile: People 1, Infrastructure 3, Regulation 1; next review December 5, 2026. Regulatory wording reflects ongoing review through EveryAILaw and the PAICE Legal Graph. No specification, rubric, or scoring changes.

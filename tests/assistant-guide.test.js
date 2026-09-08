@@ -8,6 +8,7 @@ const ROOT = path.join(__dirname, '..');
 const ROOT_GUIDE = path.join(ROOT, 'assistant-guide.txt');
 const SITE_GUIDE = path.join(ROOT, 'docs/.well-known/assistant-guide.txt');
 const MANIFEST = path.join(ROOT, 'docs/.well-known/assistant-guide-manifest.json');
+const ROOT_MANIFEST = path.join(ROOT, 'assistant-guide-manifest.json');
 const HASH_ANCHOR = path.join(ROOT, 'assistant-guide.sha256');
 const HOME = fs.readFileSync(path.join(ROOT, 'docs/index.html'), 'utf8');
 const LLMS = fs.readFileSync(path.join(ROOT, 'docs/llms.txt'), 'utf8');
@@ -66,4 +67,8 @@ test('assistant guide manifest pins the published guide bytes', () => {
   assert.equal(hashAnchor, `${guideHash}  assistant-guide.txt`);
   assert.equal(manifest.anchors[0]['guide-sha256'], guideHash);
   assert.equal(manifest.anchors[0].type, 'public-repository-file');
+});
+
+test('root assistant guide manifest mirror is byte-identical', () => {
+  assert.deepEqual(fs.readFileSync(ROOT_MANIFEST), fs.readFileSync(MANIFEST));
 });

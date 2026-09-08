@@ -1,0 +1,56 @@
+{
+  "type": "AI Posture Declaration",
+  "spec_version": "v1.1.1",
+  "generated_at": "2026-09-06T02:32:23.510883Z",
+  "next_review": "2026-12-05",
+  "subject": {
+    "name": "PAICE.work PBC",
+    "domain": "https://aiposture.org/",
+    "scope": "aiposture.org project: the informational spec site and pre-assessment"
+  },
+  "assertion_basis": "self-assertion",
+  "aggregate": {
+    "level": 1,
+    "level_name": "Perceiving"
+  },
+  "constraining_vectors": [
+    "People",
+    "Regulation"
+  ],
+  "vectors": {
+    "People": {
+      "in_scope": true,
+      "level": 1,
+      "level_name": "Perceiving",
+      "at_level_since": null
+    },
+    "Infrastructure": {
+      "in_scope": true,
+      "level": 3,
+      "level_name": "Integrating",
+      "at_level_since": null
+    },
+    "Regulation": {
+      "in_scope": true,
+      "level": 1,
+      "level_name": "Perceiving",
+      "at_level_since": null
+    }
+  },
+  "evidence": {
+    "People": [
+      "https://aiposture.org/declaration/#people"
+    ],
+    "Infrastructure": [
+      "https://aiposture.org/declaration/#infrastructure",
+      "https://aiposture.org/declaration/route-checks.json",
+      "https://aiposture.org/llms.txt",
+      "https://aiposture.org/.well-known/ai-posture-framework.json",
+      "https://aiposture.org/.well-known/assistant-guide.txt"
+    ],
+    "Regulation": [
+      "https://aiposture.org/declaration/#regulation",
+      "https://aiposture.org/privacy/"
+    ]
+  }
+}

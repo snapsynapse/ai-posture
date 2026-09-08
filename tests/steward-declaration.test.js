@@ -5,6 +5,12 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
 const declaration = JSON.parse(read('docs/.well-known/ai-posture.json'));
+test('root steward declaration mirror is byte-identical', () => {
+  assert.deepEqual(
+    fs.readFileSync(path.join(root, 'ai-posture.json')),
+    fs.readFileSync(path.join(root, 'docs/.well-known/ai-posture.json')),
+  );
+});
 test('homepage steward summary matches the declaration', () => {
   const home = read('docs/index.html');
   for (const [name, vector] of Object.entries(declaration.vectors)) {
