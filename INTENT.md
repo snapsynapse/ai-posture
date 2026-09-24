@@ -1,7 +1,7 @@
 ---
 title: "AI Posture INTENT"
-version: "0.1.3"
-last_updated: 2026-09-05
+version: "0.2.0"
+last_updated: 2026-09-23
 status: working-hypothesis
 description: "Standards-level strategy for the AI Posture framework. Subscribes to portfolio-level working hypotheses. Defines stewardship principles, vector admission criteria, recalibration gates, contribution norms."
 tags: [intent, strategy, ai-posture, standards]
@@ -9,13 +9,27 @@ tags: [intent, strategy, ai-posture, standards]
 
 # AI Posture INTENT
 
-Strategy for the AI Posture framework and the aiposture.org canonical home. Scoped to the open spec, the pre-assessment, and surrounding materials. Subscribes to portfolio-level working hypotheses (see https://github.com/snapsynapse/paice-foundation/blob/main/INTENT.md).
+Strategy for the AI Posture framework and the aiposture.org canonical home. Scoped to the open spec, its existing reference materials (including the experimental pre-assessment), and surrounding materials. Subscribes to portfolio-level working hypotheses (see https://github.com/snapsynapse/paice-foundation/blob/main/INTENT.md).
 
 ## Purpose
 
-AI Posture is the unified governance framework for aggregated intelligence readiness across observable vectors. v1.0 ships three vectors (People, Infrastructure, Regulation). The vector set is open; admission criteria are documented below and in SPEC.md.
+AI Posture is a framework for understanding and communicating aggregated intelligence readiness across observable vectors: combined readiness is bounded by the weakest in-scope vector. v1.0 ships three vectors (People, Infrastructure, Regulation). The vector set is open; admission criteria are documented below and in SPEC.md.
 
-Position within portfolio: AI Posture is the first category-ownership claim under the Measurement Authority hypothesis. The pre-assessment is the first significant data-collection surface under the Calibration Compounding hypothesis.
+Position within portfolio: AI Posture is a supporting framework within PAICE's mission to make AI Collaboration measurable, teachable, and governable. On 2026-09-22 Sam decided to retain it as a communicable mental model and to stop treating it as a standalone product bet. His dated owner assessment is that the productization experiment appears to have failed, no adoption is reported, and intended direct applications do not yet exist. That is an owner assessment, not an independent usage audit. Product development reopens only under the criteria below.
+
+## Operating posture
+
+Maintained: SPEC.md and its generated page, schemas, the reference validator, the declaration format, the steward declaration and its review cycle, the live site, and existing commitments made by the worker, privacy policy, and terms.
+
+Experimental: the pre-assessment remains available as a clearly labelled experimental estimator. It is not evidence of adoption or validated predictive power.
+
+Paused: new pre-assessment features, growth or data-collection targets, and the V2 backlog in ROADMAP.md.
+
+This posture does not archive the framework, remove existing behavior, or change normative scoring.
+
+## Reopen criteria
+
+A proposal to resume product development names: the beneficiary, the task, the observed need, existing alternatives, the smallest useful application, and the evidence that would justify investment. A new product surface is not a prerequisite for retaining the framework.
 
 ## Stewardship principles
 
@@ -49,6 +63,8 @@ Likelihood tables and prior distributions in the pre-assessment are expert-elici
 - **First 100 completions:** first recalibration pass using observed answer distributions from respondents who subsequently complete a verified per-vector assessment
 - **Annually thereafter:** full review of likelihood tables against accumulated data
 - **On vector addition:** likelihood tables for any new vector must be elicited and published before that vector goes live in the pre-assessment
+
+Under the 2026-09-22 operating posture these triggers are passive: no effort is spent driving completions to reach them.
 
 Recalibration is documented in CHANGELOG.md. Major recalibrations bump the minor version (e.g., v0.2 to v0.3). The 1.0.0 promotion is a one-time stability declaration, not a recalibration: it locks the three-vector set as the v1.x baseline without changing scoring, likelihood, prior, or aggregation rules. Subsequent recalibrations continue to bump the minor version within the v1.x line.
 
@@ -95,13 +111,11 @@ The aiposture.org project publishes a self-asserted declaration with linked evid
 
 ## Status
 
-Subscribes to: Measurement Authority, Calibration Compounding (both from the portfolio INTENT).
+Relates to: Measurement Authority and Collaboration Compounding (both from the portfolio INTENT), as a supporting framework. It does not by itself evidence either hypothesis.
 
 Current tier: working hypothesis.
 
-Last strategic review recorded: 2026-05-25.
-
-The previously scheduled strategic review was 2026-07-31 or after the first 100 pre-assessment completions. Its completion is not established here; the December declaration review is a separate checkpoint.
+Last strategic review recorded: 2026-09-22 (portfolio disposition; see paice-foundation/INTENT.md). The December declaration review is a separate checkpoint.
 
 ## Related docs
 
@@ -111,6 +125,8 @@ The previously scheduled strategic review was 2026-07-31 or after the first 100 
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## Changelog
+
+- 2026-09-23 v0.2.0 - Applied the 2026-09-22 portfolio disposition: supporting framework, not a standalone product bet. Added Operating posture and Reopen criteria. Replaced Calibration Compounding with Collaboration Compounding per portfolio INTENT. Recalibration triggers made passive. No normative or specification change.
 
 - 2026-09-05 v0.1.3 - Recorded the approved project-scoped declaration and ongoing regulatory review practice. Specification remains v1.1.1.
 

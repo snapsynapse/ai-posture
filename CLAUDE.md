@@ -4,11 +4,15 @@ Agent guidance for working in this repository. Read this before making changes.
 
 ## Purpose
 
-AI Posture is an open governance framework/specification (the "Aggregated Intelligence
-Posture" model) plus its reference implementation: a static marketing/spec site, a
-client-side Bayesian pre-assessment tool, and a small Cloudflare Worker backend. It
-produces one governance score for human-AI collaboration across three vectors —
+AI Posture is an open framework/specification (the "Aggregated Intelligence Posture"
+model) for understanding and communicating AI readiness across three vectors —
 People, Infrastructure, Regulation — bounded by the weakest ("minimum-vector" rule).
+
+Existing implementation, maintained but not under active product development: a static
+spec site, an experimental client-side Bayesian pre-assessment, and a small Cloudflare
+Worker backend. Since 2026-09-22 AI Posture is a supporting framework in the PAICE
+portfolio, not a standalone product bet. See `INTENT.md` "Operating posture" and
+"Reopen criteria" before proposing new product work.
 
 Canonical site: https://aiposture.org/
 Repo: https://github.com/snapsynapse/ai-posture (steward: PAICE.work PBC)
@@ -99,9 +103,9 @@ npm test                         # node --test
 - Worker: unsubscribe path is marked TBD (Resend-managed list link) in `worker/README.md`.
 - No CI gate runs the test suite (`npm test`) automatically — only GitHub Pages deploy
   is automated. Consider this when validating changes.
-- Recalibration of pre-assessment likelihood tables is scheduled for "first 100
-  completions" and annually thereafter (see `INTENT.md`); not yet triggered as of
-  the last recorded review.
+- Recalibration of pre-assessment likelihood tables triggers at "first 100
+  completions" and annually thereafter (see `INTENT.md`). Passive since 2026-09-22;
+  do not drive completions to reach it.
 - Governance transition to an independent steward (PAICE Foundation) is planned but
   not yet timed.
 

@@ -1,20 +1,24 @@
 # AI Posture
 
-The Aggregated Intelligence Posture framework. One governance score for human-AI collaboration across three vectors, bounded by the weakest.
+The Aggregated Intelligence Posture framework. A way to reason about AI readiness across people, infrastructure, and regulation, where the weakest area bounds the whole.
 
 Specification: stable (v1.1.1). Site/documentation release: v1.1.2. The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)
 - Pre-assessment PRD (archived): [archive/PRD.md](archive/PRD.md)
-- Self-assessment: https://aiposture.org/assess/
 - Assistant guide: https://aiposture.org/.well-known/assistant-guide.txt
 - Framework profile: https://aiposture.org/.well-known/ai-posture-framework.json
 - Estimate result schema: https://aiposture.org/assess/schema/estimate-result.schema.json
 - Declaration schema: https://aiposture.org/schema/declaration/v1/ai-posture-declaration.schema.json
 - Declaration viewer: https://aiposture.org/check/
+- Self-assessment (experimental): https://aiposture.org/assess/
 - Privacy policy: https://aiposture.org/privacy/
 - Terms of service: https://aiposture.org/terms/
+
+## Project status
+
+AI Posture is maintained as a supporting framework within the PAICE.work PBC portfolio, not as a standalone product. The specification, schemas, validator, declaration format, and steward declaration are maintained. The pre-assessment is an experimental estimator; it is not evidence of adoption or validated predictive power. New product development is paused until a concrete application justifies it. See [INTENT.md](INTENT.md).
 
 ## Steward declaration
 
@@ -28,11 +32,11 @@ PAICE.work PBC uses EveryAILaw within the PAICE Legal Graph to follow legislativ
 
 ## Who this is for
 
-Governance, risk, and compliance leaders who need one defensible readiness score across people, infrastructure, and regulation — instead of three disconnected tools that never combine into a posture.
+Governance, risk, and compliance leaders, and the people they work with, who need a shared way to explain where combined AI readiness across people, infrastructure, and regulation is actually constrained.
 
 ## What problem it solves
 
-Organizations adopt AI across people, infrastructure, and regulation but have no single measure of combined readiness. AI Posture produces one governance score, bounded by the weakest vector, so the gap that actually limits you is visible.
+Readiness in people, infrastructure, and regulation is usually assessed separately, and averaging the results hides the gap that limits the whole. AI Posture treats the three as distinct vectors on a shared five-level model and bounds the combined posture by the weakest in-scope vector, so that constraint stays visible.
 
 ## Canonical URL
 
@@ -59,7 +63,7 @@ https://aiposture.org/
 - `docs/.well-known/assistant-guide.txt` — GuideCheck Human-Verifiable Assistant Guide profile artifact
 - `docs/.well-known/assistant-guide-manifest.json` — GuideCheck Level 4 sidecar manifest
 - `docs/spec/` — generated spec page (do not edit directly; run `npm run build`)
-- `docs/assess/` — client-side Bayesian adaptive self-assessment
+- `docs/assess/` — client-side Bayesian adaptive self-assessment (experimental)
 - `docs/assess/schema/` - JSON Schema for local assessment artifacts
 - `docs/.well-known/ai-posture-framework.json` - machine-readable framework profile
 - `docs/papers/` — papers section: the whitepaper landing page, the published whitepaper PDF, and its audio overview

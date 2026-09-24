@@ -1,10 +1,12 @@
 # AI Posture Roadmap
 
-Current roadmap for remaining pre-assessment work, and the source of truth for what remains as of 2026-06-01. The original product requirements are archived at [archive/PRD.md](archive/PRD.md); the framework specification is [SPEC.md](SPEC.md).
+Roadmap and history for AI Posture work. Since 2026-09-22 AI Posture is maintained as a supporting framework, not a standalone product (see [INTENT.md](INTENT.md) "Operating posture"). Shipped items below are history. Product items are paused until a proposal meets the INTENT reopen criteria. The original product requirements are archived at [archive/PRD.md](archive/PRD.md); the framework specification is [SPEC.md](SPEC.md).
 
 ## Current state
 
 The static site, canonical spec page, Bayesian adaptive pre-assessment, privacy page, terms page, OG image, result evidence checklist, verification handoff links, local JSON artifact, copyable summary, and browser print/save-PDF path are live. The optional delivered-artifact flow is also live: landing-page newsletter capture with double opt-in, on-request JSON artifact delivery by email, and the result-screen email field, all backed by the Cloudflare Worker at `api.aiposture.org`. Analytics QA is complete and the legal pages match deployed behavior.
+
+Next: find a concrete application of the framework (beneficiary, task, decision it informs, useful output) and document one clearly labelled illustrative worked example. This is exploration, not product investment.
 
 The v1.0.0 release shipped 2026-06-01: the spec is promoted to v1.0.0 (three-vector set locked) and the pre-assessment product, site, and agent surfaces all carry v1.0.0. The remaining roadmap is a native PDF decision (Item 3, deferred and non-blocking) and post-launch calibration work once real usage exists.
 
@@ -60,7 +62,7 @@ Acceptance criteria met:
 
 ### 3. Native PDF generation
 
-Status: partially covered by browser print/save-PDF. Native client-side PDF remains deferred.
+Status: partially covered by browser print/save-PDF. Native client-side PDF paused (2026-09-22 operating posture).
 
 PRD reference: email-delivered PDF artifact. Handoff note: jsPDF was planned for v1 but not wired.
 
@@ -141,7 +143,7 @@ Acceptance criteria met:
 
 Status: complete.
 
-Intent fit: strong. The INTENT document frames AI Posture as a working hypothesis under Measurement Authority and Calibration Compounding. A thin rationale layer makes those bets inspectable without making the core spec academic.
+Intent fit: strong. The INTENT document (at the time) framed AI Posture as a working hypothesis under Measurement Authority and Calibration Compounding, since replaced by Collaboration Compounding. A thin rationale layer makes those bets inspectable without making the core spec academic.
 
 Spec fit: strong if kept separate from SPEC.md. SPEC.md already contains the first principles. This note should explain the design assumptions behind those principles, not restate or expand the normative requirements.
 
@@ -329,7 +331,7 @@ Work when triggered:
 
 ### 11. Copy and semantic validation
 
-Status: open for v1.1.
+Status: open. Since 2026-09-22 also covers framework-first public copy that distinguishes the framework, the experimental pre-assessment, declarations and conformance checks, and demonstrated applications.
 
 PRD reference: level name semantic validation.
 
@@ -406,7 +408,7 @@ Work when triggered:
 
 ### 15. First 100 completions recalibration
 
-Status: waiting on usage.
+Status: passive. Triggers only if completions accrue; no effort is spent driving usage (2026-09-22 operating posture).
 
 PRD reference: likelihood tables are expert-elicited for v1, recalibration planned after 100 completed pre-assessments.
 
@@ -427,7 +429,7 @@ Acceptance criteria:
 
 ### 16. Annual recalibration
 
-Status: future scheduled work.
+Status: passive; runs only if the pre-assessment accrues usage worth reviewing.
 
 Work remaining:
 
@@ -440,6 +442,8 @@ Acceptance criteria:
 - Annual review outcome is documented in CHANGELOG.md.
 
 ## V2 backlog
+
+Paused. Items below reopen only through a proposal that meets the INTENT reopen criteria.
 
 ### 17. Shareable URL
 
