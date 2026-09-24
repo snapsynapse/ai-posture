@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.3 release - 2026-09-23 (prepared, not yet published)
+## v1.1.3 release - 2026-09-23
 
 - Reframed public copy framework-first following the 2026-09-22 portfolio disposition: AI Posture is maintained as a supporting framework, not a standalone product. Homepage title, descriptions, structured data, hero, and section copy no longer describe a unified governance or maturity score.
 - Homepage primary action now reads the framework; the pre-assessment is labelled an experimental estimator with an uncalibrated-likelihood caveat, on the homepage, the assessment page, and in llms.txt.
