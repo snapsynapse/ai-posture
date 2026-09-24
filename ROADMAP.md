@@ -500,6 +500,16 @@ Work remaining:
 - Review expected information gain behavior against larger banks.
 - Keep total assessment length within the PRD's low-friction user expectation.
 
+## Worker status (2026-09-23)
+
+Decision: keep the Worker as is under the 2026-09-22 operating posture. Remote D1 read-only check on 2026-09-23: newsletter 0 rows; assessments 2 rows, both 2026-05-28 03:06-03:07 UTC (consistent with launch delivery testing), none retaining email; rate_limit 2 rows. No real-user delivery or subscriber is on record.
+
+- No broadcast path exists; terms section 12 promises occasional updates. Add a send path with a per-message unsubscribe before any mailing.
+- Unsubscribe is email-only; the `unsubscribed` status has no route (see worker/README.md).
+- Retention purge is manual; the two records fall due 2029-05-28, or earlier if confirmed as test records.
+- Worker evidence is cited by the steward declaration (Infrastructure 3); withdrawal requires declaration review.
+- Resend send history and PostHog volumes were not checked.
+
 ## Explicit non-goals unless roadmap changes
 
 - Certification, seal, audit, or attestation.
