@@ -6,7 +6,7 @@ Roadmap and history for AI Posture work. Since 2026-09-22 AI Posture is maintain
 
 The static site, canonical spec page, Bayesian adaptive pre-assessment, privacy page, terms page, OG image, result evidence checklist, verification handoff links, local JSON artifact, copyable summary, and browser print/save-PDF path are live. The optional delivered-artifact flow is also live: landing-page newsletter capture with double opt-in, on-request JSON artifact delivery by email, and the result-screen email field, all backed by the Cloudflare Worker at `api.aiposture.org`. Analytics QA is complete and the legal pages match deployed behavior.
 
-Next: find a concrete application of the framework (beneficiary, task, decision it informs, useful output) and document one clearly labelled illustrative worked example. This is exploration, not product investment.
+Next: find a concrete application of the framework (beneficiary, task, decision it informs, useful output) and document one clearly labelled illustrative worked example. This is exploration, not product investment. First internal example: [worked example on the steward declaration](docs/research/worked-example-steward-declaration.md) (2026-09-23); an external case is still needed.
 
 The v1.0.0 release shipped 2026-06-01: the spec is promoted to v1.0.0 (three-vector set locked) and the pre-assessment product, site, and agent surfaces all carry v1.0.0. The remaining roadmap is a native PDF decision (Item 3, deferred and non-blocking) and post-launch calibration work once real usage exists.
 

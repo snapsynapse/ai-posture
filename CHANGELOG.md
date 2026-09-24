@@ -6,6 +6,7 @@
 - Homepage primary action now reads the framework; the pre-assessment is labelled an experimental estimator with an uncalibrated-likelihood caveat, on the homepage, the assessment page, and in llms.txt.
 - Papers page adds a dated note that the June 2026 whitepaper records the original design rationale.
 - Spec page social descriptions drop "One score"; regenerated from the build template. SPEC.md body unchanged.
+- Added a non-normative worked example applying the framework to the steward declaration.
 - Repo docs (INTENT v0.2.0, README, CLAUDE.md, ROADMAP) aligned to the same posture.
 - Site/package release version is 1.1.3; normative specification, declaration schema, criteria, scoring, steward declaration, and assistant guide are unchanged. The assistant guide manifest remains anchored to v1.1.2.
 
