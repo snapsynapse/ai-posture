@@ -2,7 +2,7 @@
 
 The Aggregated Intelligence Posture framework. A way to reason about AI readiness across people, infrastructure, and regulation, where the weakest area bounds the whole.
 
-Specification: stable (v1.1.1). Site/documentation release: v1.1.2. The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
+Specification: stable (v1.1.1). Site/documentation release: v1.1.3. The specification is at v1.1.1 with the three-vector set locked and the declaration format published. The landing page, pre-assessment, supporting legal pages, and agent surfaces are live.
 
 - Canonical site: https://aiposture.org/
 - Specification: [SPEC.md](SPEC.md)

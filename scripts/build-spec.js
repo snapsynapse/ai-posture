@@ -277,7 +277,7 @@ function renderPage(fm, title, sections) {
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Posture">
   <meta property="og:title" content="AI Posture Specification ${esc(version)}">
-  <meta property="og:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta property="og:description" content="The normative specification for the Aggregated Intelligence Posture framework. Three vectors. Bounded by the weakest.">
   <meta property="og:url" content="https://aiposture.org/spec/">
   <meta property="og:locale" content="en_US">
   <meta property="article:published_time" content="${esc(published)}T00:00:00Z">
@@ -294,7 +294,7 @@ function renderPage(fm, title, sections) {
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Posture Specification ${esc(version)}">
-  <meta name="twitter:description" content="The normative specification for the Aggregated Intelligence Posture framework. One score. Three vectors. Bounded by the weakest.">
+  <meta name="twitter:description" content="The normative specification for the Aggregated Intelligence Posture framework. Three vectors. Bounded by the weakest.">
   <meta name="twitter:image" content="https://aiposture.org/imgs/og.png?v=2">
 
   <script type="application/ld+json">

@@ -43,7 +43,7 @@ date_modified: "2026-09-05"
 # Versioning
 version: v1.1.1
 canonical_file: SPEC.md
-site_release_candidate: v1.1.2
+site_release_candidate: v1.1.3
 
 # Theme
 theme_accent: "#4f46e5"

@@ -22,7 +22,7 @@ Repo: https://github.com/snapsynapse/ai-posture (steward: PAICE.work PBC)
 The published specification is v1.1.1. Check `SPEC.md` and `CHANGELOG.md` for
 version and release history; inspect Git for current checkout and remote state.
 `ROADMAP.md` tracks remaining work. The steward declaration is owner approved; delivery and outreach remain separate
-from local preparation. Site release v1.1.2 retains specification v1.1.1.
+from local preparation. Site release v1.1.3 retains specification v1.1.1.
 
 ## Tech stack
 
