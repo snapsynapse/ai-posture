@@ -25,7 +25,7 @@ Delivered:
 - Cloudflare D1 stores subscriber rows with status (`pending` / `confirmed`).
 - Resend delivers the confirmation email from `noreply@aiposture.org`; double opt-in enforced server-side.
 - Result-page artifact email field can prefill from the landing-page sessionStorage value once that field exists (Item 4).
-- PostHog `email_captured` event fires after successful submit; the address itself is never sent to PostHog.
+- The landing page calls PostHog `email_captured` after successful submit, with no address. Correction 2026-09-23: PostHog is not loaded on the landing page, so this event has never been recorded.
 - Privacy policy and terms updated to disclose Resend as a processor and Cloudflare D1 as the subscription store, with deletion path via privacy@paice.work.
 
 Acceptance criteria met:
@@ -125,7 +125,7 @@ Acceptance criteria:
 
 Status: shipped 2026-06-01.
 
-Live events: `$pageview`, `assessment_started`, `question_answered`, `assessment_completed`, `handoff_clicked`, `delivery_requested`, `pdf_requested`, and `email_captured`.
+Disclosed events: `$pageview`, `assessment_started`, `question_answered`, `assessment_completed`, `handoff_clicked`, `delivery_requested`, `pdf_requested`, and `email_captured`. Correction 2026-09-23: PostHog initializes only on the pre-assessment page, so `email_captured` and landing-page `$pageview` are not recorded. The privacy page states this.
 
 Delivered:
 
@@ -136,7 +136,7 @@ Delivered:
 
 Acceptance criteria met:
 
-- Analytics payloads match the privacy policy event list exactly (8 events).
+- Analytics payloads stay within the privacy policy event list (8 events; two are not currently recorded, see correction above).
 - Completion, abandonment, handoff, and artifact-request metrics are derivable from `assessment_started` vs `assessment_completed`, `handoff_clicked`, and `delivery_requested` without session stitching.
 
 ### 7. Design basis and open questions note

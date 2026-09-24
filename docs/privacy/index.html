@@ -148,6 +148,7 @@
       <li><code>pdf_requested</code></li>
       <li><code>handoff_clicked</code> (records the destination URL, not who clicked)</li>
     </ul>
+    <p>Analytics currently loads only on the pre-assessment page. The landing page loads no analytics, so <code>email_captured</code> and landing-page <code>$pageview</code> events are not currently recorded.</p>
     <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, and rage-click detection are disabled.</p>
 
     <h3>Completed-assessment record</h3>
