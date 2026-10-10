@@ -124,7 +124,13 @@ Last strategic review recorded: 2026-09-22 (portfolio disposition; see paice-fou
 - Pre-assessment PRD (archived): [archive/PRD.md](archive/PRD.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 
+## Exceptions to Repo Standards
+
+- Cloudflare edge blocks AI training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider return 403 on / and /llms.txt, checked by curl 2026-09-23) while docs/robots.txt explicitly allows them. Live robots.txt is byte-identical to docs/robots.txt and /.well-known/ai-posture.json returns 200 to all agents; search and user-fetch agents (OAI-SearchBot, ChatGPT-User, Claude-User, Claude-SearchBot, PerplexityBot, Googlebot and others) get 200. The pattern matches Cloudflare "Block AI training bots"; the owner dashboard setting was not inspected. Decision (Sam, 2026-09-23): keep the edge block as is for now and revisit later; robots.txt unchanged.
+
 ## Changelog
+
+- 2026-10-09: Recorded the Cloudflare edge-block exception to Repo Standards; processed the 2026-09-05 production-review handoff.
 
 - 2026-09-23 v0.2.0 - Applied the 2026-09-22 portfolio disposition: supporting framework, not a standalone product bet. Added Operating posture and Reopen criteria. Replaced Calibration Compounding with Collaboration Compounding per portfolio INTENT. Recalibration triggers made passive. No normative or specification change.
 
