@@ -296,6 +296,8 @@ Prepared locally:
 
 Declaration wording and profile are owner approved. The owner authorized staging, commit, push, tag, and release for v1.1.2. CAISI outreach, Siteline implementation, named comparisons, portfolio-wide declarations, and maintenance protocols are deferred from this tranche.
 
+CAISI outreach was dropped by owner decision on 2026-10-11. The 2026-06-09 draft note was not sent and has been discarded. Reopen only on a new owner decision.
+
 The declaration format is shipped, but the framework steward has not yet published a real declaration at `https://aiposture.org/.well-known/ai-posture.json`. Adoption should begin with inspectable, decentralized declarations rather than a centralized registry.
 
 Work remaining:
