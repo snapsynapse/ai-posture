@@ -305,7 +305,7 @@ Work remaining:
 - Owner approval obtained for the declaration profile and regulatory acknowledgment.
 - Publish the first self-reviewed declaration at the normative well-known path and validate it against the v1 schema and semantic checks.
 - Open small, independently reviewable declaration tasks for suitable portfolio sites only after the steward declaration is live.
-- File the cross-repository Siteline detection proposal as informational discovery: detect declarations, do not alter a site's score, and do not centralize assertion custody.
+- Siteline detection proposal (2026-06-10 draft): dropped as superseded by owner decision on 2026-10-11. Not filed.
 - Base any launch or distribution copy on current, verified adoption evidence. Do not reuse the unverified June 2026 novelty claim.
 
 Acceptance criteria:
