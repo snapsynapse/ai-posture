@@ -1,0 +1,74 @@
+{
+  "type": "AI Posture Pre-Assessment Result",
+  "version": "1.0.0",
+  "generated_at": "2026-10-26T12:00:00Z",
+  "source": "https://aiposture.org/assess/",
+  "estimate_label": "estimated AI Posture",
+  "scope": {
+    "label": null
+  },
+  "aggregate": {
+    "level": 3,
+    "level_name": "Integrating"
+  },
+  "constraining_vectors": [
+    "Infrastructure",
+    "Regulation",
+    "People"
+  ],
+  "vectors": {
+    "Infrastructure": {
+      "in_scope": true,
+      "level": 3,
+      "level_name": "Integrating",
+      "posterior": [
+        0.00051,
+        0.018917,
+        0.121361,
+        0.7094,
+        0.129142,
+        0.020669
+      ],
+      "evidence_checklist": [
+        "Remediations made from scan findings.",
+        "Machine-readable declarations deployed (llms.txt, structured data, agent-legible identifiers).",
+        "Follow-up scan confirms change."
+      ]
+    },
+    "Regulation": {
+      "in_scope": true,
+      "level": 3,
+      "level_name": "Integrating",
+      "posterior": [
+        0.000005,
+        0.004397,
+        0.053208,
+        0.593544,
+        0.34867,
+        0.000175
+      ],
+      "evidence_checklist": [
+        "Obligations mapped to controls.",
+        "At least primary jurisdiction fully controlled.",
+        "Statute-to-control traceability maintained."
+      ]
+    },
+    "People": {
+      "in_scope": true,
+      "level": 3,
+      "level_name": "Integrating",
+      "posterior": [
+        0.000001,
+        0.000834,
+        0.017384,
+        0.648993,
+        0.332285,
+        0.000502
+      ],
+      "evidence_checklist": [
+        "At least one policy or practice change traceable to baseline assessment data."
+      ]
+    }
+  },
+  "notice": "This is an estimate, not a verified assertion."
+}

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-spec.js && node scripts/build-criteria.js",
-    "test": "node --test"
+    "test": "node --test",
+    "test:shacl": "python3 tests/shacl_runtime.py"
   }
 }

@@ -106,6 +106,86 @@ test('EARL validator requires an evidence pointer on a passed assertion', () => 
   assert.ok(res.errors.some(m => /dct:source evidence pointer/.test(m)), res.errors.join('; '));
 });
 
+test('SEC-005 EARL rejects contradictory N/A scope and an inflated minimum', () => {
+  const e = read(EARL);
+  e.assertion[2].result.outcome = 'earl:inapplicable';
+  delete e.assertion[2].result.level;
+  e.postureLevel = 3;
+  e.constrainingVector = ['Infrastructure'];
+  assert.ok(validateEarl(e).errors.length > 0);
+  const reverse = read(EARL);
+  reverse.assertion[2].inScope = false;
+  assert.ok(validateEarl(reverse).errors.length > 0);
+});
+
+test('SEC-005 EARL validates mixed scope and all-N/A aggregate fields', () => {
+  const e = read(EARL);
+  function exclude(a) { a.inScope = false; a.result.outcome = 'earl:inapplicable'; delete a.result.level; delete a.result.levelName; delete a.result.source; }
+  exclude(e.assertion[2]);
+  e.postureLevel = 3;
+  e.postureLevelName = 'Integrating';
+  e.constrainingVector = ['Infrastructure'];
+  assert.deepEqual(validateEarl(e).errors, []);
+  e.assertion.forEach(exclude);
+  assert.ok(validateEarl(e).errors.length > 0);
+  delete e.postureLevel;
+  delete e.postureLevelName;
+  delete e.constrainingVector;
+  assert.deepEqual(validateEarl(e).errors, []);
+  e.postureLevel = null;
+  e.constrainingVector = [];
+  assert.deepEqual(validateEarl(e).errors, []);
+  e.constrainingVector = ['People'];
+  assert.ok(validateEarl(e).errors.length > 0);
+});
+
+test('SEC-006 EARL rejects malformed input with errors rather than throwing', () => {
+  for (const value of [null, 1, [], 'report', { assertion: [null] }]) {
+    assert.ok(validateEarl(value).errors.length > 0);
+  }
+  for (const value of [null, [], 'assertion']) {
+    const e = read(EARL); e.assertion[0] = value;
+    assert.ok(validateEarl(e).errors.length > 0);
+  }
+});
+
+test('SEC-006 EARL requires report provenance, typed scope, IRIs and nonempty evidence', () => {
+  const mutations = [
+    e => { delete e.assertedBy; }, e => { delete e.date; },
+    e => { e.subject = { nonsense: true }; }, e => { e.assertedBy = 123; },
+    e => { e.assertion[0].assertedBy = 123; }, e => { e.assertion[0].subject = false; },
+    e => { delete e.assertion[0].inScope; }, e => { e.assertion[0].inScope = 'true'; },
+    e => { e.assertion[0].result.source = []; }, e => { e.assertion[0].result.source = [false]; },
+    e => { e.assertion[0].result.source = ['https://acme.example/good', 'not an IRI']; },
+    e => { e.assertion[0].result.source = 'https://acme.example/has space'; },
+    e => { e.assertion[0].result.source = 'https://acme.example/back\\slash'; },
+    e => { e.assertion[0].result.source = 'https://acme.example/%zz'; },
+    e => { e.assertion[0].result.atLevelSince = '2026-02-31'; },
+    e => { e.assertion[0].result = []; }, e => { e.assertion[0].test = 'not an IRI'; }
+  ];
+  for (const mutate of mutations) {
+    const e = read(EARL); mutate(e);
+    assert.ok(validateEarl(e).errors.length > 0, mutate.toString());
+  }
+});
+
+test('SEC-006 EARL criterion IRIs must match the declared vector and level', () => {
+  for (const iri of ['https://aiposture.org/criteria/v1/regulation/4', 'https://aiposture.org/criteria/v1/people/1', 'https://unrelated.example/anything']) {
+    const e = read(EARL); e.assertion[0].test = iri;
+    assert.ok(validateEarl(e).errors.some(error => /criterion IRI/.test(error)));
+  }
+});
+
+test('SEC-006 EARL accepts string and JSON-LD IRI references and evidence arrays', () => {
+  const e = read(EARL);
+  e.subject = e.subject['@id'];
+  e.assertedBy = e.assertedBy['@id'];
+  e.assertion[0].subject = { '@id': e.subject };
+  e.assertion[0].assertedBy = { '@id': e.assertedBy };
+  e.assertion[0].result.source = ['https://acme.example/a', { '@id': 'urn:example:evidence' }];
+  assert.deepEqual(validateEarl(e).errors, []);
+});
+
 test('criterion IRI registry covers three vectors x five levels', () => {
   const reg = read('docs/criteria/v1/index.json');
   assert.equal(reg.criteria.length, 15);

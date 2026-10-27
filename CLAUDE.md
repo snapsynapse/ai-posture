@@ -31,9 +31,12 @@ from local preparation. Site release v1.1.3 retains specification v1.1.1.
 - `worker/` — a separate Cloudflare Worker (Wrangler, `type: module`) for newsletter
   signup (Resend, double opt-in) and assessment-artifact delivery, backed by D1.
 - Tests: Node's built-in `node --test` (no Jest/Mocha).
-- CI: GitHub Actions deploys `docs/` to GitHub Pages on push to `main`
-  (`.github/workflows/pages.yml`). There is no CI job that runs `npm test` —
-  test execution is manual/local only.
+- CI: `.github/workflows/pages.yml` locally prepares Node 26 and Python 3.12 tests
+  for pull requests and main pushes. Its main-only Pages deployment depends on
+  root, Worker and SHACL runtime suites. See README for SHACL test setup. This
+  workflow has not been pushed or executed remotely.
+  Before publishing, reconcile Pages source and required-check settings; see
+  `audits/2026-10-26-low-remediation.md` for the legacy branch-source gap.
 
 ## Directory layout
 
@@ -100,9 +103,9 @@ npm test                         # node --test
 
 ## Outstanding / known gaps
 
-- Worker: unsubscribe path is marked TBD (Resend-managed list link) in `worker/README.md`.
-- No CI gate runs the test suite (`npm test`) automatically — only GitHub Pages deploy
-  is automated. Consider this when validating changes.
+- Pages was last observed using legacy main `/docs` publication, which can bypass
+  the locally prepared Actions test dependency. Switching its source and requiring
+  the test check remain separate external configuration work, not performed here.
 - Recalibration of pre-assessment likelihood tables triggers at "first 100
   completions" and annually thereafter (see `INTENT.md`). Passive since 2026-09-22;
   do not drive completions to reach it.

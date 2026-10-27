@@ -1,0 +1,3 @@
+# Test-only RDF parser and SHACL engine; no site or Worker runtime dependency.
+pyshacl==0.30.1
+rdflib==7.6.0

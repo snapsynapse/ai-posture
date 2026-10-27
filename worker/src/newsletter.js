@@ -3,9 +3,11 @@
 
 import { json } from './index.js';
 import { sendEmail } from './resend.js';
-import { rateLimit, clientIp } from './ratelimit.js';
+import { rateLimit, clientIp, reserveMail } from './ratelimit.js';
+import { readJsonBody } from './request.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONFIRM_TTL_SECONDS = 24 * 3600;
 
 export function isValidEmail(input) {
   if (typeof input !== 'string') return false;
@@ -35,12 +37,9 @@ export async function handleNewsletterSubscribe(request, env, origin) {
     );
   }
 
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ error: 'invalid_json' }, { status: 400 }, origin);
-  }
+  const parsed = await readJsonBody(request, 1024, ['email'], ['source']);
+  if (parsed.error) return json({ error: parsed.error }, { status: parsed.status }, origin);
+  const body = parsed.body;
 
   if (!isValidEmail(body?.email)) {
     return json({ error: 'invalid_email' }, { status: 400 }, origin);
@@ -50,6 +49,22 @@ export async function handleNewsletterSubscribe(request, env, origin) {
   const source = typeof body.source === 'string' ? body.source.slice(0, 64) : null;
   const now = Math.floor(Date.now() / 1000);
 
+  let budget;
+  try {
+    budget = await reserveMail(env, 'newsletter', email);
+  } catch {
+    return json({ error: 'service_unavailable' }, { status: 503 }, origin);
+  }
+  if (!budget.allowed) {
+    if (budget.reason === 'recipient') return json({ ok: true, status: 'pending' }, {}, origin);
+    return json({ error: 'rate_limited' }, { status: 429, headers: { 'Retry-After': '3600' } }, origin);
+  }
+
+  // Expired pending subscriptions do not keep an indefinitely usable token.
+  // Cleanup is opportunistic; confirmation independently enforces the deadline.
+  await env.DB.prepare("DELETE FROM newsletter WHERE status = 'pending' AND created_at <= ?")
+    .bind(now - CONFIRM_TTL_SECONDS).run();
+
   // Read existing row to decide whether a confirmation email is actually needed.
   // We do NOT leak that information back to the caller — response is uniform.
   const existing = await env.DB
@@ -58,27 +73,34 @@ export async function handleNewsletterSubscribe(request, env, origin) {
     .first();
 
   if (existing?.status !== 'confirmed') {
-    const token = generateToken();
-    await env.DB
+    const pending = await env.DB
       .prepare(
         `INSERT INTO newsletter (email, status, confirm_token, created_at, source)
          VALUES (?, 'pending', ?, ?, ?)
          ON CONFLICT(email) DO UPDATE SET
-           confirm_token = excluded.confirm_token,
-           created_at    = excluded.created_at,
+           confirm_token = CASE WHEN newsletter.status = 'pending' AND newsletter.confirm_token IS NOT NULL
+                                THEN newsletter.confirm_token ELSE excluded.confirm_token END,
+           created_at    = CASE WHEN newsletter.status = 'pending' AND newsletter.confirm_token IS NOT NULL
+                                THEN newsletter.created_at ELSE excluded.created_at END,
            source        = excluded.source,
-           status        = 'pending'`
+           status        = 'pending'
+         WHERE newsletter.status != 'confirmed'
+         RETURNING confirm_token, created_at`
       )
-      .bind(email, token, now, source)
-      .run();
+      .bind(email, generateToken(), now, source)
+      .first();
 
-    const confirmUrl = `${env.API_ORIGIN}/api/newsletter/confirm?t=${token}`;
+    // A confirmation may have raced the earlier SELECT. Never reset it to pending.
+    if (!pending) return json({ ok: true, status: 'pending' }, {}, origin);
+
+    const confirmUrl = `${env.API_ORIGIN}/api/newsletter/confirm?t=${pending.confirm_token}`;
+    const expiresAt = new Date((pending.created_at + CONFIRM_TTL_SECONDS) * 1000).toISOString();
 
     await sendEmail(env, {
       to: email,
       subject: 'Confirm your AI Posture subscription',
-      text: confirmText(confirmUrl),
-      html: confirmHtml(confirmUrl),
+      text: confirmText(confirmUrl, expiresAt),
+      html: confirmHtml(confirmUrl, expiresAt),
     });
   }
 
@@ -88,50 +110,48 @@ export async function handleNewsletterSubscribe(request, env, origin) {
 
 export async function handleNewsletterConfirm(url, env) {
   const token = url.searchParams.get('t');
-  if (!token || token.length !== 64) {
+  if (!token || !/^[0-9a-f]{64}$/.test(token)) {
     return htmlPage('Invalid confirmation link', 'This link is not valid.');
   }
 
-  const row = await env.DB
-    .prepare('SELECT email, status FROM newsletter WHERE confirm_token = ?')
-    .bind(token)
-    .first();
-
-  if (!row) {
-    return htmlPage('Link expired or already used', 'Try subscribing again from the site.');
-  }
-
-  if (row.status === 'confirmed') {
-    return htmlPage('Already confirmed', 'You are subscribed. Nothing more to do.');
-  }
-
   const now = Math.floor(Date.now() / 1000);
-  await env.DB
+  await env.DB.prepare("DELETE FROM newsletter WHERE confirm_token = ? AND status = 'pending' AND created_at <= ?")
+    .bind(token, now - CONFIRM_TTL_SECONDS).run();
+  // Check freshness and consume the token in one statement, including races.
+  const confirmed = await env.DB
     .prepare(
       `UPDATE newsletter
          SET status = 'confirmed', confirmed_at = ?, confirm_token = NULL
-         WHERE confirm_token = ?`
+         WHERE confirm_token = ? AND status = 'pending' AND created_at > ? AND created_at <= ?
+         RETURNING 1 AS confirmed`
     )
-    .bind(now, token)
-    .run();
+    .bind(now, token, now - CONFIRM_TTL_SECONDS, now)
+    .first();
+
+  if (!confirmed) {
+    return htmlPage('Link expired or already used', 'Try subscribing again from the site.');
+  }
 
   return htmlPage('Subscription confirmed', 'You will get AI Posture updates from now on.');
 }
 
-function confirmText(url) {
+function confirmText(url, expiresAt) {
   return [
     'Confirm your AI Posture subscription by opening this link:',
     '',
     url,
     '',
+    `This link expires at ${expiresAt} (UTC). If it expires, subscribe again.`,
+    '',
     'If you did not request this, ignore this email and you will not be subscribed.',
   ].join('\n');
 }
 
-function confirmHtml(url) {
+function confirmHtml(url, expiresAt) {
   return `<!doctype html><html><body style="font-family:system-ui,sans-serif;line-height:1.5;max-width:560px;margin:2rem auto;padding:0 1rem;color:#111">
 <h2 style="margin-top:0">Confirm your AI Posture subscription</h2>
 <p>Click the link below to confirm.</p>
+<p>This link expires at ${expiresAt} (UTC). If it expires, subscribe again.</p>
 <p><a href="${url}" style="display:inline-block;padding:.6rem 1rem;background:#111;color:#fff;text-decoration:none;border-radius:4px">Confirm subscription</a></p>
 <p style="font-size:.85rem;color:#666">Or paste this URL into your browser:<br><code>${url}</code></p>
 <p style="font-size:.85rem;color:#666">If you did not request this, ignore the email and you will not be subscribed.</p>

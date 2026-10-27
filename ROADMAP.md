@@ -39,6 +39,8 @@ Acceptance criteria met:
 
 Status: shipped 2026-05-28 (JSON only; PDF email delivery deferred to Item 3).
 
+Local review update, 2026-10-26: the six-medium audit remediation prepares send-before-store delivery without persistent email, recipient/global sending controls, and bounded JSON parsing. These changes and matching privacy copy are not deployed. See `audits/2026-10-26-medium-remediation.md` and the Worker rollout note. The delivered behavior below records the prior implementation, not verification of the local changes in production.
+
 PRD reference: optional email-delivered PDF and JSON artifact, email dissociated after delivery, per-run record stored under a random opaque ID.
 
 Delivered:

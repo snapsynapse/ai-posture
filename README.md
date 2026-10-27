@@ -85,6 +85,17 @@ To run the assessment test suite:
 ```
 npm test
 ```
+The prepared Pages workflow runs root, Worker and SHACL runtime tests on pull requests and main pushes, and requires success before its main-only deploy job. It uses Node 26 and Python 3.12. The Node suites need no dependency installation; SHACL uses the pinned test dependencies in `tests/requirements-shacl.txt`. Local `.agents` configuration is optional in clean checkouts. GitHub Pages source and required-check settings must be reconciled before relying on this workflow as the only publication path; see [local security remediation](audits/2026-10-26-low-remediation.md).
+
+To install and run the separate SHACL runtime suite in an ignored local Python environment (Python 3.9 or later):
+
+Literal
+```
+python3 -m venv .venv
+.venv/bin/python -m pip install -r tests/requirements-shacl.txt
+PATH="$PWD/.venv/bin:$PATH" npm run test:shacl
+```
+This suite executes the published shapes, checks Meta-SHACL and compares representative aggregate decisions with the JavaScript validator. Missing dependencies or a validator error fail the command; these checks are not silently skipped by the Node suites.
 
 To validate a declaration or EARL report:
 

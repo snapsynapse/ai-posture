@@ -24,6 +24,14 @@ apos:PostureReportShape
     sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
   ] ;
   sh:property [
+    sh:path earl:assertedBy ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path dct:date ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ;
+  ] ;
+  sh:property [
     sh:path apos:nextReview ;
     sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
   ] ;
@@ -31,6 +39,10 @@ apos:PostureReportShape
     sh:path apos:postureLevel ;
     sh:maxCount 1 ; sh:datatype xsd:integer ;
     sh:minInclusive 1 ; sh:maxInclusive 5 ;
+  ] ;
+  sh:property [
+    sh:path apos:postureLevelName ;
+    sh:maxCount 1 ; sh:datatype xsd:string ;
   ] ;
   sh:property [
     sh:path apos:constrainingVector ;
@@ -41,8 +53,8 @@ apos:PostureReportShape
     sh:minCount 1 ;
     sh:node apos:AssertionShape ;
   ] ;
-  # Weakest-link coherence: postureLevel must equal the minimum level over
-  # in-scope assertions.
+  # Group by report so multiple reports in one graph keep separate minima.
+  # NOT EXISTS also rejects an omitted aggregate when assertions are in scope.
   sh:sparql [
     sh:message "postureLevel must equal the minimum apos:level over in-scope assertions (weakest-link rule)." ;
     sh:prefixes apos: ;
@@ -50,16 +62,66 @@ apos:PostureReportShape
       PREFIX apos: <https://aiposture.org/ns#>
       PREFIX earl: <http://www.w3.org/ns/earl#>
       SELECT $this WHERE {
-        $this apos:postureLevel ?declared .
         {
-          SELECT (MIN(?lvl) AS ?computed) WHERE {
+          SELECT $this (MIN(?lvl) AS ?computed) WHERE {
             $this apos:assertion ?a .
             ?a apos:inScope true .
             ?a earl:result ?r .
             ?r apos:level ?lvl .
+          } GROUP BY $this
+        }
+        FILTER NOT EXISTS { $this apos:postureLevel ?computed . }
+      }
+    """ ;
+  ] ;
+  sh:sparql [
+    sh:message "constrainingVector must name exactly the in-scope vectors at the aggregate minimum." ;
+    sh:select """
+      PREFIX apos: <https://aiposture.org/ns#>
+      PREFIX earl: <http://www.w3.org/ns/earl#>
+      SELECT DISTINCT $this WHERE {
+        $this apos:postureLevel ?minimum .
+        {
+          $this apos:assertion ?a .
+          ?a apos:inScope true ; apos:vector ?vector ; earl:result/apos:level ?minimum .
+          FILTER NOT EXISTS { $this apos:constrainingVector ?vector . }
+        } UNION {
+          $this apos:constrainingVector ?vector .
+          FILTER NOT EXISTS {
+            $this apos:assertion ?a .
+            ?a apos:inScope true ; apos:vector ?vector ; earl:result/apos:level ?minimum .
           }
         }
-        FILTER (?declared != ?computed)
+      }
+    """ ;
+  ] ;
+  sh:sparql [
+    sh:message "postureLevelName must match the aggregate level when present." ;
+    sh:select """
+      PREFIX apos: <https://aiposture.org/ns#>
+      SELECT $this WHERE {
+        $this apos:postureLevel ?level ; apos:postureLevelName ?name .
+        BIND (IF(?level = 1, "Perceiving",
+              IF(?level = 2, "Assessing",
+              IF(?level = 3, "Integrating",
+              IF(?level = 4, "Calibrating", "Engineering")))) AS ?expected)
+        FILTER (?name != ?expected)
+      }
+    """ ;
+  ] ;
+  sh:sparql [
+    sh:message "All-N/A reports must omit postureLevel and constrainingVector; postureLevelName must be absent or N/A." ;
+    sh:select """
+      PREFIX apos: <https://aiposture.org/ns#>
+      SELECT DISTINCT $this WHERE {
+        $this apos:assertion ?assertion .
+        FILTER NOT EXISTS { $this apos:assertion/apos:inScope true . }
+        { $this apos:postureLevel ?level . }
+        UNION { $this apos:constrainingVector ?vector . }
+        UNION {
+          $this apos:postureLevelName ?name .
+          FILTER (?name != "N/A")
+        }
       }
     """ ;
   ] .
@@ -81,6 +143,10 @@ apos:AssertionShape
     sh:in ( "People" "Infrastructure" "Regulation" ) ;
   ] ;
   sh:property [
+    sh:path apos:inScope ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ;
+  ] ;
+  sh:property [
     sh:path earl:test ;
     sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
   ] ;
@@ -88,6 +154,30 @@ apos:AssertionShape
     sh:path earl:result ;
     sh:minCount 1 ; sh:maxCount 1 ;
     sh:node apos:ResultShape ;
+  ] ;
+  sh:or (
+    [ sh:property [ sh:path apos:inScope ; sh:hasValue true ] ;
+      sh:property [ sh:path earl:result ; sh:node [
+        sh:property [ sh:path apos:level ; sh:minCount 1 ] ;
+        sh:property [ sh:path earl:outcome ; sh:not [ sh:in ( earl:inapplicable ) ] ]
+      ] ] ]
+    [ sh:property [ sh:path apos:inScope ; sh:hasValue false ] ;
+      sh:property [ sh:path earl:result ; sh:node [
+        sh:property [ sh:path earl:outcome ; sh:hasValue earl:inapplicable ] ;
+        sh:property [ sh:path apos:level ; sh:maxCount 0 ]
+      ] ] ]
+  ) ;
+  sh:sparql [
+    sh:message "An in-scope test must match the published vector/level criterion IRI." ;
+    sh:select """
+      PREFIX apos: <https://aiposture.org/ns#>
+      PREFIX earl: <http://www.w3.org/ns/earl#>
+      SELECT $this WHERE {
+        $this apos:inScope true ; apos:vector ?vector ; earl:test ?test ; earl:result ?result .
+        ?result apos:level ?level .
+        FILTER (STR(?test) != CONCAT("https://aiposture.org/criteria/v1/", LCASE(STR(?vector)), "/", STR(?level)))
+      }
+    """ ;
   ] .
 
 apos:ResultShape
@@ -109,6 +199,11 @@ apos:ResultShape
   # Evidence pointer: a passed assertion must resolve to an inspectable artifact.
   sh:property [
     sh:path dct:source ;
-    sh:minCount 1 ; sh:nodeKind sh:IRI ;
+    sh:nodeKind sh:IRI ;
     sh:message "A passed AI Posture assertion must carry at least one dct:source evidence pointer." ;
-  ] .
+  ] ;
+  sh:or (
+    [ sh:property [ sh:path earl:outcome ; sh:hasValue earl:passed ] ;
+      sh:property [ sh:path dct:source ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path earl:outcome ; sh:not [ sh:in ( earl:passed ) ] ] ]
+  ) .

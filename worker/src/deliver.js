@@ -1,11 +1,11 @@
 // Artifact-delivery handler.
-// Accepts { email, payload } from the result page, stores a per-run record under
-// an opaque ID, sends the JSON artifact via Resend, then nulls the email column
-// so the stored record carries no direct identifier.
+// Accepts { email, payload }, sends via Resend, then stores an anonymous record.
+// Delivery email exists only in the active request, never in the assessment row.
 
 import { json } from './index.js';
 import { sendEmail } from './resend.js';
-import { rateLimit, clientIp } from './ratelimit.js';
+import { rateLimit, clientIp, reserveMail } from './ratelimit.js';
+import { readJsonBody } from './request.js';
 import { isValidEmail, normalizeEmail, generateToken } from './newsletter.js';
 
 const MAX_PAYLOAD_BYTES = 32 * 1024; // 32 KiB — comfortably above any real artifact
@@ -108,6 +108,37 @@ function isValidVectors(value) {
   return VECTOR_NAMES.every((vector) => isValidVectorResult(value[vector]));
 }
 
+function isCoherentEstimate(payload) {
+  const inScope = [];
+  // The deployed 1.0.0 engine included slot-zero probability in otherwise valid
+  // in-scope estimates. Preserve those clients without relaxing other checks.
+  const legacyPosterior = payload.version === '1.0.0';
+  for (const name of VECTOR_NAMES) {
+    const vector = payload.vectors[name];
+    // Six probabilities rounded to six decimals can lose up to 3e-6 total mass.
+    const mass = vector.posterior.reduce((sum, value) => sum + value, 0);
+    if (Math.abs(mass - 1) > 3e-6 + 1e-12) return false;
+    if (!vector.in_scope) {
+      if (vector.level !== null || vector.level_name !== 'N/A' ||
+          vector.posterior[0] !== 1 || vector.posterior.slice(1).some(value => value !== 0) ||
+          vector.evidence_checklist.length !== 0) return false;
+    } else {
+      if (vector.level === null || vector.level_name !== LEVEL_NAMES[vector.level]) return false;
+      if (!legacyPosterior && vector.posterior[0] !== 0) return false;
+      // Export rounding can tie modes. Accept any tied maximum, not just the first.
+      if (vector.posterior[vector.level] !== Math.max(...vector.posterior)) return false;
+      inScope.push(name);
+    }
+  }
+  if (inScope.length === 0) {
+    return payload.aggregate.level === null && payload.aggregate.level_name === 'N/A' && payload.constraining_vectors.length === 0;
+  }
+  const minimum = Math.min(...inScope.map(name => payload.vectors[name].level));
+  const expected = inScope.filter(name => payload.vectors[name].level === minimum).sort();
+  return payload.aggregate.level === minimum && payload.aggregate.level_name === LEVEL_NAMES[minimum] &&
+    JSON.stringify(payload.constraining_vectors.slice().sort()) === JSON.stringify(expected);
+}
+
 export function isValidPayload(p) {
   return isPlainObject(p) &&
     hasExactKeys(p, TOP_LEVEL_KEYS) &&
@@ -121,7 +152,8 @@ export function isValidPayload(p) {
     isValidAggregate(p.aggregate) &&
     isValidConstrainingVectors(p.constraining_vectors) &&
     isValidVectors(p.vectors) &&
-    p.notice === 'This is an estimate, not a verified assertion.';
+    p.notice === 'This is an estimate, not a verified assertion.' &&
+    isCoherentEstimate(p);
 }
 
 export function generateRunId() {
@@ -143,12 +175,9 @@ export async function handleDeliver(request, env, origin) {
     );
   }
 
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ error: 'invalid_json' }, { status: 400 }, origin);
-  }
+  const parsed = await readJsonBody(request, MAX_PAYLOAD_BYTES + 1024, ['email', 'payload']);
+  if (parsed.error) return json({ error: parsed.error }, { status: parsed.status }, origin);
+  const body = parsed.body;
 
   if (!isValidEmail(body?.email)) {
     return json({ error: 'invalid_email' }, { status: 400 }, origin);
@@ -163,16 +192,17 @@ export async function handleDeliver(request, env, origin) {
   }
 
   const email = normalizeEmail(body.email);
+  let budget;
+  try {
+    budget = await reserveMail(env, 'deliver', email);
+  } catch {
+    return json({ error: 'service_unavailable' }, { status: 503 }, origin);
+  }
+  if (!budget.allowed) {
+    return json({ error: 'rate_limited' }, { status: 429, headers: { 'Retry-After': budget.reason === 'recipient' ? '600' : '3600' } }, origin);
+  }
   const runId = generateRunId();
   const now = Math.floor(Date.now() / 1000);
-
-  await env.DB
-    .prepare(
-      `INSERT INTO assessments (run_id, created_at, email, payload)
-       VALUES (?, ?, ?, ?)`
-    )
-    .bind(runId, now, email, serialized)
-    .run();
 
   const attachment = {
     filename: 'ai-posture-estimate.json',
@@ -187,18 +217,20 @@ export async function handleDeliver(request, env, origin) {
       html: deliveryHtml(runId, body.payload),
       attachments: [attachment],
     });
-  } catch (err) {
-    // Delivery failed. Per PRD acceptance criteria, do not retain a delivery-failed
-    // record with the email attached. Remove the row so no stale PII is held.
-    await env.DB.prepare('DELETE FROM assessments WHERE run_id = ?').bind(runId).run();
+  } catch {
+    // No assessment exists yet, so failure cannot strand email or a partial row.
     return json({ error: 'delivery_failed' }, { status: 502 }, origin);
   }
 
-  // Dissociate email from the stored record now that delivery succeeded.
-  await env.DB
-    .prepare('UPDATE assessments SET email = NULL, delivered_at = ? WHERE run_id = ?')
-    .bind(now, runId)
-    .run();
+  try {
+    await env.DB.prepare(
+      `INSERT INTO assessments (run_id, created_at, delivered_at, payload)
+       VALUES (?, ?, ?, ?)`
+    ).bind(runId, now, Math.floor(Date.now() / 1000), serialized).run();
+  } catch {
+    // Mail may already have arrived. No email was persisted, even on this path.
+    return json({ error: 'storage_failed', message: 'The email was sent, but the assessment record could not be saved.' }, { status: 503 }, origin);
+  }
 
   return json({ ok: true, run_id: runId }, {}, origin);
 }
