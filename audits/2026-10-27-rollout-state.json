@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0",
+  "repository": "snapsynapse/ai-posture",
+  "profile": "website",
+  "authority": "R0",
+  "start_head": "d89993ffd30edaf805e84e88cdc9e08420218d94",
+  "candidate_head": null,
+  "candidate_version": null,
+  "updated_at": "2026-10-27T07:01:59.074276Z",
+  "steps": [
+    {
+      "id": "prior_exact_head_ci",
+      "status": "completed",
+      "evidence": "CI run 40456586861: root 166 passes / 1 skip, Worker 45 passes, SHACL 26 passes; deploy skipped.",
+      "head": "d89993ffd30edaf805e84e88cdc9e08420218d94",
+      "completed_at": null
+    },
+    {
+      "id": "prior_simplicity",
+      "status": "completed",
+      "evidence": "Gemini 4 Argon High PASS on full committed diff; unchanged existing head.",
+      "head": "d89993ffd30edaf805e84e88cdc9e08420218d94",
+      "completed_at": null
+    },
+    {
+      "id": "privacy_review",
+      "status": "completed",
+      "evidence": "Local privacy-and-rollout plan records PRIV-001..005 and operational confirmations.",
+      "head": null,
+      "completed_at": "2026-10-27T06:12:23.434857Z"
+    },
+    {
+      "id": "local_privacy_validation",
+      "status": "completed",
+      "evidence": "Fresh root 179 passed; Worker 45 separately; SHACL 26; site build and secret-free Wrangler dry-run passed. Nine source/test files and tested rollout blocks, manifest SHA256 19a99ad29424d337005fe00d089c47f238b4a75d05fabad99f05b42f6f1e171e. Working tree only.",
+      "head": null,
+      "completed_at": "2026-10-27T06:55:33.444528Z"
+    },
+    {
+      "id": "privacy_corrections",
+      "status": "completed",
+      "evidence": "PRIV-001..005 and PRIV-R1..R3 fixed locally: complete session-entry omission, consistent terms, guarded command blocks. Six new R1-R3 tests pass; no publication or activation.",
+      "head": null,
+      "completed_at": "2026-10-27T06:55:33.444528Z"
+    },
+    {
+      "id": "owner_policy_confirmation",
+      "status": "not_started",
+      "evidence": "Retention, rights operations and provider/legal assertions remain unconfirmed; preparation date is October 27, effective on publication; actual publication timestamp must be captured later.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "live_worker_preflight",
+      "status": "completed",
+      "evidence": "Deployment 70818932-eafa-404d-b782-16570245e9ab: version 64243110-2e25-4db9-9ee6-2ec070d0e0a1 at 100%; D1 binding and secret name verified.",
+      "head": null,
+      "completed_at": "2026-10-27T06:12:23.434857Z"
+    },
+    {
+      "id": "live_schema_preflight",
+      "status": "completed",
+      "evidence": "sqlite_master read confirms three legacy tables and missing mail_cooldown; rows_written: 0 / changed_db: false. DB 299cdd40-a0d9-452e-8b89-7b23047a64e3.",
+      "head": null,
+      "completed_at": "2026-10-27T06:12:23.434857Z"
+    },
+    {
+      "id": "recovery_metadata",
+      "status": "completed",
+      "evidence": "Current bookmark 00000008-00000000-00005111-2b429b5042828ac7504aa12a293775c7 retrieved read-only; must be refreshed before later DDL.",
+      "head": null,
+      "completed_at": "2026-10-27T06:12:23.434857Z"
+    },
+    {
+      "id": "optional_d1_info_read",
+      "status": "failed",
+      "evidence": "Wrangler d1 info returned Cloudflare 10000; other catalog/schema/recovery reads succeeded. No login or secret change.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "additive_sql_preparation",
+      "status": "ready",
+      "evidence": "Draft SQL SHA256 201fb608500f549b4cb634a644b6beaefb5e0bde630698d4a225b78fa4e6530d; exact two CREATE statements from reviewed worker/schema.sql. Not applied.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "mail_pause_mechanism",
+      "status": "unknown",
+      "evidence": "Short-pause cutover recommended; exact mechanism and failure response require selection/verification before execution.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "final_candidate_validation",
+      "status": "not_started",
+      "evidence": "Local corrections/tests/builds and exact 13-file staged review pass. One new local commit is authorized; fresh committed-head CI and simplicity remain pending. No push or production authority.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "merge",
+      "status": "not_started",
+      "evidence": "PR #1 remains draft; no merge authorization in this request.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "schema_apply",
+      "status": "not_started",
+      "evidence": "No production DDL authorized or executed.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "worker_deploy",
+      "status": "not_started",
+      "evidence": "No deployment authorized or executed.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "pages_approval",
+      "status": "not_started",
+      "evidence": "Existing environment gate requires snapsynapse; no approval submitted.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "controlled_mail_verification",
+      "status": "not_started",
+      "evidence": "Requires exact owned recipient(s) and bounded message authorization.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "hosted_artifact_verification",
+      "status": "not_started",
+      "evidence": "Not yet deployed; cached web response is not fresh byte identity.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "historical_data_cleanup",
+      "status": "not_applicable",
+      "evidence": "Outside additive rollout scope; any investigation or mutation of legacy personal rows is a separate decision.",
+      "head": null,
+      "completed_at": null
+    },
+    {
+      "id": "complete_local_diff_review",
+      "status": "completed",
+      "evidence": "PRIV-R1..R3 corrected and retested; full 13-file staged diff reviewed, verified manifest/source/SQL match and no blocking finding. External rollout gates remain separate.",
+      "head": null,
+      "completed_at": "2026-10-27T07:01:59.074276Z"
+    },
+    {
+      "id": "rollout_command_guards",
+      "status": "completed",
+      "evidence": "All four documented blocks fail closed in guarded subshells. Three inert-stub regressions pass under sh, bash and zsh; zero production commands. Tested command digest 649de2e8223b3dab62de2554078ce1afa8a6c85ee541606b65bab79d2649175e.",
+      "head": null,
+      "completed_at": "2026-10-27T06:55:33.444528Z"
+    },
+    {
+      "id": "staged_privacy_review",
+      "status": "completed",
+      "evidence": "Exactly 13 intended regular files staged and reviewed; nine verified source/test files and four guarded command blocks match passing checks. No unrelated, credential, dependency or temporary-evidence files.",
+      "head": null,
+      "completed_at": "2026-10-27T07:01:59.074276Z"
+    },
+    {
+      "id": "local_commit_authorization",
+      "status": "completed",
+      "evidence": "Sam explicitly authorized staging, staged review and one new local privacy commit, keeping both existing commits separate. Precommit snapshot: candidate_head intentionally unset; Git history records the eventual commit. Push/deploy are not authorized.",
+      "head": null,
+      "completed_at": "2026-10-27T07:01:59.074276Z"
+    }
+  ]
+}

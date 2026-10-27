@@ -114,9 +114,11 @@
   <div class="container">
     <h1>Privacy policy</h1>
     <p class="meta">
-      <span class="version">v0.1.0</span>
+      <span class="version">v0.2.0</span>
       <span class="sep">&middot;</span>
-      Effective <time datetime="2026-05-29">May 29, 2026</time>
+      Revision prepared <time datetime="2026-10-27">October 27, 2026</time>
+      <span class="sep">&middot;</span>
+      Effective on publication
       <span class="sep">&middot;</span>
       <a href="https://github.com/snapsynapse/ai-posture/commits/main/docs/privacy/index.html">Revision history</a>
     </p>
@@ -137,38 +139,38 @@
     </div>
 
     <h3>Privacy-respecting analytics</h3>
-    <p>We use <a href="https://posthog.com/">PostHog</a> in cookie-less mode. Only the following event types may be recorded:</p>
+    <p>We use <a href="https://posthog.com/">PostHog</a> with browser persistence set to memory only, without analytics cookies. Only the following event types may be recorded:</p>
     <ul>
-      <li><code>$pageview</code> (records the page path and referrer, never an identity or cross-session link)</li>
+      <li><code>$pageview</code> (records the page URL without credentials, query or fragment, and the referrer origin only)</li>
       <li><code>assessment_started</code></li>
       <li><code>question_answered</code> (records the question identifier only, never your answer)</li>
       <li><code>assessment_completed</code> (records per-vector levels and the aggregate estimate, not individual answers)</li>
       <li><code>email_captured</code> (records that a newsletter email was submitted, not the address)</li>
       <li><code>delivery_requested</code> (records that an artifact delivery was requested, not the address or the artifact)</li>
       <li><code>pdf_requested</code></li>
-      <li><code>handoff_clicked</code> (records the destination URL, not who clicked)</li>
+      <li><code>handoff_clicked</code> (records the destination URL without credentials, query or fragment)</li>
     </ul>
     <p>Analytics currently loads only on the pre-assessment page. The landing page loads no analytics, so <code>email_captured</code> and landing-page <code>$pageview</code> events are not currently recorded.</p>
-    <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, rage-click detection, and automatic pageleave events are disabled. An explicit event filter permits only the event types listed above.</p>
+    <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, rage-click detection, and automatic pageleave events are disabled. An explicit event filter permits only the event types listed above. Campaign-attribution properties and unused person-profile updates are omitted from outgoing events. SDK session-entry properties are omitted entirely. Before sending any permitted event, we remove credentials, query strings and fragments from current/initial page URLs and handoff URLs, reduce current/initial referrers to their origin, and remove campaign/search properties copied from query values. Invalid or non-web URL values are omitted. URL paths may still contain identifying text; these controls do not make all analytics data anonymous or remove data previously received by PostHog.</p>
 
     <h3>Completed-assessment record</h3>
-    <p>If you request email delivery of your estimate, we store a per-run record under a random opaque identifier (the &ldquo;run ID&rdquo;). The record contains: timestamp, the JSON artifact (aggregate posture, per-vector levels and posteriors, scope label if you set one, generated-at timestamp), and the delivered-at timestamp. The record does not contain your name, organization, IP address, or any other direct identifier.</p>
+    <p>If you request email delivery of your estimate, we store a per-run record under a random opaque identifier (the &ldquo;run ID&rdquo;). The record contains: timestamp, the JSON artifact (aggregate posture, per-vector levels and posteriors, scope label if you set one, generated-at timestamp), and the delivered-at timestamp. The artifact has no dedicated name or organization field, but a scope label or other accepted text can identify a person, team or organization. For requests handled after the updated delivery service is activated, we do not add the delivery email address or request IP to the assessment record. Separate request-security records are described below.</p>
     <p>Retention is three years. You may request deletion of a specific record by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a> with the run ID included in your delivery email.</p>
 
     <h3>Email delivery</h3>
-    <p>If you request the JSON artifact by email from the result screen, we use your address solely to deliver the artifact. The delivery email address is never stored on the assessment record. We write the record only after the email provider accepts the message; a rejected or failed send creates no assessment record. If saving the record subsequently fails, the email may still arrive, but there may be no saved record for that run ID. We do not retain your delivery email address for marketing or re-use after delivery.</p>
+    <p>If you request the JSON artifact by email from the result screen, we use your address solely to deliver the artifact. For new requests handled after the updated delivery service is activated, the delivery email address is not added to the assessment record. We write the record only after the email provider accepts the message; a rejected or failed send creates no assessment record. If saving the record subsequently fails, the email may still arrive, but there may be no saved record for that run ID. We do not use the delivery address for marketing. Earlier service versions could store the delivery address with the assessment artifact. This update does not automatically erase historical records or establish that their addresses have been deleted. You can request deletion using the run ID.</p>
     <p>To limit email abuse, we keep a keyed hash of the recipient address separately from assessment records for a rolling send cooldown, plus an aggregate hourly sending counter. The recipient identifier is not stored on the assessment record. Expired cooldown identifiers are removed on subsequent sending requests. We also store IP addresses in hourly request-limit buckets; old buckets are removed opportunistically when requests trigger cleanup. These controls are not used for analytics or cross-session analytics tracking.</p>
 
     <h3>Newsletter signup</h3>
     <p>If you subscribe to AI Posture updates from the landing page, your email address is stored in our database (Cloudflare D1) to send you those updates. We use double opt-in: you must click a confirmation link before subscription becomes active. Confirmation links expire after 24 hours; subscribe again to obtain a fresh link if yours has expired. Expired pending subscription records are removed on subsequent subscription requests or when their expired confirmation link is used.</p>
-    <p>We use <a href="https://resend.com/">Resend</a> as a processor to deliver subscription emails. Resend processes only the email address and message contents we send, under their <a href="https://resend.com/legal/privacy-policy">privacy policy</a>. We do not share your email with any other party.</p>
-    <p>Subscription data retained: email address, subscription timestamp, confirmation timestamp, and the source of subscription (for example, the landing page). No other personal data is collected at signup.</p>
+    <p>We use <a href="https://cloudflare.com/">Cloudflare Workers and D1</a> for the API and subscription database, and <a href="https://resend.com/">Resend</a> to deliver subscription emails. Resend receives the recipient address and message contents; see their <a href="https://resend.com/legal/privacy-policy">privacy policy</a>. These service providers process data to operate the service.</p>
+    <p>Subscription data retained: email address, subscription timestamp, confirmation timestamp, and the source of subscription (for example, the landing page). Request IP buckets and recipient cooldown identifiers are stored separately for abuse prevention, as described above.</p>
     <p>To unsubscribe or request deletion of your subscription record, email <a href="mailto:privacy@paice.work">privacy@paice.work</a> from the subscribed address. We will remove the record within 30 days.</p>
     <p>The PAICE newsletter on Substack is a separate platform with its own <a href="https://substack.com/privacy">privacy policy</a>; subscribing there is independent of the AI Posture newsletter described above.</p>
 
     <h2>What we do not collect</h2>
     <ul>
-      <li>No cookies of any kind.</li>
+      <li>The assessment configuration does not set analytics cookies. Hosting and service providers also receive request metadata; this is not a guarantee about every provider or edge setting.</li>
       <li>No cross-session analytics identifiers. No fingerprinting.</li>
       <li>No third-party advertising or retargeting tags.</li>
       <li>No session recording or replay.</li>
@@ -192,11 +194,11 @@
       <li>Consent, for any optional email delivery you initiate.</li>
       <li>Contract performance, for delivering artifacts you request.</li>
     </ul>
-    <p>Because we do not collect personal identifiers in the core pre-assessment flow, most of this policy addresses behavior that would apply <em>if</em> we did.</p>
+    <p>The browser-side question flow does not transmit individual answers. Optional email actions, request-security controls and analytics do process data, including email addresses, request IP buckets, session-scoped identifiers and potentially identifying artifact text or URL paths. The rights and safeguards in this policy apply to that processing.</p>
 
     <h2>Your rights</h2>
-    <p>Depending on your jurisdiction, you may have rights to access, correct, delete, port, restrict, or object to our use of your data. Where we hold identifiable data about you (only through opt-in actions you take, such as requesting email delivery), you can exercise these by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a>. We will respond within 30 days.</p>
-    <p>Because we do not collect identifiable data during the pre-assessment itself, rights exercises against non-identifying aggregate statistics are typically not applicable.</p>
+    <p>Depending on your jurisdiction, you may have rights to access, correct, delete, port, restrict, or object to our use of your data. Where we hold identifiable data about you, you can exercise these by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a>. We will respond within 30 days.</p>
+    <p>For a stored assessment, include its run ID so we can locate it without relying on a retained delivery address. Statistics that no longer identify a person may not support an individual record lookup.</p>
 
     <h2>Data location and transfers</h2>
     <p>PostHog data may be processed in the United States. PAICE.work PBC is a US entity. Where your jurisdiction requires specific cross-border transfer protections, we apply the strictest of the jurisdictions we operate in.</p>
@@ -205,10 +207,10 @@
     <p>The pre-assessment is not directed at children under 16. We do not knowingly collect data from children.</p>
 
     <h2>Security</h2>
-    <p>The pre-assessment runs client-side in your browser. Static hosting is via GitHub Pages. No backend handles answer data during the flow. Any future backend components will document their security posture here before they go live.</p>
+    <p>The pre-assessment runs client-side in your browser. Static hosting is via GitHub Pages. No backend handles individual answers during the question flow. If you request artifact delivery, the estimate artifact and delivery address are sent to the Cloudflare Worker; Resend receives the address, message and attachment. D1 stores assessment artifacts, newsletter subscription data and separate abuse-control records. The abuse controls use IP buckets and keyed recipient identifiers, not analytics identification.</p>
 
     <h2>Changes to this policy</h2>
-    <p>Material changes trigger a new effective date at the top of this page. The repository commit history is authoritative. If changes affect already-stored records (when storage is live), we will notify affected record holders via the email on file where one exists.</p>
+    <p>This revision takes effect when published. Its preparation date records the local revision, not proof of publication or service activation. The repository commit history records changes; the published revision identifies the notice in force. If a change affects existing records, we will use an address on file where one exists to notify affected record holders. New assessment records are not linked to a delivery address, so the run ID is the lookup key for requests about those records.</p>
 
     <h2>Contact</h2>
     <p>Privacy questions or deletion requests: <a href="mailto:privacy@paice.work">privacy@paice.work</a>.</p>

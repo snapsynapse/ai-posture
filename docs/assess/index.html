@@ -282,9 +282,54 @@
     autocapture: false,
     capture_pageview: true,
     capture_pageleave: false,
+    save_campaign_params: false,
     before_send: function (event) {
       var allowed = ['$pageview', 'assessment_started', 'question_answered', 'assessment_completed', 'email_captured', 'delivery_requested', 'pdf_requested', 'handoff_clicked'];
-      return event && allowed.indexOf(event.event) !== -1 ? event : null;
+      if (!event || allowed.indexOf(event.event) === -1) return null;
+      // Person updates are unused with person_profiles: 'never'. They can carry
+      // additional initial URLs outside the normal event properties.
+      delete event.$set;
+      delete event.$set_once;
+      var properties = event.properties;
+      if (!properties || typeof properties !== 'object') return event;
+      delete properties.$set;
+      delete properties.$set_once;
+
+      // URLs can contain addresses/tokens even when event names are restricted.
+      // Sanitize initial/session properties too, on every permitted event.
+      ['$current_url', '$initial_current_url', '$pathname', '$initial_pathname', '$referrer', '$initial_referrer', 'url'].forEach(function (key) {
+        if (!Object.prototype.hasOwnProperty.call(properties, key)) return;
+        var value = properties[key];
+        var referrer = key === '$referrer' || key === '$initial_referrer';
+        if (referrer && value === '$direct') return;
+        try {
+          if (typeof value !== 'string' || !value.trim()) throw new Error('Invalid URL');
+          var parsed = value.charAt(0) === '/' ? new URL(value, 'https://aiposture.org/') : new URL(value);
+          if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') throw new Error('Non-web URL');
+          // origin excludes credentials; pathname excludes query and fragment.
+          properties[key] = referrer ? parsed.origin :
+            (key === '$pathname' || key === '$initial_pathname' ? parsed.pathname : parsed.origin + parsed.pathname);
+        } catch (_) {
+          delete properties[key];
+        }
+      });
+      // Derive duplicated host/domain fields from the sanitized URL fields.
+      [['$host', '$current_url'], ['$initial_host', '$initial_current_url'], ['$referring_domain', '$referrer'], ['$initial_referring_domain', '$initial_referrer']].forEach(function (pair) {
+        if (!Object.prototype.hasOwnProperty.call(properties, pair[0])) return;
+        try {
+          properties[pair[0]] = properties[pair[1]] === '$direct' ? '$direct' : new URL(properties[pair[1]]).hostname;
+        } catch (_) {
+          delete properties[pair[0]];
+        }
+      });
+      // The SDK creates session-entry attribution independently of campaign
+      // settings. Drop that unused namespace, including future entry fields.
+      var campaignKeys = ['gclid', 'gclsrc', 'dclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'twclid', 'li_fat_id', 'igshid', 'ttclid', 'rdt_cid', 'epik', 'qclid', 'sccid', 'oppref', 'bfcid', 'irclid', '_kx', 'gad_source', 'mc_cid'];
+      Object.keys(properties).forEach(function (key) {
+        var name = key.toLowerCase().replace(/^\$initial_/, '');
+        if (name.indexOf('$session_entry_') === 0 || /^(?:utm_|ph_keyword$|\$?search_engine$)/.test(name) || campaignKeys.indexOf(name) !== -1) delete properties[key];
+      });
+      return event;
     },
     capture_heatmaps: false,
     rageclick: false

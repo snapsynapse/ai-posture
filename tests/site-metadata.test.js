@@ -36,9 +36,14 @@ function sitemapLastmod(url) {
   return match[1];
 }
 
-function effectiveDate(html) {
-  const match = html.match(/Effective <time datetime="(\d{4}-\d{2}-\d{2})">/);
-  assert.ok(match, 'page must include an effective date');
+function revisionDate(html) {
+  const match = html.match(/Revision prepared <time datetime="(\d{4}-\d{2}-\d{2})">([^<]+)<\/time>/);
+  assert.ok(match, 'page must distinguish revision preparation from publication');
+  const visibleDate = new Date(match[1] + 'T00:00:00Z').toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
+  });
+  assert.equal(match[2], visibleDate, 'visible revision date must match datetime');
+  assert.match(html, /Effective on publication/);
   return match[1];
 }
 
@@ -76,9 +81,12 @@ test('homepage repo-updated date is wired to GitHub pushed_at with static fallba
 });
 
 test('sitemap lastmod tracks changed public assessment and legal surfaces', () => {
-  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-09-23');
-  assert.equal(sitemapLastmod('https://aiposture.org/privacy/'), effectiveDate(PRIVACY));
-  assert.equal(sitemapLastmod('https://aiposture.org/terms/'), effectiveDate(TERMS));
+  assert.equal(sitemapLastmod('https://aiposture.org/assess/'), '2026-10-27');
+  assert.equal(sitemapLastmod('https://aiposture.org/privacy/'), revisionDate(PRIVACY));
+  assert.equal(sitemapLastmod('https://aiposture.org/terms/'), revisionDate(TERMS));
+  for (const page of [PRIVACY, TERMS]) {
+    assert.match(page, /<span class="version">v0\.2\.0<\/span>/);
+  }
 });
 
 test('public metadata discovers the assistant guide', () => {

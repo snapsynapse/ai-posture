@@ -49,7 +49,9 @@ test('terms disclose Cloudflare and Resend as processors and cover the newslette
   assert.match(TERMS, /AI Posture newsletter/);
 });
 
-test('privacy and terms carry the v1.0 effective date', () => {
-  assert.match(PRIVACY, /datetime="2026-05-29"/);
-  assert.match(TERMS, /datetime="2026-05-29"/);
+test('privacy and terms identify the revised notice without implying it is already published', () => {
+  for (const page of [PRIVACY, TERMS]) {
+    assert.match(page, /<span class="version">v0\.2\.0<\/span>/);
+    assert.match(page, /Effective on publication/);
+  }
 });

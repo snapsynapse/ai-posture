@@ -29,9 +29,13 @@ test('assess CSS covers the delivery form and hides it in print', () => {
   assert.match(ASSESS_HTML, /\.delivery,\s*\.not-panel\s*\{\s*display:\s*none\s*!important/);
 });
 
-test('privacy policy describes assessment storage without delivery email and separate abuse controls', () => {
+test('privacy policy qualifies new-record handling and discloses legacy records and abuse controls', () => {
   assert.match(PRIVACY, /Completed-assessment record/);
-  assert.match(PRIVACY, /delivery email address is never stored on the assessment record/i);
+  assert.match(PRIVACY, /For new requests handled after the updated delivery service is activated, the delivery email address is not added to the assessment record/);
+  assert.match(PRIVACY, /Earlier service versions could store the delivery address/);
+  assert.match(PRIVACY, /does not automatically erase historical records/);
+  assert.match(PRIVACY, /scope label or other accepted text can identify a person, team or organization/);
+  assert.doesNotMatch(PRIVACY, /record does not contain your name, organization|Any future backend components/);
   assert.match(PRIVACY, /keyed hash of the recipient address/);
   assert.match(PRIVACY, /IP addresses in hourly request-limit buckets/);
   assert.match(PRIVACY, /run ID/);
@@ -41,8 +45,15 @@ test('privacy policy lists delivery_requested as a permitted analytics event', (
   assert.match(PRIVACY, /<code>delivery_requested<\/code>/);
 });
 
-test('privacy and terms carry the v1.0 effective date and delivery disclosure', () => {
-  assert.match(PRIVACY, /datetime="2026-05-29"/);
-  assert.match(TERMS, /datetime="2026-05-29"/);
+test('privacy and terms distinguish preparation from publication and disclose delivery', () => {
+  for (const page of [PRIVACY, TERMS]) {
+    assert.match(page, /Revision prepared <time/);
+    assert.match(page, /Effective on publication/);
+  }
   assert.match(TERMS, /request email delivery of your JSON estimate artifact/);
+});
+
+test('PRIV-R2 terms prohibit extracting personal data without denying its existence', () => {
+  assert.match(TERMS, /<li>Reverse-engineer the service to extract personal data about other users\.<\/li>/);
+  assert.doesNotMatch(TERMS, /no such data exists|does not collect personal data during the flow/);
 });
