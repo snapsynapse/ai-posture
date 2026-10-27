@@ -32,6 +32,7 @@ An EARL AI Posture report is a single node of type `apos:PostureReport` that car
 | `nextReview` | `apos:nextReview` | yes | Assessor's next-review belief (xsd:date). Consumers weight a report past this date as a weaker signal. |
 | `scope` | `apos:scope` | recommended | Organizational, business-unit, product-line, or team. |
 | `postureLevel` | `apos:postureLevel` | yes unless all vectors N/A | Aggregate level. Must equal the minimum in-scope assertion level. |
+| `postureLevelName` | `apos:postureLevelName` | optional | If present, must match the aggregate level; absent or `N/A` when all vectors are N/A. |
 | `constrainingVector` | `apos:constrainingVector` | yes unless all vectors N/A | The in-scope vector(s) at the minimum. |
 
 ### Per-assertion fields
@@ -81,9 +82,17 @@ These proposed IRIs are placeholders that assume the Obligation-First namespace 
 
 `apos:postureLevel` MUST equal the minimum `apos:level` over assertions where `apos:inScope` is `true`. `apos:constrainingVector` MUST name every in-scope vector at that minimum. The SHACL shapes express this as a SPARQL constraint; the reference validator enforces it directly.
 
+SHACL and the reference validator require the aggregate when any assertion is in scope, reject missing or extra constraining vectors, and check an optional aggregate name. Minima are computed separately for each report when an RDF graph contains multiple reports. Runtime regression tests execute the published SHACL using the local JSON-LD context and compare its aggregate decisions with the JavaScript validator; run `npm run test:shacl` after installing `tests/requirements-shacl.txt` in a Python environment. The Node suites remain dependency-free; the separate SHACL test dependencies are not used by the site or Worker.
+
+SHACL checks the expanded RDF graph. The JavaScript validator additionally checks the compact JSON representation. JSON-LD can erase distinctions such as an explicit null optional name or repeated identical array values; SHACL cannot distinguish those from omission or a single RDF value. This does not permit an invalid aggregate in the expanded graph.
+
 ## Scope and N/A handling
 
 A vector that does not apply is expressed as an assertion with `apos:inScope: false` and `earl:outcome: earl:inapplicable`. N/A assertions are excluded from the weakest-link minimum. An N/A assertion that is externally contradicted invalidates the entire report for that stamping, mirroring the spec's falsifiable-scope rule.
+
+The reference validator requires an explicit boolean `inScope`. An in-scope assertion cannot use `earl:inapplicable`; an out-of-scope assertion cannot carry a maturity level. For an all-N/A report, omit `postureLevel` (or use JSON-LD null), omit `postureLevelName` (or use `N/A`), and omit `constrainingVector` (or use an empty array). The validator does not infer scope from an outcome.
+
+IRI-valued subject, assertor, and evidence fields may be strings or JSON-LD nodes with a valid `@id`, as in the example. A passed assertion needs at least one evidence IRI; an empty array does not qualify. The reference validator checks syntax and required fields without fetching evidence. In-scope `test` IRIs must match the published criterion for the stated vector and level. A valid wire-format result does not establish the truth of evidence or authorize use of the reserved verified basis.
 
 ## Correspondence to the SPEC reporting block
 

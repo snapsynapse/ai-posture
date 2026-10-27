@@ -29,9 +29,11 @@ test('assess CSS covers the delivery form and hides it in print', () => {
   assert.match(ASSESS_HTML, /\.delivery,\s*\.not-panel\s*\{\s*display:\s*none\s*!important/);
 });
 
-test('privacy policy describes the completed-assessment record and email dissociation as deployed', () => {
+test('privacy policy describes assessment storage without delivery email and separate abuse controls', () => {
   assert.match(PRIVACY, /Completed-assessment record/);
-  assert.match(PRIVACY, /removed after delivery|email column nulled|after delivery/i);
+  assert.match(PRIVACY, /delivery email address is never stored on the assessment record/i);
+  assert.match(PRIVACY, /keyed hash of the recipient address/);
+  assert.match(PRIVACY, /IP addresses in hourly request-limit buckets/);
   assert.match(PRIVACY, /run ID/);
 });
 

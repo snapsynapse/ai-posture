@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased local security remediation - 2026-10-26
+
+- Corrected R4: SHACL now requires an in-scope aggregate, checks its optional level name and exact constraining-vector set, and rejects aggregate claims on all-N/A reports. Added a pinned, separate SHACL runtime suite with JavaScript comparison and multi-report coverage, required by the prepared CI test job. No specification, site release or Worker version change.
+- Resolved precommit findings R1-R3: analytics uses the computation engine version while old drafts retain their format version; valid version 1.0.0 estimates retain delivery compatibility under common semantic checks; initial and resent confirmation emails show their original absolute UTC expiry. Added a captured old adaptive-flow fixture and regression coverage for metadata, delivery, and near-expiry resend behavior. All work remains local for review.
+- Prepared the five low findings (SEC-007 through SEC-011): delivery semantic consistency, own-property schema lookup, 24-hour atomic confirmation expiry with renewal, an explicit analytics event allowlist, and a PR/main test job required by the tracked Pages deploy job. Added regression coverage and clean-checkout verification. GitHub Pages legacy source and required-check settings are unchanged and require separate review before eventual publication.
+- Prepared fixes for audit SEC-001 through SEC-006, with regression tests. No push, deployment, or production schema change has been performed for this tranche.
+- Artifact delivery keeps email only in the active request, sends before storing an anonymous record, and reports post-send storage failures separately. Added rolling recipient cooldowns, pending-token reuse, a shared hourly send budget, and bounded JSON request parsing. The additive `mail_cooldown` schema must be applied before eventual Worker deployment.
+- Experimental estimator engine 1.1.0 conditions in-scope priors on levels 1-5, retaining zero only for confirmed N/A. Exported artifacts identify the engine version even when restoring older drafts. Elicited likelihood tables and their relative in-scope prior weights are unchanged; this is a scope-boundary correction, not empirical recalibration. Normative specification v1.1.1, minimum-vector aggregation, and schema shape remain unchanged.
+- EARL validation now enforces explicit coherent scope, all-N/A aggregate fields, report provenance, valid subject/assertor/evidence IRIs, and criterion vector/level correspondence. Prepared matching delivery/privacy copy and a local remediation record.
+
 ## v1.1.3 release - 2026-09-23
 
 - Reframed public copy framework-first following the 2026-09-22 portfolio disposition: AI Posture is maintained as a supporting framework, not a standalone product. Homepage title, descriptions, structured data, hero, and section copy no longer describe a unified governance or maturity score.

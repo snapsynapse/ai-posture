@@ -11,9 +11,14 @@ function read(rel) {
 
 // The canonical-spec-page PROJECT_CONTEXT is intentionally duplicated so the
 // skill works across agent surfaces (.claude for Claude Code, .agents for
-// everything else). The two copies must never drift.
-test('canonical-spec-page PROJECT_CONTEXT copies are byte-identical', () => {
+// everything else). .agents is ignored local configuration, absent in CI.
+// When it exists, its bytes must still match the tracked context.
+test('optional local canonical-spec-page PROJECT_CONTEXT matches the tracked copy', t => {
   const claude = read('.claude/skills/canonical-spec-page/PROJECT_CONTEXT.md');
+  if (!fs.existsSync(path.join(ROOT, '.agents/skills/canonical-spec-page/PROJECT_CONTEXT.md'))) {
+    t.skip('Ignored local .agents context is absent in a clean checkout');
+    return;
+  }
   const agents = read('.agents/skills/canonical-spec-page/PROJECT_CONTEXT.md');
   assert.equal(claude, agents, '.claude and .agents PROJECT_CONTEXT.md have drifted');
 });

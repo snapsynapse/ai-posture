@@ -1,5 +1,5 @@
 // AIP Pre-Assessment — UI runtime
-// Version: 1.0.0
+// Version: 1.1.0
 // Single-file vanilla JS. Depends on window.AIPostureBayes (bayes.js).
 
 (function () {
@@ -13,7 +13,7 @@
     ? 'http://localhost:8787'
     : 'https://api.aiposture.org';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  var LEVEL_NAMES = ['Ignoring', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
+  var LEVEL_NAMES = ['N/A', 'Perceiving', 'Assessing', 'Integrating', 'Calibrating', 'Engineering'];
   var VECTOR_ORDER = ['Infrastructure', 'Regulation', 'People'];
   var CRITERIA_URLS = {
     People: 'https://aiposture.org/criteria/v1/people/',
@@ -332,7 +332,7 @@
         VECTOR_ORDER.forEach(function (v) { modes[v] = B.modeLevel(r.posteriors[v]); });
         var agg = B.aggregateAIPosture(modes, r.inScope);
         track('assessment_completed', {
-          version: state.version,
+          version: B.VERSION,
           aip: agg == null ? null : LEVEL_NAMES[agg],
           people_level: r.inScope.People ? modes.People : null,
           infrastructure_level: r.inScope.Infrastructure ? modes.Infrastructure : null,
@@ -442,7 +442,7 @@
     truncateFrom({ type: 'opener', id: def.id });
     if (!state.analytics.startedTracked) {
       state.analytics.startedTracked = true;
-      track('assessment_started', { version: state.version });
+      track('assessment_started', { version: B.VERSION });
     }
     state.steps.push({ type: 'opener', id: def.id, value: value, skip: false });
     track('question_answered', { question_id: def.id });
@@ -779,7 +779,9 @@
     });
     return {
       type: 'AI Posture Pre-Assessment Result',
-      version: state.version,
+      // Draft version describes saved answer shape; artifact version identifies
+      // the engine that computed this estimate, including restored old drafts.
+      version: B.VERSION,
       generated_at: new Date().toISOString(),
       source: 'https://aiposture.org/assess/',
       estimate_label: 'estimated AI Posture',
@@ -812,7 +814,7 @@
     var section = el('div', { class: 'delivery' });
     section.appendChild(el('h3', null, ['Email me this estimate']));
     section.appendChild(el('p', { class: 'delivery-note' }, [
-      'We send the JSON artifact once and remove your email from the stored record after delivery. Records are retained for up to three years; request deletion via privacy@paice.work.'
+      'We use your email to send the JSON artifact without storing the address on the assessment record. Records are retained for up to three years; request deletion via privacy@paice.work.'
     ]));
 
     var form = el('form', { class: 'delivery-form', novalidate: 'novalidate' });
@@ -873,14 +875,21 @@
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
         .then(function (res) {
           if (res.body && res.body.error === 'rate_limited') {
-            status.textContent = 'Too many requests. Try again in an hour.';
+            status.textContent = 'Too many requests. Please wait before trying again.';
             status.className = 'delivery-status delivery-status-error';
             submit.disabled = false;
             return;
           }
+          if (res.body && res.body.error === 'storage_failed') {
+            status.textContent = 'The email was sent, but the assessment record could not be saved. Check your inbox for the artifact.';
+            status.className = 'delivery-status delivery-status-error';
+            input.disabled = true;
+            submit.disabled = true;
+            return;
+          }
           if (!res.ok) throw new Error(res.body && res.body.error || 'request_failed');
           track('delivery_requested');
-          status.textContent = 'Sent. Check your inbox. The email is removed from our record after delivery.';
+          status.textContent = 'Sent. Check your inbox. Your email is not stored on the assessment record.';
           status.className = 'delivery-status delivery-status-ok';
           input.disabled = true;
           submit.disabled = true;

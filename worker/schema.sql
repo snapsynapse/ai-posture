@@ -24,8 +24,19 @@ CREATE TABLE IF NOT EXISTS rate_limit (
 
 CREATE INDEX IF NOT EXISTS idx_rate_limit_bucket ON rate_limit (bucket_hour);
 
+-- Rolling send cooldowns. Recipient keys are HMACs, never raw email addresses.
+-- Expired rows are reaped on subsequent mail reservations.
+CREATE TABLE IF NOT EXISTS mail_cooldown (
+  route          TEXT NOT NULL,
+  recipient_key  TEXT NOT NULL,
+  available_at   INTEGER NOT NULL,
+  PRIMARY KEY (route, recipient_key)
+);
+CREATE INDEX IF NOT EXISTS idx_mail_cooldown_expiry ON mail_cooldown (available_at);
+
 -- Completed assessment records. Stored under a random opaque run_id.
--- email is captured only for delivery and is nulled out after a successful send.
+-- New records are written only after sending, without an email value.
+-- The nullable email column remains for compatibility with existing databases.
 -- payload is the JSON artifact (aggregate, vectors, constraining vectors, etc).
 CREATE TABLE IF NOT EXISTS assessments (
   run_id        TEXT PRIMARY KEY,

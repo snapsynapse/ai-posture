@@ -149,17 +149,18 @@
       <li><code>handoff_clicked</code> (records the destination URL, not who clicked)</li>
     </ul>
     <p>Analytics currently loads only on the pre-assessment page. The landing page loads no analytics, so <code>email_captured</code> and landing-page <code>$pageview</code> events are not currently recorded.</p>
-    <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, and rage-click detection are disabled.</p>
+    <p>PostHog persistence is set to memory only. Identifiers are session-scoped. We do not stitch sessions across visits. Autocapture, session recording, heatmaps, rage-click detection, and automatic pageleave events are disabled. An explicit event filter permits only the event types listed above.</p>
 
     <h3>Completed-assessment record</h3>
     <p>If you request email delivery of your estimate, we store a per-run record under a random opaque identifier (the &ldquo;run ID&rdquo;). The record contains: timestamp, the JSON artifact (aggregate posture, per-vector levels and posteriors, scope label if you set one, generated-at timestamp), and the delivered-at timestamp. The record does not contain your name, organization, IP address, or any other direct identifier.</p>
     <p>Retention is three years. You may request deletion of a specific record by emailing <a href="mailto:privacy@paice.work">privacy@paice.work</a> with the run ID included in your delivery email.</p>
 
     <h3>Email delivery</h3>
-    <p>If you request the JSON artifact by email from the result screen, we use your address solely to deliver the artifact. Your email address is stored on the assessment record only until the email is sent successfully, after which it is removed; the stored record then carries no direct identifier. If delivery fails, the partial record is removed entirely. We do not retain your email address for marketing or re-use after delivery.</p>
+    <p>If you request the JSON artifact by email from the result screen, we use your address solely to deliver the artifact. The delivery email address is never stored on the assessment record. We write the record only after the email provider accepts the message; a rejected or failed send creates no assessment record. If saving the record subsequently fails, the email may still arrive, but there may be no saved record for that run ID. We do not retain your delivery email address for marketing or re-use after delivery.</p>
+    <p>To limit email abuse, we keep a keyed hash of the recipient address separately from assessment records for a rolling send cooldown, plus an aggregate hourly sending counter. The recipient identifier is not stored on the assessment record. Expired cooldown identifiers are removed on subsequent sending requests. We also store IP addresses in hourly request-limit buckets; old buckets are removed opportunistically when requests trigger cleanup. These controls are not used for analytics or cross-session analytics tracking.</p>
 
     <h3>Newsletter signup</h3>
-    <p>If you subscribe to AI Posture updates from the landing page, your email address is stored in our database (Cloudflare D1) to send you those updates. We use double opt-in: you must click a confirmation link before subscription becomes active.</p>
+    <p>If you subscribe to AI Posture updates from the landing page, your email address is stored in our database (Cloudflare D1) to send you those updates. We use double opt-in: you must click a confirmation link before subscription becomes active. Confirmation links expire after 24 hours; subscribe again to obtain a fresh link if yours has expired. Expired pending subscription records are removed on subsequent subscription requests or when their expired confirmation link is used.</p>
     <p>We use <a href="https://resend.com/">Resend</a> as a processor to deliver subscription emails. Resend processes only the email address and message contents we send, under their <a href="https://resend.com/legal/privacy-policy">privacy policy</a>. We do not share your email with any other party.</p>
     <p>Subscription data retained: email address, subscription timestamp, confirmation timestamp, and the source of subscription (for example, the landing page). No other personal data is collected at signup.</p>
     <p>To unsubscribe or request deletion of your subscription record, email <a href="mailto:privacy@paice.work">privacy@paice.work</a> from the subscribed address. We will remove the record within 30 days.</p>
@@ -168,7 +169,7 @@
     <h2>What we do not collect</h2>
     <ul>
       <li>No cookies of any kind.</li>
-      <li>No cross-session user identifiers. No fingerprinting.</li>
+      <li>No cross-session analytics identifiers. No fingerprinting.</li>
       <li>No third-party advertising or retargeting tags.</li>
       <li>No session recording or replay.</li>
       <li>No autocapture of clicks, form inputs, or keystrokes.</li>

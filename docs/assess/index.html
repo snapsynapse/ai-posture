@@ -281,6 +281,11 @@
     disable_session_recording: true,
     autocapture: false,
     capture_pageview: true,
+    capture_pageleave: false,
+    before_send: function (event) {
+      var allowed = ['$pageview', 'assessment_started', 'question_answered', 'assessment_completed', 'email_captured', 'delivery_requested', 'pdf_requested', 'handoff_clicked'];
+      return event && allowed.indexOf(event.event) !== -1 ? event : null;
+    },
     capture_heatmaps: false,
     rageclick: false
   });

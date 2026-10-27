@@ -164,10 +164,10 @@
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       var props = schema.properties || {};
       (schema.required || []).forEach(function (k) {
-        if (!(k in value)) errors.push(pathStr + ': missing required property "' + k + '"');
+        if (!Object.prototype.hasOwnProperty.call(value, k)) errors.push(pathStr + ': missing required property "' + k + '"');
       });
       Object.keys(value).forEach(function (k) {
-        if (props[k]) validateAgainst(props[k], value[k], rootSchema, pathStr + '.' + k, errors);
+        if (Object.prototype.hasOwnProperty.call(props, k)) validateAgainst(props[k], value[k], rootSchema, pathStr + '.' + k, errors);
         else if (schema.additionalProperties === false) errors.push(pathStr + ': unexpected property "' + k + '"');
       });
     }

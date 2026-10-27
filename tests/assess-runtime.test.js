@@ -234,6 +234,32 @@ test('restoring a completed assessment does not emit another completion event', 
   );
 });
 
+test('R1 start and completion analytics identify the engine while preserving the draft format', () => {
+  const { hooks, root, captured } = loadRuntime();
+  hooks.setState({ version: '1.0.0', steps: [] });
+  hooks.render();
+  root.querySelectorAll = () => [{ checked: true, value: 'a' }];
+  const openerForm = root.children.find(node => node.className === 'q-form');
+  openerForm.listeners.submit({ preventDefault() {} });
+  hooks.setState(completedState());
+  hooks.render();
+  const artifact = hooks.buildJsonArtifact();
+  assert.equal(artifact.version, '1.1.0');
+  assert.equal(captured.find(e => e.event === 'assessment_started').props.version, artifact.version);
+  assert.equal(captured.find(e => e.event === 'assessment_completed').props.version, artifact.version);
+  assert.equal(hooks.getState().version, '1.0.0', 'saved answer shape stays compatible');
+});
+
+test('R1 a restored old draft emits the current engine version on completion', () => {
+  const { hooks, captured } = loadRuntime({ sessionValue: JSON.stringify(completedState()) });
+  assert.equal(hooks.loadDraft(), true);
+  hooks.render();
+  const artifact = hooks.buildJsonArtifact();
+  assert.equal(captured.find(e => e.event === 'assessment_completed').props.version, artifact.version);
+  assert.equal(artifact.version, '1.1.0');
+  assert.equal(hooks.getState().version, '1.0.0');
+});
+
 test('start over resets analytics flags for a fresh run', () => {
   const { hooks } = loadRuntime();
 
@@ -355,6 +381,59 @@ test('all-N/A JSON artifact uses schema-valid aggregate naming', async () => {
   assert.equal(artifact.aggregate.level, null);
   assert.equal(artifact.aggregate.level_name, 'N/A');
   assert.equal(isValidPayload(artifact), true);
+});
+
+test('SEC-004 uncertainty answers never create an in-scope level-zero artifact', async () => {
+  const { isValidPayload } = await import('../worker/src/deliver.js');
+  const { hooks } = loadRuntime();
+  const context = { window: {} };
+  vm.runInNewContext(BAYES_JS, context);
+  const B = context.window.AIPostureBayes;
+  hooks.setState({ version: '1.0.0', steps: [
+    { type: 'opener', id: 'O1', value: 'c', skip: false },
+    { type: 'opener', id: 'O2', value: ['us_other'], skip: false },
+    { type: 'opener', id: 'O3', value: 'b', skip: false }
+  ] });
+  for (let guard = 0; hooks.deriveStage().kind === 'bank' && guard < 20; guard++) {
+    const vector = hooks.deriveStage().vector;
+    const state = hooks.getState();
+    const asked = state.steps.filter(s => s.vector === vector).map(s => s.qid);
+    const remaining = QUESTIONS.banks[vector].map(q => q.id).filter(id => !asked.includes(id));
+    const qid = B.selectNextQuestion(hooks.computePosteriors().posteriors[vector], remaining, LIKELIHOODS);
+    const question = QUESTIONS.banks[vector].find(q => q.id === qid);
+    const optIdx = question.options.findIndex(opt => /Not sure|Don't know/.test(opt.label));
+    assert.ok(optIdx >= 0);
+    state.steps.push({ type: 'bank', vector, qid, optIdx });
+    hooks.setState(state);
+  }
+  assert.equal(hooks.deriveStage().kind, 'result');
+  const artifact = hooks.buildJsonArtifact();
+  for (const result of Object.values(artifact.vectors)) {
+    assert.ok(result.level >= 1 && result.level <= 5);
+    assert.equal(result.posterior[0], 0);
+    assert.notEqual(result.level_name, 'Ignoring');
+  }
+  assert.equal(artifact.version, '1.1.0');
+  assert.ok(artifact.aggregate.level >= 1);
+  assert.equal(isValidPayload(artifact), true);
+});
+
+test('SEC-001 post-send storage failure tells the user to check email and prevents a duplicate retry', async () => {
+  const { hooks, root } = loadRuntime({ fetchImpl: async () => ({ ok: false, json: async () => ({ error: 'storage_failed' }) }) });
+  hooks.setState(completedState());
+  hooks.renderResult();
+  const nodes = [];
+  function visit(node) { nodes.push(node); node.children.forEach(visit); }
+  visit(root);
+  const form = nodes.find(node => node.className === 'delivery-form');
+  const input = form.children.find(node => node.tagName === 'input');
+  const button = form.children.find(node => node.tagName === 'button');
+  input.value = 'fixture@example.org';
+  form.listeners.submit({ preventDefault() {} });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.match(root.textContent, /email was sent.*record could not be saved.*Check your inbox/);
+  assert.equal(button.disabled, true);
+  assert.equal(input.disabled, true);
 });
 
 test('normalizeState drops malformed stored steps', () => {

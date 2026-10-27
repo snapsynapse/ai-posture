@@ -59,6 +59,31 @@ test('buildPriors excludes skipped vectors from aggregate scope', () => {
   assert.equal(built.inScope.Infrastructure, false);
 });
 
+test('SEC-004 all opener combinations keep in-scope probability on levels one through five', () => {
+  const B = loadBayes();
+  for (const o1 of ['a', 'b', 'c', 'd', 'e']) {
+    for (const o2 of [['none'], ['us_other'], ['eu', 'uk']]) {
+      for (const o3 of ['a', 'b', 'c', 'd']) {
+        const built = B.buildPriors({ O1: { value: o1, skip: o1 === 'd' }, O2: { value: o2, skip: o2[0] === 'none' }, O3: { value: o3, skip: o3 === 'c' } });
+        for (const vector of B.VECTORS) {
+          const prior = built.priors[vector];
+          assert.equal(prior[0], built.inScope[vector] ? 0 : 1);
+          assert.ok(Math.abs(prior.reduce((sum, x) => sum + x, 0) - 1) < 1e-12);
+          if (!built.inScope[vector]) continue;
+          for (const q of Object.values(LIKELIHOODS.questions)) {
+            for (let option = 0; option < q.options.length; option++) {
+              const posterior = B.updatePosterior(prior, q, option);
+              assert.equal(posterior[0], 0);
+              assert.ok(B.modeLevel(posterior) >= 1);
+              assert.ok(Math.abs(posterior.reduce((sum, x) => sum + x, 0) - 1) < 1e-12);
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
 test('aggregateAIPosture ignores skipped vectors', () => {
   const B = loadBayes();
 

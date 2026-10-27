@@ -47,3 +47,30 @@ test('/check shared validator rejects all-N/A declarations with constraining vec
   const res = validateDeclaration(d);
   assert.ok(res.errors.some(e => /constraining_vectors must be empty/.test(e)), res.errors.join('; '));
 });
+
+test('SEC-008 inherited schema names are rejected as extra properties at every object boundary', () => {
+  for (const key of ['constructor', 'toString', '__proto__', 'hasOwnProperty']) {
+    for (const location of [[], ['subject'], ['aggregate'], ['vectors'], ['vectors', 'People'], ['evidence']]) {
+      const d = read(DECL);
+      if (location[0] === 'evidence') d.evidence = {};
+      const object = location.reduce((o, part) => o[part], d);
+      Object.defineProperty(object, key, { value: 'unrecognized', enumerable: true });
+      const parsed = JSON.parse(JSON.stringify(d));
+      const res = validateDeclaration(parsed);
+      assert.ok(res.errors.some(e => e.includes(`unexpected property "${key}"`)), `${key} at ${location.join('.')}`);
+    }
+  }
+});
+
+test('SEC-008 required fields must be own properties, including on nested objects', () => {
+  const d = read(DECL);
+  const subject = d.subject;
+  delete d.subject;
+  Object.setPrototypeOf(d, { subject });
+  assert.ok(validateDeclaration(d).errors.some(e => /missing required property "subject"/.test(e)));
+  const nested = read(DECL);
+  const name = nested.subject.name;
+  delete nested.subject.name;
+  Object.setPrototypeOf(nested.subject, { name });
+  assert.ok(validateDeclaration(nested).errors.some(e => /missing required property "name"/.test(e)));
+});

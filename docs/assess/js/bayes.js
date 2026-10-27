@@ -1,11 +1,11 @@
 // AIP Pre-Assessment — Bayesian engine + prior construction
-// Version: 1.0.0
+// Version: 1.1.0
 // Pure functions. No DOM. No I/O. Easy to unit-test in isolation.
 
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.0.0';
+  var ENGINE_VERSION = '1.1.0';
   var LEVELS = [0, 1, 2, 3, 4, 5];
   var VECTORS = ['Infrastructure', 'Regulation', 'People'];
   var TILT_CAP = 0.10; // max 10% total probability mass moved per opener on a non-primary vector
@@ -16,8 +16,8 @@
   //
   // Shape of every distribution: [P(L0), P(L1), P(L2), P(L3), P(L4), P(L5)]
   //
-  // Default base distribution when opener gives no signal: small mass on L0
-  // (Ignoring is rare but not impossible), remaining uniform over L1..L5.
+  // Legacy elicited weights include slot zero. buildPriors conditions in-scope
+  // vectors on L1..L5; slot zero is reserved for a confirmed scope exclusion.
   // ---------------------------------------------------------------------------
 
   var BASE_PRIOR = [0.02, 0.196, 0.196, 0.196, 0.196, 0.196];
@@ -202,6 +202,17 @@
     } else if (a.O3 && a.O3.skip) {
       inScope.Infrastructure = false;
     }
+
+    // Scope is a boundary, not another maturity outcome. Condition before
+    // tilting so the probability-mass cap applies within the in-scope model.
+    VECTORS.forEach(function (vector) {
+      if (inScope[vector]) {
+        priors[vector][0] = 0;
+        priors[vector] = normalize(priors[vector]);
+      } else {
+        priors[vector] = [1, 0, 0, 0, 0, 0];
+      }
+    });
 
     // Secondary tilts (only to in-scope vectors)
     function applyOpenerTilts(openerId, keyForTilts) {
